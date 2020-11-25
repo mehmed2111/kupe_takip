@@ -5,7 +5,7 @@ const kLoginDarkBackground = Color(0xFF1d2136);
 const KLoginLightDarkBackground = Color(0xFF323244);
 
 const kSendButtonTextStyle = TextStyle(
-  color: Colors.lightBlueAccent,
+  color: Color(0xFF5CB3AB),
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
@@ -16,11 +16,11 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
+    borderSide: BorderSide(color: Color(0xFF5CB3AB), width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
+    borderSide: BorderSide(color: Color(0xFF5CB3AB), width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );

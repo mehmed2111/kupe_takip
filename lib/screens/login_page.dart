@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/screens/home_page.dart';
@@ -11,15 +12,41 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation animation;
+
   bool showSpinner = false;
   String username;
   String password;
 
   @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this,
+    );
+
+    animation = ColorTween(begin: Color(0xFF5CB3AB), end: Colors.white)
+        .animate(controller);
+    controller.forward();
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -37,8 +64,17 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              TypewriterAnimatedTextKit(
+                text: ['Küpe Takip'],
+                textAlign: TextAlign.center,
+                textStyle: TextStyle(
+                  fontSize: 45.0,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF1d2136),
+                ),
+              ),
               SizedBox(
-                height: 48.0,
+                height: 24.0,
               ),
               TextField(
                 keyboardType: TextInputType.text,
@@ -67,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 24.0,
               ),
               RoundedButton(
-                colour: Colors.lightBlueAccent,
+                colour: Color(0xFF5CB3AB),
                 buttonTitle: 'GİRİŞ YAP',
                 onPressed: () async {
                   setState(() {

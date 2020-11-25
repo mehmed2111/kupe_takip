@@ -19,7 +19,7 @@ class NavMenu extends StatelessWidget {
                   'Dostunu takip et..',
                   style: TextStyle(
                     color: Color(0xFF1d2136),
-                    fontSize: 24,
+                    fontSize: 30.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -27,18 +27,21 @@ class NavMenu extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('images/logo.jpg'),
+                  image: AssetImage('images/logo_arka_beyaz.jpg'),
                 ),
               ),
             ),
             ListTile(
               leading: Icon(
-                Icons.supervised_user_circle,
+                Icons.account_box,
                 color: Colors.white,
               ),
               title: Text(
                 'Kullanıcı Profili',
-                style: TextStyle(fontSize: 18, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
               ),
               onTap: () => {Navigator.of(context).pop()},
             ),
@@ -71,6 +74,31 @@ class NavMenu extends StatelessWidget {
               leading: Icon(Icons.settings, color: Colors.white),
               title: Text(
                 'Ayarlar',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+              leading:
+                  Icon(Icons.admin_panel_settings_sharp, color: Colors.white),
+              title: Text(
+                'Şifre Değiştir',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+              leading: Icon(Icons.switch_account, color: Colors.white),
+              title: Text(
+                'Profil Güncelle',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+              leading: Icon(Icons.alarm, color: Colors.white),
+              title: Text(
+                'Alarm & Rapor Tanımlama',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               onTap: () => {Navigator.of(context).pop()},
