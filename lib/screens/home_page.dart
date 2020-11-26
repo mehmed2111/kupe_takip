@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 
