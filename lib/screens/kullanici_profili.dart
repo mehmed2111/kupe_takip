@@ -25,7 +25,7 @@ class KullaniciProfili extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -36,6 +36,7 @@ class KullaniciProfili extends StatelessWidget {
               height: 400.0,
               width: 360.0,
               child: ListView(
+                controller: ScrollController(keepScrollOffset: false),
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -78,12 +79,29 @@ class KullaniciProfili extends StatelessWidget {
                       kullaniciBilg: 'Kayıtlı veterineriniz:',
                       kullaniciIcerik: 'icerik gelecek..'),
                   SizedBox(
-                    height: 20.0,
+                    height: 30.0,
                   ),
-                  Align(
+                  /* Align(
                     alignment: Alignment.bottomCenter,
                     child: RaisedButton(
                       color: Color(0xFF5CB3AB),
+                      child: Text(
+                        'Kapat',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),*/
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 110.0),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      color: Color(0xFF5CB3AB),
+                      elevation: 5.0,
+                      height: 42.0,
                       child: Text(
                         'Kapat',
                         style: TextStyle(color: Colors.white),

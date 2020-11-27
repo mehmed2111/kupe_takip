@@ -79,6 +79,7 @@ class _LoginPageState extends State<LoginPage>
               TextField(
                 keyboardType: TextInputType.text,
                 textAlign: TextAlign.center,
+                cursorColor: Color(0xFF5CB3AB),
                 onChanged: (value) {
                   username = value;
                 },
@@ -92,6 +93,7 @@ class _LoginPageState extends State<LoginPage>
               TextField(
                 textAlign: TextAlign.center,
                 obscureText: true,
+                cursorColor: Color(0xFF5CB3AB),
                 onChanged: (value) {
                   password = value;
                 },

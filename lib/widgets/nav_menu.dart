@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
+import 'package:kupe/screens/sifre_degistir.dart';
 
 class NavMenu extends StatelessWidget {
   @override
@@ -48,7 +49,7 @@ class NavMenu extends StatelessWidget {
                   ),
                 ),
                 onTap: () => {
-                  Navigator.of(context).pop(),
+                  //Navigator.of(context).pop(),
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -100,7 +101,14 @@ class NavMenu extends StatelessWidget {
                           color: Colors.white),
                       title: Text('Şifre Değiştir',
                           style: TextStyle(fontSize: 18, color: Colors.white)),
-                      onTap: () => {Navigator.of(context).pop()},
+                      onTap: () => {
+                        //Navigator.of(context).pop(),
+                        Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) {
+                              return SifreDegistir();
+                            }))
+                      },
                     ),
                     ListTile(
                       leading: Icon(Icons.switch_account, color: Colors.white),
