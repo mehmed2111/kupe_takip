@@ -11,7 +11,7 @@ class GoogleMapsPage extends StatefulWidget {
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
   GoogleMapController mapController;
 
-  //başlangıçta türkiyenin kordinatları al
+  //başlangıçta türkiyenin kordinatlarını al
   final LatLng _center = const LatLng(41.015137, 28.979530);
 
   void _onMapCreated(GoogleMapController controller) {
