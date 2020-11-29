@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/kullanici_bilgileri.dart';
 
 class KullaniciProfili extends StatelessWidget {
@@ -94,23 +95,9 @@ class KullaniciProfili extends StatelessWidget {
                       },
                     ),
                   ),*/
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 110.0),
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      color: Color(0xFF5CB3AB),
-                      elevation: 5.0,
-                      height: 42.0,
-                      child: Text(
-                        'Kapat',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
+                  KapatButonu(onPressed: () {
+                    Navigator.pop(context);
+                  }),
                 ],
               ),
             ),

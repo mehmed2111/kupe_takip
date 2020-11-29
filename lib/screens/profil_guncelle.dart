@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
+import 'package:kupe/widgets/profil_bilgileri.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
-class SifreDegistir extends StatelessWidget {
-  static const String id = 'sifre_degistir';
+class ProfilGuncelle extends StatelessWidget {
+  static const String id = 'profil_guncelle';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -20,26 +19,34 @@ class SifreDegistir extends StatelessWidget {
           child: Theme(
             data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
             child: Container(
-              height: 290,
+              height: 600,
               width: 360,
               child: ListView(
                 controller: ScrollController(keepScrollOffset: false),
                 children: [
                   Text(
-                    'Şifre Değiştir',
+                    'Profil Güncelle',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Color(0xFF1d2136), fontSize: 25),
                   ),
-                  SizedBox(height: 20.0),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TextField(
-                      keyboardType: TextInputType.text,
-                      textAlign: TextAlign.center,
-                      cursorColor: Color(0xFF5CB3AB),
-                      decoration: kTextFieldDecoration.copyWith(
-                          hintText: 'Lütfen yeni şifrenizi giriniz..'),
-                    ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  ProfilBilgileri(
+                    titleBilg: 'Mail adresi:',
+                    hintText: 'Mail adresinizi giriniz..',
+                  ),
+                  ProfilBilgileri(
+                    titleBilg: 'Telefon numarası:',
+                    hintText: 'Telefon numaranızı giriniz..',
+                  ),
+                  ProfilBilgileri(
+                    titleBilg: 'Adres bilgisi:',
+                    hintText: 'Adresinizi giriniz..',
+                  ),
+                  ProfilBilgileri(
+                    titleBilg: 'Veteriner:',
+                    hintText: 'Yeni veteriner adını giriniz..',
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -55,6 +62,7 @@ class SifreDegistir extends StatelessWidget {
                   KapatButonu(onPressed: () {
                     Navigator.pop(context);
                   }),
+                  SizedBox(height: 10.0),
                 ],
               ),
             ),
