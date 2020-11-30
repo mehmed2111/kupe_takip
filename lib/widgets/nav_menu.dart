@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
@@ -116,7 +117,7 @@ class NavMenu extends StatelessWidget {
                       title: Text('Profil Güncelle',
                           style: TextStyle(fontSize: 18, color: Colors.white)),
                       onTap: () => {
-                        //Navigator.of(context).pop()
+                        //Navigator.of(context).pop(),
                         Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
@@ -130,7 +131,18 @@ class NavMenu extends StatelessWidget {
                         'Alarm & Rapor Tanımlama',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                      onTap: () => {Navigator.of(context).pop()},
+                      onTap: () => {
+                        //Navigator.of(context).pop(),
+                        Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (
+                              BuildContext context,
+                              _,
+                              __,
+                            ) {
+                              return AlarmRaporTanim();
+                            }))
+                      },
                     ),
                   ],
                 ),
