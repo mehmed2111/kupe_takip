@@ -6,6 +6,7 @@ import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
+import 'package:kupe/screens/sifremi_unuttum.dart';
 
 void main() => runApp(Kupe());
 
@@ -22,6 +23,7 @@ class Kupe extends StatelessWidget {
         SifreDegistir.id: (context) => SifreDegistir(),
         ProfilGuncelle.id: (context) => ProfilGuncelle(),
         AlarmRaporTanim.id: (context) => AlarmRaporTanim(),
+        SifremiUnuttum.id: (context) => SifremiUnuttum(),
       },
     );
   }

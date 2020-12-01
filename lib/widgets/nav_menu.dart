@@ -85,7 +85,7 @@ class NavMenu extends StatelessWidget {
                 ),
                 onTap: () => {Navigator.popAndPushNamed(context, HomePage.id)},
               ),
-              //burada submenu oluşturuldu
+              //burada Submenu oluşturuldu
               Theme(
                 data: Theme.of(context).copyWith(
                     accentColor: Colors.white,

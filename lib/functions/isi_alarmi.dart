@@ -28,8 +28,8 @@ class _IsiAlarmiState extends State<IsiAlarmi> {
       ),
       value: isiAlarm,
       onChanged: _isiAlarmOnChanged,
-      controlAffinity: ListTileControlAffinity.leading,
       activeColor: Color(0xFF5CB3AB),
+      controlAffinity: ListTileControlAffinity.leading,
     );
   }
 }

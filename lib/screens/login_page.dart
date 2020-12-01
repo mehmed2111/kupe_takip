@@ -1,8 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/functions/beni_hatirla.dart';
 import 'package:kupe/screens/home_page.dart';
+import 'package:kupe/screens/sifremi_unuttum.dart';
 import 'package:kupe/widgets/rounded_button.dart';
+import 'package:kupe/widgets/sifremi_unuttum_butonu.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginPage extends StatefulWidget {
@@ -101,9 +104,8 @@ class _LoginPageState extends State<LoginPage>
                   hintText: 'Şifre',
                 ),
               ),
-              SizedBox(
-                height: 24.0,
-              ),
+              SizedBox(height: 8.0),
+              BeniHatirla(),
               RoundedButton(
                 colour: Color(0xFF5CB3AB),
                 buttonTitle: 'GİRİŞ YAP',
@@ -129,6 +131,14 @@ class _LoginPageState extends State<LoginPage>
                   }
                 },
               ),
+              SizedBox(height: 24),
+              SifremiUnuttumButonu(onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return SifremiUnuttum();
+                    }));
+              }),
             ],
           ),
         ),
