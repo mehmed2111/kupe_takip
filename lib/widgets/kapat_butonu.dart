@@ -8,11 +8,11 @@ class KapatButonu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 110.0),
+      padding: EdgeInsets.symmetric(horizontal: 110),
       child: MaterialButton(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        color: Color(0xFF323244),
+        color: Color(0xFF1d2136),
         elevation: 5.0,
         height: 42.0,
         child: Text(

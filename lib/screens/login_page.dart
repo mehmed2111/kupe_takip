@@ -4,6 +4,7 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/functions/beni_hatirla.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/sifremi_unuttum.dart';
+import 'package:kupe/widgets/alert_dialog.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:kupe/widgets/sifremi_unuttum_butonu.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -122,6 +123,17 @@ class _LoginPageState extends State<LoginPage>
                       }*/
                     if (username != null && password != null) {
                       Navigator.pushNamed(context, HomePage.id);
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialogWidget(
+                              dialogTitle: 'Hata!',
+                              dialogContent:
+                                  'Kullanıcı adı ve şifre boş bırakılamaz!',
+                              kapatBtnTitle: 'Kapat',
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }));
                     }
                     setState(() {
                       showSpinner = false;

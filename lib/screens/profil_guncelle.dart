@@ -14,7 +14,7 @@ class ProfilGuncelle extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
         child: Dialog(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Theme(
             data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
