@@ -6,6 +6,7 @@ import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
+import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 
 class NavMenu extends StatelessWidget {
@@ -67,7 +68,7 @@ class NavMenu extends StatelessWidget {
                   'Sağlık Takip',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {Navigator.pushNamed(context, SaglikTakip.id)},
               ),
               ListTile(
                 leading: Icon(Icons.mobile_friendly, color: Colors.white),

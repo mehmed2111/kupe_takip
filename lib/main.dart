@@ -5,6 +5,7 @@ import 'package:kupe/screens/google_maps_page.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
+import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/screens/sifremi_unuttum.dart';
 
@@ -24,6 +25,7 @@ class Kupe extends StatelessWidget {
         ProfilGuncelle.id: (context) => ProfilGuncelle(),
         AlarmRaporTanim.id: (context) => AlarmRaporTanim(),
         SifremiUnuttum.id: (context) => SifremiUnuttum(),
+        SaglikTakip.id: (context) => SaglikTakip(),
       },
     );
   }
