@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
@@ -26,67 +27,71 @@ class KullaniciProfili extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0),
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
-          child: Theme(
-            data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
-            child: Container(
-              height: 400.0,
-              width: 360.0,
-              child: ListView(
-                controller: ScrollController(keepScrollOffset: false),
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage('images/logo.jpg'),
-                        radius: 40.0,
+          child: Container(
+            height: 450.0,
+            //width: 360.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('images/logo.jpg'),
+                      radius: 40.0,
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Text(
+                      'Kullanıcı Profili',
+                      style: TextStyle(
+                        color: Color(0xFF1d2136),
+                        fontSize: 25.0,
                       ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        'Kullanıcı Profili',
-                        style: TextStyle(
-                          color: Color(0xFF1d2136),
-                          fontSize: 25.0,
-                        ),
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Expanded(
+                  child: Theme(
+                    data: Theme.of(context)
+                        .copyWith(accentColor: Color(0xFF5CB3AB)),
+                    child: ListView(
+                      controller: ScrollController(keepScrollOffset: false),
+                      children: [
+                        KullaniciBilgileri(
+                            kullaniciBilg: 'Kullanıcı ID:',
+                            kullaniciIcerik: 'icerik gelecek..'),
+                        KullaniciBilgileri(
+                            kullaniciBilg: 'Adınız:',
+                            kullaniciIcerik: 'icerik gelecek..'),
+                        KullaniciBilgileri(
+                            kullaniciBilg: 'Adresiniz:',
+                            kullaniciIcerik: 'icerik gelecek..'),
+                        KullaniciBilgileri(
+                            kullaniciBilg: 'Telefon numaranız:',
+                            kullaniciIcerik: 'icerik gelecek..'),
+                        KullaniciBilgileri(
+                            kullaniciBilg: 'Mail adresiniz:',
+                            kullaniciIcerik: 'icerik gelecek..'),
+                        KullaniciBilgileri(
+                            kullaniciBilg: 'Kayıtlı veterineriniz:',
+                            kullaniciIcerik: 'icerik gelecek..'),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  KullaniciBilgileri(
-                      kullaniciBilg: 'Kullanıcı ID:',
-                      kullaniciIcerik: 'icerik gelecek..'),
-                  KullaniciBilgileri(
-                      kullaniciBilg: 'Adınız:',
-                      kullaniciIcerik: 'icerik gelecek..'),
-                  KullaniciBilgileri(
-                      kullaniciBilg: 'Adresiniz:',
-                      kullaniciIcerik: 'icerik gelecek..'),
-                  KullaniciBilgileri(
-                      kullaniciBilg: 'Telefon numaranız:',
-                      kullaniciIcerik: 'icerik gelecek..'),
-                  KullaniciBilgileri(
-                      kullaniciBilg: 'Mail adresiniz:',
-                      kullaniciIcerik: 'icerik gelecek..'),
-                  KullaniciBilgileri(
-                      kullaniciBilg: 'Kayıtlı veterineriniz:',
-                      kullaniciIcerik: 'icerik gelecek..'),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  KapatButonu(onPressed: () {
-                    Navigator.pop(context);
-                  }),
-                ],
-              ),
+                ),
+                KapatButonu(onPressed: () {
+                  Navigator.pop(context);
+                }),
+              ],
             ),
           ),
         ),

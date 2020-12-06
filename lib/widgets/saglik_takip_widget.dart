@@ -25,7 +25,7 @@ class SaglikTakipWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0),
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -33,8 +33,8 @@ class SaglikTakipWidget extends StatelessWidget {
           child: Theme(
             data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
             child: Container(
-              height: 400.0,
-              width: 360.0,
+              height: 440.0,
+              //width: 360.0,
               child: ListView(
                 controller: ScrollController(keepScrollOffset: false),
                 children: [
@@ -45,7 +45,7 @@ class SaglikTakipWidget extends StatelessWidget {
                         width: 10.0,
                       ),
                       Text(
-                        'Kullanıcı Profili',
+                        'Sağlık takibi',
                         style: TextStyle(
                           color: Color(0xFF1d2136),
                           fontSize: 25.0,
@@ -53,16 +53,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme1',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Hayvan ID:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 5.0),
                       Text(
                         hayvanID.toString(),
                         style:
@@ -70,13 +72,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme2',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Adı:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 5.0),
                       Text(
                         name,
                         style:
@@ -84,13 +91,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme3',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Parazitler:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 10.0),
                       Text(
                         parazitler,
                         style:
@@ -98,13 +110,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme4',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Karma:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 5.0),
                       Text(
                         karma,
                         style:
@@ -112,13 +129,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme5',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Kuduz:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 5.0),
                       Text(
                         kuduz,
                         style:
@@ -126,13 +148,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme6',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Mantar:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 5.0),
                       Text(
                         mantar,
                         style:
@@ -140,17 +167,24 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   Row(
                     children: [
+                      SizedBox(width: 10.0),
                       Text(
-                        'Deneme7',
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        'Lyme:',
+                        style: TextStyle(
+                            color: Color(0xFF1d2136),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: 5.0),
                       Text(
                         lyme,
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                          color: Color(0xFF1d2136),
+                          fontSize: 18.0,
+                        ),
                       ),
                     ],
                   ),

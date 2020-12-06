@@ -17,40 +17,48 @@ class AlarmRaporTanim extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
-          child: Theme(
-            data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
-            child: Container(
-              height: 355,
-              width: 360,
-              child: ListView(
-                controller: ScrollController(keepScrollOffset: false),
+          child: Container(
+              height: 350.0,
+              //width: 360.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(height: 20.0),
                   Text(
                     'Alarm & Rapor Tanımlama',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Color(0xFF1d2136), fontSize: 25.0),
                   ),
-                  SizedBox(height: 20.0),
-                  BolgeihlalOnChanged(),
-                  IsiAlarmi(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: RoundedButton(
-                      colour: Color(0xFF5CB3AB),
-                      buttonTitle: 'GÜNCELLE',
-                      onPressed: () {
-                        /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
-                      },
+                  SizedBox(height: 10.0),
+                  Expanded(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(accentColor: Color(0xFF5CB3AB)),
+                      child: ListView(
+                        controller: ScrollController(keepScrollOffset: false),
+                        children: [
+                          BolgeihlalOnChanged(),
+                          IsiAlarmi(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            child: RoundedButton(
+                              colour: Color(0xFF5CB3AB),
+                              buttonTitle: 'GÜNCELLE',
+                              onPressed: () {
+                                /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  //SizedBox(height: 20.0),
                   KapatButonu(onPressed: () {
                     Navigator.pop(context);
-                  })
+                  }),
                 ],
-              ),
-            ),
-          ),
+              )),
         ),
       ),
     );

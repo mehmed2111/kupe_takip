@@ -71,7 +71,7 @@ class _SaglikTakipState extends State<SaglikTakip> {
     super.initState();
   }
 
-  //kullanıcı da kaç tane hayvan varsa, dropdown menüde göster
+  //Kullanıcı da kaç tane hayvan varsa, dropdown menüde göster
   List<DropdownMenuItem<Hayvanlarim>> buildDropdownMenuItems(List hayvanlar) {
     List<DropdownMenuItem<Hayvanlarim>> items = List();
     for (Hayvanlarim hayvan in hayvanlar) {
@@ -93,13 +93,13 @@ class _SaglikTakipState extends State<SaglikTakip> {
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
             return SaglikTakipWidget(
-                hayvanID: 3,
-                name: 'Dost3',
-                parazitler: 'Parazit aşısı yapıldı',
-                karma: 'Karma aşısı yapıldı',
-                kuduz: 'Kuduz aşısı yapıldı',
-                mantar: 'Mantar aşısı yapıldı',
-                lyme: 'Lyme aşısı yapıldı');
+                hayvanID: _secilenHayvan.hayvanID,
+                name: _secilenHayvan.name,
+                parazitler: _secilenHayvan.parazitler,
+                karma: _secilenHayvan.karma,
+                kuduz: _secilenHayvan.kuduz,
+                mantar: _secilenHayvan.mantar,
+                lyme: _secilenHayvan.lyme);
           }));
     });
   }
@@ -118,7 +118,7 @@ class _SaglikTakipState extends State<SaglikTakip> {
           children: [
             SizedBox(height: 20.0),
             Text(
-              'Dost seç',
+              'Dostunu seç',
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             SizedBox(height: 20.0),

@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage>
                               dialogTitle: 'Hata!',
                               dialogContent:
                                   'Kullanıcı adı ve şifre boş bırakılamaz!',
-                              kapatBtnTitle: 'Kapat',
+                              btnTitle: 'Kapat',
                               onPressed: () {
                                 Navigator.pop(context);
                               }));
@@ -143,7 +143,7 @@ class _LoginPageState extends State<LoginPage>
                   }
                 },
               ),
-              SizedBox(height: 24),
+              //SizedBox(height: 8.0),
               SifremiUnuttumButonu(onPressed: () {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,

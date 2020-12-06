@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SifremiUnuttumButonu extends StatelessWidget {
@@ -16,13 +17,13 @@ class SifremiUnuttumButonu extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         child: Row(
-          //mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.vpn_key_rounded,
               color: Colors.white,
             ),
-            SizedBox(width: 77),
+            SizedBox(width: 10.0),
             Text(
               'Şifremi Unuttum',
               style: TextStyle(fontSize: 18, color: Colors.white),
