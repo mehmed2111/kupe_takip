@@ -4,8 +4,9 @@ import 'package:kupe/constants.dart';
 class ProfilBilgileri extends StatelessWidget {
   final String titleBilg;
   final String hintText;
+  final Function onChanged;
 
-  ProfilBilgileri({this.titleBilg, this.hintText});
+  ProfilBilgileri({this.titleBilg, this.hintText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ProfilBilgileri extends StatelessWidget {
           titleBilg,
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Color(0xFF1d2136),
+              color: kLoginDarkBackground,
               fontSize: 18.0,
               fontWeight: FontWeight.bold),
         ),
@@ -25,8 +26,9 @@ class ProfilBilgileri extends StatelessWidget {
           child: TextField(
             keyboardType: TextInputType.text,
             textAlign: TextAlign.center,
-            cursorColor: Color(0xFF5CB3AB),
+            cursorColor: kMainKupeColor,
             decoration: kTextFieldDecoration.copyWith(hintText: hintText),
+            onChanged: onChanged,
           ),
         ),
         SizedBox(height: 10.0),

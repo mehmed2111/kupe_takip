@@ -27,13 +27,13 @@ class SifreDegistir extends StatelessWidget {
                   Text(
                     'Şifre Değiştir',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Color(0xFF1d2136), fontSize: 25),
+                    style: TextStyle(color: kLoginDarkBackground, fontSize: 25),
                   ),
                   SizedBox(height: 10.0),
                   Expanded(
                       child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(accentColor: Color(0xFF5CB3AB)),
+                    data:
+                        Theme.of(context).copyWith(accentColor: kMainKupeColor),
                     child: ListView(
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
@@ -42,7 +42,7 @@ class SifreDegistir extends StatelessWidget {
                           child: TextField(
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.center,
-                            cursorColor: Color(0xFF5CB3AB),
+                            cursorColor: kMainKupeColor,
                             decoration: kTextFieldDecoration.copyWith(
                                 hintText: 'Lütfen yeni şifrenizi giriniz..'),
                           ),
@@ -50,7 +50,7 @@ class SifreDegistir extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: RoundedButton(
-                            colour: Color(0xFF5CB3AB),
+                            colour: kMainKupeColor,
                             buttonTitle: 'GÜNCELLE',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/

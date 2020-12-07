@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage>
       vsync: this,
     );
 
-    animation = ColorTween(begin: Color(0xFF5CB3AB), end: Colors.white)
+    animation = ColorTween(begin: kMainKupeColor, end: Colors.white)
         .animate(controller);
     controller.forward();
     controller.addListener(() {
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage>
                 textStyle: TextStyle(
                   fontSize: 45.0,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF1d2136),
+                  color: kLoginDarkBackground,
                 ),
               ),
               SizedBox(
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage>
               TextField(
                 keyboardType: TextInputType.text,
                 textAlign: TextAlign.center,
-                cursorColor: Color(0xFF5CB3AB),
+                cursorColor: kMainKupeColor,
                 onChanged: (value) {
                   username = value;
                 },
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage>
               TextField(
                 textAlign: TextAlign.center,
                 obscureText: true,
-                cursorColor: Color(0xFF5CB3AB),
+                cursorColor: kMainKupeColor,
                 onChanged: (value) {
                   password = value;
                 },
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage>
               SizedBox(height: 8.0),
               BeniHatirla(),
               RoundedButton(
-                colour: Color(0xFF5CB3AB),
+                colour: kMainKupeColor,
                 buttonTitle: 'GİRİŞ YAP',
                 onPressed: () async {
                   setState(() {

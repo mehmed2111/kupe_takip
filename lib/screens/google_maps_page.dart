@@ -10,8 +10,9 @@ class GoogleMapsPage extends StatefulWidget {
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
   GoogleMapController mapController;
+  var mapType = MapType.normal;
 
-  //başlangıçta türkiyenin kordinatlarını al
+  //default coordinates set to Istanbul
   final LatLng _center = const LatLng(41.015137, 28.979530);
 
   void _onMapCreated(GoogleMapController controller) {
@@ -20,15 +21,42 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      //buradan uydu görünümü de yapılabilir
-      mapType: MapType.normal,
-      onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(
-        target: _center,
-        zoom: 10.0,
+    return Scaffold(
+      body: GoogleMap(
+        //buradan uydu görünümü de yapılabilir
+        mapType: mapType,
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: _center,
+          zoom: 10.0,
+        ),
+        zoomControlsEnabled: true,
       ),
-      zoomControlsEnabled: true,
+      floatingActionButton: FloatingActionButton.extended(
+          label: Text('Harita görünümünü değiştir'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          icon: Icon(Icons.swipe),
+          onPressed: () {
+            setState(() {
+              if (mapType == MapType.normal) {
+                this.mapType = MapType.satellite;
+              } else {
+                this.mapType = MapType.normal;
+              }
+            });
+          }),
     );
   }
 }
+
+/*
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          child: const Icon(Icons.my_location),
+          onPressed: () {
+            setState(() {
+              this.mapType = MapType.satellite;
+            });
+          }),*/

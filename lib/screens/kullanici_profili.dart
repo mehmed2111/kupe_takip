@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/kullanici_bilgileri.dart';
 
@@ -52,7 +53,7 @@ class KullaniciProfili extends StatelessWidget {
                     Text(
                       'Kullanıcı Profili',
                       style: TextStyle(
-                        color: Color(0xFF1d2136),
+                        color: kLoginDarkBackground,
                         fontSize: 25.0,
                       ),
                     ),
@@ -61,8 +62,8 @@ class KullaniciProfili extends StatelessWidget {
                 SizedBox(height: 10.0),
                 Expanded(
                   child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(accentColor: Color(0xFF5CB3AB)),
+                    data:
+                        Theme.of(context).copyWith(accentColor: kMainKupeColor),
                     child: ListView(
                       controller: ScrollController(keepScrollOffset: false),
                       children: [

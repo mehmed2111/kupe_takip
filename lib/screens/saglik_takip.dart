@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/saglik_takip_widget.dart';
 
 class SaglikTakip extends StatefulWidget {
@@ -107,9 +108,9 @@ class _SaglikTakipState extends State<SaglikTakip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1d2136),
+      backgroundColor: kLoginDarkBackground,
       appBar: AppBar(
-        backgroundColor: Color(0xFF5CB3AB),
+        backgroundColor: kMainKupeColor,
         title: Text('Sağlık Takibi'),
       ),
       body: Center(
@@ -135,10 +136,10 @@ class _SaglikTakipState extends State<SaglikTakip> {
                 icon: Icon(Icons.arrow_drop_down),
                 isExpanded: true,
                 iconSize: 37.0,
-                iconEnabledColor: Color(0xFF1d2136),
+                iconEnabledColor: kLoginDarkBackground,
                 underline: SizedBox(),
                 dropdownColor: Colors.white,
-                style: TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
               ),
             ),
           ],

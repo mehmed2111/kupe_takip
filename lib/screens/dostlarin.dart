@@ -1,64 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/dostlarin_bilgileri.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
-class SifremiUnuttum extends StatelessWidget {
-  static const String id = 'sifremi_unuttum';
+class Dostlarin extends StatelessWidget {
+  static const String id = 'dostlarin';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10.0),
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          elevation: 16.0,
           child: Container(
-            height: 320,
-            //width: 360,
+            height: 500,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: 20.0),
                 Text(
-                  'Şifremi Unuttum',
+                  'Dostların',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: kLoginDarkBackground, fontSize: 25),
+                  style: TextStyle(fontSize: 25.0, color: kLoginDarkBackground),
                 ),
                 SizedBox(height: 10.0),
                 Expanded(
                   child: Theme(
-                    data:
-                        Theme.of(context).copyWith(accentColor: kMainKupeColor),
+                    data: Theme.of(context).copyWith(
+                      accentColor: kMainKupeColor,
+                    ),
                     child: ListView(
-                      controller: ScrollController(keepScrollOffset: false),
                       children: [
-                        Text(
-                          'Mail adresiniz:',
-                          style: TextStyle(
-                              color: kLoginDarkBackground, fontSize: 18),
-                          textAlign: TextAlign.center,
+                        DostlarinBilgileri(
+                          textTitle: 'Adı:',
+                          hintText: 'Dostunuzun adını giriniz..',
+                          onChanged: (newValue) {},
                         ),
-                        SizedBox(height: 8.0),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.0),
-                          child: TextField(
-                            keyboardType: TextInputType.emailAddress,
-                            textAlign: TextAlign.center,
-                            cursorColor: kMainKupeColor,
-                            decoration: kTextFieldDecoration.copyWith(
-                                hintText: 'Lütfen mail adresinizi giriniz..'),
-                            onChanged: (newValue) {},
-                          ),
+                        SizedBox(height: 10.0),
+                        //BURAYA IMAGE GELECEK
+                        DostlarinBilgileri(
+                          textTitle: 'Cinsiyeti:',
+                          hintText: 'Dostunuzun cinsiyeti (E/D)..',
+                          onChanged: (newValue) {},
                         ),
+                        SizedBox(height: 10.0),
+                        DostlarinBilgileri(
+                          textTitle: 'Rengi:',
+                          hintText: 'Dostunuzun rengini giriniz..',
+                          onChanged: (newValue) {},
+                        ),
+
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: RoundedButton(
                             colour: kMainKupeColor,
-                            buttonTitle: 'GÖNDER',
+                            buttonTitle: 'TÜMÜNÜ KAYDET',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
                             },

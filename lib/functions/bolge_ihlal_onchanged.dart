@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class BolgeihlalOnChanged extends StatefulWidget {
   @override
@@ -26,12 +27,12 @@ class _BolgeihlalOnChangedState extends State<BolgeihlalOnChanged> {
     return CheckboxListTile(
       title: Text(
         'Bölge İhlal Alarmı',
-        style: TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+        style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
       ),
       value: bolgeihlalAlarm,
       onChanged: _bolgeihlalOnChanged,
       controlAffinity: ListTileControlAffinity.leading,
-      activeColor: Color(0xFF5CB3AB),
+      activeColor: kMainKupeColor,
     );
   }
 }

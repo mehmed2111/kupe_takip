@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class AlertDialogWidget extends StatelessWidget {
   final String dialogTitle;
@@ -16,7 +17,7 @@ class AlertDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
+      data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
       child: AlertDialog(
         backgroundColor: Colors.white,
         titlePadding: EdgeInsets.symmetric(vertical: 20.0),
@@ -31,7 +32,7 @@ class AlertDialogWidget extends StatelessWidget {
         content: SingleChildScrollView(
           child: Text(dialogContent,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFF1d2136), fontSize: 18)),
+              style: TextStyle(color: kLoginDarkBackground, fontSize: 18)),
         ),
         actions: [
           SizedBox(
@@ -42,7 +43,7 @@ class AlertDialogWidget extends StatelessWidget {
                 MaterialButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),
-                    color: Color(0xFF1d2136),
+                    color: kLoginDarkBackground,
                     elevation: 5.0,
                     height: 42.0,
                     child: Text(

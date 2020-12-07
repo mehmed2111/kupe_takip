@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
+import 'package:kupe/screens/dostlarin.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 import 'package:kupe/screens/home_page.dart';
@@ -26,6 +27,7 @@ class Kupe extends StatelessWidget {
         AlarmRaporTanim.id: (context) => AlarmRaporTanim(),
         SifremiUnuttum.id: (context) => SifremiUnuttum(),
         SaglikTakip.id: (context) => SaglikTakip(),
+        Dostlarin.id: (context) => Dostlarin(),
       },
     );
   }

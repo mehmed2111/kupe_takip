@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class SifremiUnuttumButonu extends StatelessWidget {
   final Function onPressed;
@@ -12,7 +13,7 @@ class SifremiUnuttumButonu extends StatelessWidget {
       height: 48.0,
       child: RaisedButton(
         elevation: 5.0,
-        color: Color(0xFF1d2136),
+        color: kLoginDarkBackground,
         onPressed: onPressed,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),

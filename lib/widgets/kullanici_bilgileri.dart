@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class KullaniciBilgileri extends StatelessWidget {
   final String kullaniciBilg;
@@ -17,7 +18,7 @@ class KullaniciBilgileri extends StatelessWidget {
             Text(
               kullaniciBilg,
               style: TextStyle(
-                  color: Color(0xFF1d2136),
+                  color: kLoginDarkBackground,
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -27,7 +28,7 @@ class KullaniciBilgileri extends StatelessWidget {
             Flexible(
               child: Text(
                 kullaniciIcerik,
-                style: TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
               ),
             ),
           ],

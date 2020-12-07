@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class KapatButonu extends StatelessWidget {
   final Function onPressed;
@@ -17,7 +18,7 @@ class KapatButonu extends StatelessWidget {
             MaterialButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0)),
-                color: Color(0xFF1d2136),
+                color: kLoginDarkBackground,
                 elevation: 5.0,
                 height: 42.0,
                 child: Text(

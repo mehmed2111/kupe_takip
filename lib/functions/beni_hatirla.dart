@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class BeniHatirla extends StatefulWidget {
   @override
@@ -27,11 +28,11 @@ class _BeniHatirlaState extends State<BeniHatirla> {
     return CheckboxListTile(
       title: Text(
         'Beni Hatırla',
-        style: TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+        style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
       ),
       value: beniHatirla,
       onChanged: _beniHatirlaOnChanged,
-      activeColor: Color(0xFF1d2136),
+      activeColor: kLoginDarkBackground,
       controlAffinity: ListTileControlAffinity.leading,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 class IsiAlarmi extends StatefulWidget {
   @override
@@ -24,11 +25,11 @@ class _IsiAlarmiState extends State<IsiAlarmi> {
     return CheckboxListTile(
       title: Text(
         'Isı Alarmı',
-        style: TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+        style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
       ),
       value: isiAlarm,
       onChanged: _isiAlarmOnChanged,
-      activeColor: Color(0xFF5CB3AB),
+      activeColor: kMainKupeColor,
       controlAffinity: ListTileControlAffinity.leading,
     );
   }

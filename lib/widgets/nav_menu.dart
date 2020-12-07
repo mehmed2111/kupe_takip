@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kupe/constants.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
+import 'package:kupe/screens/dostlarin.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
@@ -14,9 +16,9 @@ class NavMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Theme(
-        data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
+        data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
         child: Container(
-          color: Color(0xFF1d2136),
+          color: kLoginDarkBackground,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
@@ -26,7 +28,7 @@ class NavMenu extends StatelessWidget {
                   child: Text(
                     'Dostunu takip et..',
                     style: TextStyle(
-                      color: Color(0xFF1d2136),
+                      color: kLoginDarkBackground,
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -76,7 +78,14 @@ class NavMenu extends StatelessWidget {
                   'Dostların',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  //Navigator.of(context).pop()
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return Dostlarin();
+                      })),
+                },
               ),
               ListTile(
                 leading: Icon(Icons.refresh_outlined, color: Colors.white),
@@ -110,7 +119,7 @@ class NavMenu extends StatelessWidget {
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
                               return SifreDegistir();
-                            }))
+                            })),
                       },
                     ),
                     ListTile(
@@ -123,7 +132,7 @@ class NavMenu extends StatelessWidget {
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
                               return ProfilGuncelle();
-                            }))
+                            })),
                       },
                     ),
                     ListTile(
@@ -136,13 +145,9 @@ class NavMenu extends StatelessWidget {
                         //Navigator.of(context).pop(),
                         Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
-                            pageBuilder: (
-                              BuildContext context,
-                              _,
-                              __,
-                            ) {
+                            pageBuilder: (BuildContext context, _, __) {
                               return AlarmRaporTanim();
-                            }))
+                            })),
                       },
                     ),
                   ],

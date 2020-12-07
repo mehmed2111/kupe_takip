@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/profil_bilgileri.dart';
 import 'package:kupe/widgets/rounded_button.dart';
@@ -36,7 +37,7 @@ class ProfilGuncelle extends StatelessWidget {
                     Text(
                       'Profil Güncelle',
                       style: TextStyle(
-                        color: Color(0xFF1d2136),
+                        color: kLoginDarkBackground,
                         fontSize: 25.0,
                       ),
                     ),
@@ -45,31 +46,35 @@ class ProfilGuncelle extends StatelessWidget {
                 SizedBox(height: 10.0),
                 Expanded(
                   child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(accentColor: Color(0xFF5CB3AB)),
+                    data:
+                        Theme.of(context).copyWith(accentColor: kMainKupeColor),
                     child: ListView(
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
                         ProfilBilgileri(
                           titleBilg: 'Mail adresi:',
                           hintText: 'Mail adresinizi giriniz..',
+                          //onChanged: (newValue) {},
                         ),
                         ProfilBilgileri(
                           titleBilg: 'Telefon numarası:',
                           hintText: 'Telefon numaranızı giriniz..',
+                          //onChanged: (newValue) {},
                         ),
                         ProfilBilgileri(
                           titleBilg: 'Adres bilgisi:',
                           hintText: 'Adresinizi giriniz..',
+                          //onChanged: (newValue) {},
                         ),
                         ProfilBilgileri(
                           titleBilg: 'Veteriner:',
                           hintText: 'Yeni veteriner adını giriniz..',
+                          //onChanged: (newValue) {},
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: RoundedButton(
-                            colour: Color(0xFF5CB3AB),
+                            colour: kMainKupeColor,
                             buttonTitle: 'GÜNCELLE',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/

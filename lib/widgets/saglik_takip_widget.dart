@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 
 import 'kapat_butonu.dart';
 
@@ -31,7 +32,7 @@ class SaglikTakipWidget extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Theme(
-            data: Theme.of(context).copyWith(accentColor: Color(0xFF5CB3AB)),
+            data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
             child: Container(
               height: 440.0,
               //width: 360.0,
@@ -47,7 +48,7 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Sağlık takibi',
                         style: TextStyle(
-                          color: Color(0xFF1d2136),
+                          color: kLoginDarkBackground,
                           fontSize: 25.0,
                         ),
                       ),
@@ -60,15 +61,15 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Hayvan ID:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 5.0),
                       Text(
                         hayvanID.toString(),
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 18.0),
                       ),
                     ],
                   ),
@@ -79,15 +80,15 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Adı:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 5.0),
                       Text(
                         name,
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 18.0),
                       ),
                     ],
                   ),
@@ -98,15 +99,15 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Parazitler:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 10.0),
                       Text(
                         parazitler,
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 18.0),
                       ),
                     ],
                   ),
@@ -117,15 +118,15 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Karma:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 5.0),
                       Text(
                         karma,
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 18.0),
                       ),
                     ],
                   ),
@@ -136,15 +137,15 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Kuduz:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 5.0),
                       Text(
                         kuduz,
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 18.0),
                       ),
                     ],
                   ),
@@ -155,15 +156,15 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Mantar:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 5.0),
                       Text(
                         mantar,
-                        style:
-                            TextStyle(color: Color(0xFF1d2136), fontSize: 18.0),
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 18.0),
                       ),
                     ],
                   ),
@@ -174,7 +175,7 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         'Lyme:',
                         style: TextStyle(
-                            color: Color(0xFF1d2136),
+                            color: kLoginDarkBackground,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
@@ -182,7 +183,7 @@ class SaglikTakipWidget extends StatelessWidget {
                       Text(
                         lyme,
                         style: TextStyle(
-                          color: Color(0xFF1d2136),
+                          color: kLoginDarkBackground,
                           fontSize: 18.0,
                         ),
                       ),

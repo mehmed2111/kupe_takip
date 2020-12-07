@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/constants.dart';
 import 'package:kupe/functions/bolge_ihlal_onchanged.dart';
 import 'package:kupe/functions/isi_alarmi.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
@@ -27,13 +28,14 @@ class AlarmRaporTanim extends StatelessWidget {
                   Text(
                     'Alarm & Rapor Tanımlama',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Color(0xFF1d2136), fontSize: 25.0),
+                    style:
+                        TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
                   ),
                   SizedBox(height: 10.0),
                   Expanded(
                     child: Theme(
                       data: Theme.of(context)
-                          .copyWith(accentColor: Color(0xFF5CB3AB)),
+                          .copyWith(accentColor: kMainKupeColor),
                       child: ListView(
                         controller: ScrollController(keepScrollOffset: false),
                         children: [
@@ -42,7 +44,7 @@ class AlarmRaporTanim extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: RoundedButton(
-                              colour: Color(0xFF5CB3AB),
+                              colour: kMainKupeColor,
                               buttonTitle: 'GÜNCELLE',
                               onPressed: () {
                                 /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
