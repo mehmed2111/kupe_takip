@@ -96,6 +96,7 @@ class NavMenu extends StatelessWidget {
                 onTap: () => {Navigator.popAndPushNamed(context, HomePage.id)},
               ),
               //burada Submenu oluşturuldu
+              Divider(color: Colors.white, thickness: 0.3),
               Theme(
                 data: Theme.of(context).copyWith(
                     accentColor: Colors.white,
@@ -153,6 +154,7 @@ class NavMenu extends StatelessWidget {
                   ],
                 ),
               ),
+              Divider(color: Colors.white, thickness: 0.3),
               ListTile(
                 leading: Icon(Icons.logout, color: Colors.white),
                 title: Text(

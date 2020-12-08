@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //App const colors
 const kMainKupeColor = Color(0xFF5CB3AB);
 const kLoginDarkBackground = Color(0xFF1d2136);
-const KLoginLightDarkBackground = Color(0xFF323244);
+const kLoginLightDarkBackground = Color(0xFF323244);
 
 //Login, update, save buttons style
 const kSendButtonTextStyle = TextStyle(

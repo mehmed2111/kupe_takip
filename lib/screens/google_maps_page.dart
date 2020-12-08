@@ -9,54 +9,71 @@ class GoogleMapsPage extends StatefulWidget {
 }
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
+  //Completer<GoogleMapController> _mapController = Completer();
   GoogleMapController mapController;
-  var mapType = MapType.normal;
+  MapType _mapType = MapType.normal;
 
   //default coordinates set to Istanbul
   final LatLng _center = const LatLng(41.015137, 28.979530);
 
   void _onMapCreated(GoogleMapController controller) {
+    //_mapController.complete(controller);
     mapController = controller;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        //buradan uydu görünümü de yapılabilir
-        mapType: mapType,
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 10.0,
+    return Stack(
+      children: [
+        GoogleMap(
+          //choose type of the map
+          mapType: _mapType,
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 11.0,
+          ),
+          zoomControlsEnabled: true,
         ),
-        zoomControlsEnabled: true,
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-          label: Text('Harita görünümünü değiştir'),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          icon: Icon(Icons.swipe),
-          onPressed: () {
-            setState(() {
-              if (mapType == MapType.normal) {
-                this.mapType = MapType.satellite;
-              } else {
-                this.mapType = MapType.normal;
-              }
-            });
-          }),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 28.0,
+                  backgroundColor: Colors.white.withOpacity(0.75),
+                  child: IconButton(
+                      icon: Icon(Icons.satellite),
+                      iconSize: 36.0,
+                      color: Colors.grey[700],
+                      onPressed: () {
+                        setState(() {
+                          this._mapType = MapType.hybrid;
+                        });
+                      }),
+                ),
+                SizedBox(width: 16.0),
+                CircleAvatar(
+                  radius: 28.0,
+                  backgroundColor: Colors.white.withOpacity(0.75),
+                  child: IconButton(
+                      icon: Icon(Icons.map_rounded),
+                      iconSize: 36.0,
+                      color: Colors.grey[700],
+                      onPressed: () {
+                        setState(() {
+                          this._mapType = MapType.normal;
+                        });
+                      }),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
-
-/*
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          child: const Icon(Icons.my_location),
-          onPressed: () {
-            setState(() {
-              this.mapType = MapType.satellite;
-            });
-          }),*/
