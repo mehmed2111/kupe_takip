@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/bildirim_deneme.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 import 'package:location/location.dart';
+
+import '../bildirim_deneme.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_page';
@@ -57,11 +60,20 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: kMainKupeColor,
         title: Image.asset('images/yazi_logo.png', fit: BoxFit.contain),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.notifications_active_outlined),
+              onPressed: () {
+                Navigator.pushNamed(context, BildirimDeneme.id);
+              }),
+        ],
       ),
       //google maps sayfasına git
-      body:
+      body: _locationData != null
+          ? GoogleMapsPage(location: _locationData)
+          : null,
 
-          /*RaisedButton(
+      /*RaisedButton(
         onPressed: () => _locationData != null
             ? Navigator.push(
                 context,
@@ -72,11 +84,7 @@ class _HomePageState extends State<HomePage> {
             : null,
       ),*/
 
-          //GoogleMapsPage(location: _locationData),
-
-          _locationData != null
-              ? GoogleMapsPage(location: _locationData)
-              : null,
+      //GoogleMapsPage(location: _locationData),
     );
   }
 }
