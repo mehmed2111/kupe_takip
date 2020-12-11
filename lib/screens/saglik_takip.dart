@@ -33,13 +33,13 @@ class Hayvanlarim {
   static List<Hayvanlarim> getHayvanlarim() {
     return <Hayvanlarim>[
       Hayvanlarim(
-          hayvanID: 1,
-          name: 'Dost1',
-          parazitler: 'Parazit aşısı yapıldı',
-          karma: 'Karma aşısı yapıldı',
-          kuduz: 'Kuduz aşısı yapıldı',
-          mantar: 'Mantar aşısı yapıldı',
-          lyme: 'Lyme aşısı yapıldı'),
+          hayvanID: 10267,
+          name: 'Boncuk',
+          parazitler: 'Henüz aşı bilgisi yok',
+          karma: '11.03.2020 de aşısı yapıldı',
+          kuduz: 'Henüz aşı bilgisi yok',
+          mantar: '01.06.2020 de aşısı yapıldı',
+          lyme: 'Henüz aşı bilgisi yok'),
       Hayvanlarim(
           hayvanID: 2,
           name: 'Dost2',

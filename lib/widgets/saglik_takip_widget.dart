@@ -34,19 +34,24 @@ class SaglikTakipWidget extends StatelessWidget {
           child: Theme(
             data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
             child: Container(
-              height: 440.0,
+              height: 540.0,
               //width: 360.0,
-              child: ListView(
-                controller: ScrollController(keepScrollOffset: false),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage('images/logo.jpg'),
+                        radius: 40.0,
+                      ),
                       SizedBox(
                         width: 10.0,
                       ),
                       Text(
-                        'Sağlık takibi',
+                        'Sağlık Takibi',
                         style: TextStyle(
                           color: kLoginDarkBackground,
                           fontSize: 25.0,
@@ -54,140 +59,168 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Hayvan ID:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(accentColor: kMainKupeColor),
+                      child: ListView(
+                        controller: ScrollController(keepScrollOffset: false),
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Hayvan ID:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5.0),
+                              Text(
+                                hayvanID.toString(),
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Adı:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5.0),
+                              Flexible(
+                                child: Text(
+                                  name,
+                                  style: TextStyle(
+                                      color: kLoginDarkBackground,
+                                      fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Parazitler:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 10.0),
+                              Flexible(
+                                child: Text(
+                                  parazitler,
+                                  style: TextStyle(
+                                      color: kLoginDarkBackground,
+                                      fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Karma:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5.0),
+                              Flexible(
+                                child: Text(
+                                  karma,
+                                  style: TextStyle(
+                                      color: kLoginDarkBackground,
+                                      fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Kuduz:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5.0),
+                              Flexible(
+                                child: Text(
+                                  kuduz,
+                                  style: TextStyle(
+                                      color: kLoginDarkBackground,
+                                      fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Mantar:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5.0),
+                              Flexible(
+                                child: Text(
+                                  mantar,
+                                  style: TextStyle(
+                                      color: kLoginDarkBackground,
+                                      fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            children: [
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Lyme:',
+                                style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5.0),
+                              Flexible(
+                                child: Text(
+                                  lyme,
+                                  style: TextStyle(
+                                    color: kLoginDarkBackground,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        hayvanID.toString(),
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Adı:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        name,
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Parazitler:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 10.0),
-                      Text(
-                        parazitler,
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Karma:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        karma,
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Kuduz:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        kuduz,
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Mantar:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        mantar,
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Lyme:',
-                        style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        lyme,
-                        style: TextStyle(
-                          color: kLoginDarkBackground,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   SizedBox(
                     height: 30.0,

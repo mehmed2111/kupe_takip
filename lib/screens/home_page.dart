@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Location location = Location();
+  final Location location = Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
@@ -69,11 +69,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       //google maps sayfasına git
-      body: _locationData != null
+      /*body: _locationData != null
           ? GoogleMapsPage(location: _locationData)
-          : null,
+          : null,*/
 
-      /*RaisedButton(
+      body: RaisedButton(
         onPressed: () => _locationData != null
             ? Navigator.push(
                 context,
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                           location: _locationData,
                         )))
             : null,
-      ),*/
+      ),
 
       //GoogleMapsPage(location: _locationData),
     );
