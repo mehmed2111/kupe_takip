@@ -4,7 +4,6 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 import 'package:location/location.dart';
-
 import '../bildirim_deneme.dart';
 
 class HomePage extends StatefulWidget {
@@ -81,9 +80,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Text(
-                    'Dostlarınızı görmek için ekrana dokunun...',
+                    'Dostlarınızı görüntülemek için ekrana dokunun...',
                     style:
-                        TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
+                        TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
                   ),
                   FlatButton(
                     onPressed: () => _locationData != null
