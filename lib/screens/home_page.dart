@@ -53,27 +53,59 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      //navigation menu sayfasına git
-      drawer: NavMenu(),
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: kMainKupeColor,
-        title: Image.asset('images/yazi_logo.png', fit: BoxFit.contain),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.notifications_active_outlined),
-              onPressed: () {
-                Navigator.pushNamed(context, BildirimDeneme.id);
-              }),
-        ],
-      ),
-      //google maps sayfasına git
-      /*body: _locationData != null
+        backgroundColor: Colors.white,
+        //navigation menu sayfasına git
+        drawer: NavMenu(),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: kMainKupeColor,
+          title: Image.asset('images/yazi_logo.png', fit: BoxFit.contain),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.notifications_active_outlined),
+                onPressed: () {
+                  Navigator.pushNamed(context, BildirimDeneme.id);
+                }),
+          ],
+        ),
+        //google maps sayfasına git
+        /*body: _locationData != null
           ? GoogleMapsPage(location: _locationData)
           : null,*/
 
-      body: RaisedButton(
+        body: Container(
+          child: ConstrainedBox(
+            constraints: BoxConstraints.expand(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              child: Column(
+                children: [
+                  Text(
+                    'Dostlarınızı görmek için ekrana dokunun...',
+                    style:
+                        TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
+                  ),
+                  FlatButton(
+                    onPressed: () => _locationData != null
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GoogleMapsPage(
+                                      location: _locationData,
+                                    )))
+                        : null,
+                    padding: EdgeInsets.all(0.0),
+                    child: Image.asset(
+                      'images/logo_transparent.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+        /*RaisedButton(
         onPressed: () => _locationData != null
             ? Navigator.push(
                 context,
@@ -82,9 +114,9 @@ class _HomePageState extends State<HomePage> {
                           location: _locationData,
                         )))
             : null,
-      ),
+      ),*/
 
-      //GoogleMapsPage(location: _locationData),
-    );
+        //GoogleMapsPage(location: _locationData),
+        );
   }
 }

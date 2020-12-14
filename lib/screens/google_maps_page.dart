@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/screens/HayvanMarkerlari.dart';
-import 'package:kupe/widgets/marker_info_window.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:location/location.dart';
 import 'dart:collection';
-
-import '../bildirim_deneme.dart';
+import 'package:kupe/bildirim_deneme.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   static const String id = 'google_maps_page';
@@ -25,14 +23,14 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   //Maps
   Set<Marker> _markers = HashSet<Marker>();
-  GoogleMapController _googleMapController;
+  GoogleMapController googleMapController;
   BitmapDescriptor _markerIcon;
 
   //id
-  int _markerIdCounter = 1;
+  //int _markerIdCounter = 1;
 
   //Type controller
-  bool _isMarker = false;
+  //bool _isMarker = false;
 
   @override
   void initState() {
@@ -46,7 +44,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   //Marker ikonunu değiştirmek için
   void _setMarkerIcon() async {
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'images/kopek.png')
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'images/kopek_64.png')
         .then((onValue) {
       _markerIcon = onValue;
     });
@@ -73,7 +71,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   //Mapi bu marker ayarlarıyla başlat
   void _onMapCreated(GoogleMapController controller) {
-    _googleMapController = controller;
+    googleMapController = controller;
 
     setState(() {
       _markers.add(
@@ -170,7 +168,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           });
                         }),
                   ),
-                  SizedBox(width: 13.0),
+                  //SizedBox(width: 13.0),
                   //Marker için ornek button
                   /*RaisedButton(
                       color: kMainKupeColor,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
-import 'kapat_butonu.dart';
+import 'package:kupe/constants.dart';
 
 class MarkerInfoWindow extends StatelessWidget {
   final String ad;
@@ -44,7 +42,7 @@ class MarkerInfoWindow extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Row(
               children: [
                 SizedBox(width: 10.0),
@@ -65,7 +63,7 @@ class MarkerInfoWindow extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Row(
               children: [
                 SizedBox(width: 10.0),
@@ -86,7 +84,7 @@ class MarkerInfoWindow extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Row(
               children: [
                 SizedBox(width: 10.0),
@@ -107,7 +105,7 @@ class MarkerInfoWindow extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Row(
               children: [
                 SizedBox(width: 10.0),
@@ -128,7 +126,7 @@ class MarkerInfoWindow extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Row(
               children: [
                 SizedBox(width: 10.0),
