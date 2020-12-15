@@ -26,9 +26,12 @@ class SifremiUnuttum extends StatelessWidget {
                 Text(
                   'Şifremi Unuttum',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: kLoginDarkBackground, fontSize: 25),
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10.0),
+                //SizedBox(height: 10.0),
                 Expanded(
                   child: Theme(
                     data:

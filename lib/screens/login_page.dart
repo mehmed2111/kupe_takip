@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,38 +18,12 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation animation;
-
+class _LoginPageState extends State<LoginPage> {
   bool showSpinner = false;
   String username;
   String password;
 
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: Duration(seconds: 1),
-      vsync: this,
-    );
-
-    animation = ColorTween(begin: kMainKupeColor, end: Colors.white)
-        .animate(controller);
-    controller.forward();
-    controller.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
-  //Alert Dialog to ask to exit from the App
+  //Alert Dialog to ask to exit from the App onBackButton pressed
   Future<bool> _onBackPressed() {
     return showDialog(
           context: context,
@@ -60,11 +33,15 @@ class _LoginPageState extends State<LoginPage>
                   borderRadius: BorderRadius.circular(30.0)),
               title: Text(
                 'Emin misiniz?',
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               content: Text('Uygulamadan çıkmak istiyor musunuz?',
-                  style: TextStyle(color: kLoginDarkBackground)),
+                  style:
+                      TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
               actions: [
                 FlatButton(
                   shape: RoundedRectangleBorder(
@@ -88,7 +65,7 @@ class _LoginPageState extends State<LoginPage>
                   ),
                   onPressed: () => exit(0),
                   //Navigator.of(context).pop(true);
-                )
+                ),
               ],
             );
           },
@@ -101,7 +78,6 @@ class _LoginPageState extends State<LoginPage>
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        backgroundColor: animation.value,
         body: ModalProgressHUD(
           inAsyncCall: showSpinner,
           child: Padding(
