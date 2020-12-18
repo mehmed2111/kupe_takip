@@ -8,6 +8,7 @@ class MarkerInfoWindow extends StatelessWidget {
   final String cinsiyet;
   final String renk;
   final String sonKonT;
+  final int deger;
 
   MarkerInfoWindow(
       {@required this.ad,
@@ -15,7 +16,8 @@ class MarkerInfoWindow extends StatelessWidget {
       @required this.isi,
       @required this.cinsiyet,
       @required this.renk,
-      @required this.sonKonT});
+      @required this.sonKonT,
+      this.deger});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,26 @@ class MarkerInfoWindow extends StatelessWidget {
         child: ListView(
           controller: ScrollController(keepScrollOffset: false),
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage('images/logo.jpg'),
+                  radius: 40.0,
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Text(
+                  ad,
+                  style: TextStyle(
+                    color: kLoginDarkBackground,
+                    fontSize: 25.0,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.0),
             Row(
               children: [
                 SizedBox(width: 10.0),
@@ -141,6 +163,27 @@ class MarkerInfoWindow extends StatelessWidget {
                 Flexible(
                   child: Text(
                     sonKonT,
+                    style:
+                        TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Row(
+              children: [
+                SizedBox(width: 10.0),
+                Text(
+                  'Gelen Değer:',
+                  style: TextStyle(
+                      color: kLoginDarkBackground,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 5.0),
+                Flexible(
+                  child: Text(
+                    deger.toString(),
                     style:
                         TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
                   ),

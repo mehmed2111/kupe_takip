@@ -85,7 +85,7 @@ class SaglikTakipWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Row(
                             children: [
                               SizedBox(width: 10.0),
@@ -107,7 +107,7 @@ class SaglikTakipWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Row(
                             children: [
                               SizedBox(width: 10.0),
@@ -129,7 +129,7 @@ class SaglikTakipWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Row(
                             children: [
                               SizedBox(width: 10.0),
@@ -151,7 +151,7 @@ class SaglikTakipWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Row(
                             children: [
                               SizedBox(width: 10.0),
@@ -173,7 +173,7 @@ class SaglikTakipWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Row(
                             children: [
                               SizedBox(width: 10.0),
@@ -195,7 +195,7 @@ class SaglikTakipWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Row(
                             children: [
                               SizedBox(width: 10.0),

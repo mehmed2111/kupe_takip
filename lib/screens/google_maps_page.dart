@@ -1,48 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:kupe/constants.dart';
 import 'package:kupe/screens/HayvanMarkerlari.dart';
-import 'package:kupe/widgets/nav_menu.dart';
 import 'package:location/location.dart';
 import 'dart:collection';
-import 'package:kupe/bildirim_deneme.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   static const String id = 'google_maps_page';
-  final LocationData location;
-  GoogleMapsPage({this.location});
 
   @override
   _GoogleMapsPageState createState() => _GoogleMapsPageState();
 }
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
-  MapType _mapType = MapType.normal;
   //Location
-  LocationData _locationData;
+  final Location location = Location();
+  LocationData locationData;
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
 
   //Maps
-  Set<Marker> _markers = HashSet<Marker>();
+  MapType _mapType = MapType.normal;
   GoogleMapController googleMapController;
   BitmapDescriptor _markerIcon;
+  Set<Marker> _markers = HashSet<Marker>();
 
-  //id
-  //int _markerIdCounter = 1;
-
-  //Type controller
-  //bool _isMarker = false;
+  //create markers list
+  Set<Marker> markers = Set();
+  List<Marker> addMarkers = [];
 
   @override
   void initState() {
     super.initState();
-    //Marker ikonunu değiştirmek istersem
     _setMarkerIcon();
-    _locationData = widget.location;
-    //print('Google Maps Page de........');
-    //print('Lat Long buraya gelmeli... $_locationData');
+    _checkLocationPermission();
   }
 
-  //Marker ikonunu değiştirmek için
+  //Marker icon
   void _setMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'images/kopek_64.png')
         .then((onValue) {
@@ -50,141 +43,113 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     });
   }
 
-  //Set Markers to the map
-  /*void _setMarkers(LatLng point) {
-    final String markerIdVal = 'marker_id_$_markerIdCounter';
-    _markerIdCounter++;
+  //Check Location Permissions and get my location
+  void _checkLocationPermission() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    LocationData currLocation = await location.getLocation();
     setState(() {
-      print(
-          'Marker | Latitude: ${point.latitude} Longitude: ${point.longitude}');
-      _markers.add(
-        Marker(
-          markerId: MarkerId(markerIdVal),
-          position: point,
-        ),
-      );
+      locationData = currLocation;
     });
-  }*/
+  }
 
-  //default coordinates set to Istanbul
+  //On map start; default coordinates set to Istanbul
   //final LatLng _center = const LatLng(41.015137, 28.979530);
-
-  //Mapi bu marker ayarlarıyla başlat
   void _onMapCreated(GoogleMapController controller) {
     googleMapController = controller;
-
-    setState(() {
-      _markers.add(
-        Marker(
-          markerId: MarkerId('0'),
-          position: LatLng(41.015137, 28.979530),
-          infoWindow: InfoWindow(
-            title: 'Boncuk',
-            snippet: 'Boncuğun bilgileri',
-            //buraya bizim hayvanların bilgileri gelecek, popup şeklinde
-            onTap: () => {
-              Navigator.of(context).push(PageRouteBuilder(
-                  opaque: false,
-                  pageBuilder: (BuildContext context, _, __) {
-                    return HayvanMarkerlari();
-                  })),
-            },
+    int i;
+    for (i = 0; i < 6; i++) {
+      setState(() {
+        _markers.add(
+          Marker(
+            markerId: MarkerId('$i'),
+            position: LatLng(i + 41.015137, i + 28.979530),
+            infoWindow: InfoWindow(
+              title: 'Boncuk $i',
+              snippet: 'Boncuğun bilgileri',
+              //buraya bizim hayvanların bilgileri gelecek, popup şeklinde
+              onTap: () => {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return HayvanMarkerlari(
+                        deger: i,
+                      );
+                    })),
+              },
+            ),
+            icon: _markerIcon,
           ),
-          icon: _markerIcon,
-        ),
-      );
-    });
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      //navigation menu sayfasına git
-      drawer: NavMenu(),
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: kMainKupeColor,
-        title: Image.asset('images/yazi_logo.png', fit: BoxFit.contain),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.notifications_active_outlined),
-              onPressed: () {
-                Navigator.pushNamed(context, BildirimDeneme.id);
-              }),
-        ],
-      ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(_locationData.latitude, _locationData.longitude),
-              zoom: 11.0,
-            ),
-            mapType: _mapType,
-            markers: _markers,
-            myLocationEnabled: true,
-            /* onTap: (point) {
-              if (_isMarker) {
-                setState(() {
-                  _markers.clear();
-                  _setMarkers(point);
-                });
-              } else {}
-            },*/
-            onMapCreated: _onMapCreated,
-            zoomControlsEnabled: true,
+    return Stack(
+      children: [
+        GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: LatLng(41.015137, 28.979530),
+            zoom: 11.0,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 16.0),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 28.0,
-                    backgroundColor: Colors.white.withOpacity(0.75),
-                    child: IconButton(
-                        icon: Icon(Icons.satellite),
-                        iconSize: 36.0,
-                        color: Colors.grey[700],
-                        onPressed: () {
-                          setState(() {
-                            this._mapType = MapType.hybrid;
-                          });
-                        }),
-                  ),
-                  SizedBox(width: 13.0),
-                  CircleAvatar(
-                    radius: 28.0,
-                    backgroundColor: Colors.white.withOpacity(0.75),
-                    child: IconButton(
-                        icon: Icon(Icons.map_rounded),
-                        iconSize: 36.0,
-                        color: Colors.grey[700],
-                        onPressed: () {
-                          setState(() {
-                            this._mapType = MapType.normal;
-                          });
-                        }),
-                  ),
-                  //SizedBox(width: 13.0),
-                  //Marker için ornek button
-                  /*RaisedButton(
-                      color: kMainKupeColor,
+          mapType: _mapType,
+          markers: _markers,
+          myLocationEnabled: true,
+          onMapCreated: _onMapCreated,
+          zoomControlsEnabled: true,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 16.0),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 28.0,
+                  backgroundColor: Colors.white.withOpacity(0.75),
+                  child: IconButton(
+                      icon: Icon(Icons.satellite),
+                      iconSize: 36.0,
+                      color: Colors.grey[700],
                       onPressed: () {
-                        _isMarker = true;
-                      },
-                      child: Text('Marker',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white))),*/
-                ],
-              ),
+                        setState(() {
+                          this._mapType = MapType.hybrid;
+                        });
+                      }),
+                ),
+                SizedBox(width: 13.0),
+                CircleAvatar(
+                  radius: 28.0,
+                  backgroundColor: Colors.white.withOpacity(0.75),
+                  child: IconButton(
+                      icon: Icon(Icons.map_rounded),
+                      iconSize: 36.0,
+                      color: Colors.grey[700],
+                      onPressed: () {
+                        setState(() {
+                          this._mapType = MapType.normal;
+                        });
+                      }),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

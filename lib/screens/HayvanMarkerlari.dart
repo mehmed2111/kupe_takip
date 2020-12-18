@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/marker_info_window.dart';
 import '../constants.dart';
@@ -12,6 +13,7 @@ class HayvanMarkerlari extends StatelessWidget {
   final String cinsiyet;
   final String renk;
   final String sonKonT;
+  final int deger;
 
   HayvanMarkerlari(
       {this.ad,
@@ -19,7 +21,8 @@ class HayvanMarkerlari extends StatelessWidget {
       this.isi,
       this.cinsiyet,
       this.renk,
-      this.sonKonT});
+      this.sonKonT,
+      this.deger});
 
   @override
   Widget build(BuildContext context) {
@@ -37,27 +40,6 @@ class HayvanMarkerlari extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('images/logo.jpg'),
-                      radius: 40.0,
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Boncuk',
-                      style: TextStyle(
-                        color: kLoginDarkBackground,
-                        fontSize: 25.0,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
                 MarkerInfoWindow(
                   ad: 'Boncuk',
                   sagDurumu: 'İyi',
@@ -65,6 +47,7 @@ class HayvanMarkerlari extends StatelessWidget {
                   cinsiyet: 'Erkek',
                   renk: 'Kahverengi',
                   sonKonT: '11.12.2020',
+                  deger: deger,
                 ),
                 KapatButonu(onPressed: () {
                   Navigator.pop(context);
