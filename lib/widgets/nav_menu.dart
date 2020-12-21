@@ -12,6 +12,8 @@ import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/userstable.dart';
 
+import '../dbtables/userstable.dart';
+
 class NavMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -174,7 +176,7 @@ class NavMenu extends StatelessWidget {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return Deneme();
+                        return MyHomePage();
                       })),
                 },
               ),
