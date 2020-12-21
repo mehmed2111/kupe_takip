@@ -20,13 +20,14 @@ class _BildirimDenemeState extends State<BildirimDeneme> {
     var initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = IOSInitializationSettings();
-    var initSetttings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+    var initSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
-    flutterLocalNotificationsPlugin.initialize(initSetttings,
+    flutterLocalNotificationsPlugin.initialize(initSettings,
         onSelectNotification: onSelectNotification);
   }
 
+  // ignore: missing_return
   Future onSelectNotification(String payload) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return MessageScreen(
@@ -63,9 +64,9 @@ class _BildirimDenemeState extends State<BildirimDeneme> {
   showNotification() async {
     var android = new AndroidNotificationDetails(
         'id', 'channel ', 'description',
-        priority: Priority.High, importance: Importance.Max);
+        priority: Priority.high, importance: Importance.max);
     var iOS = new IOSNotificationDetails();
-    var platform = new NotificationDetails(android, iOS);
+    var platform = new NotificationDetails(android: android, iOS: iOS);
     await flutterLocalNotificationsPlugin.show(
         0, 'Küpe Takip', 'Local bildirim deneme mesajıdır', platform,
         payload: 'Mesajın yönlendirildiği sayfa');

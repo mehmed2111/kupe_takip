@@ -15,12 +15,12 @@ class HayvanMarkerlari extends StatelessWidget {
   final MarkerId deger;
 
   HayvanMarkerlari(
-      {@required this.ad,
-      @required this.sagDurumu,
-      @required this.isi,
-      @required this.cinsiyet,
-      @required this.renk,
-      @required this.sonKonT,
+      {this.ad,
+      this.sagDurumu,
+      this.isi,
+      this.cinsiyet,
+      this.renk,
+      this.sonKonT,
       this.deger});
 
   @override
