@@ -10,7 +10,7 @@ import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
-import 'package:kupe/dbtables/userstable.dart';
+import 'package:kupe/dbtables/users_table.dart';
 
 class NavMenu extends StatelessWidget {
   @override
@@ -163,20 +163,6 @@ class NavMenu extends StatelessWidget {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 onTap: () => {Navigator.pushNamed(context, LoginPage.id)},
-              ),
-              ListTile(
-                leading: Icon(Icons.logout, color: Colors.white),
-                title: Text(
-                  'Get Json',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                onTap: () => {
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return Deneme();
-                      })),
-                },
               ),
             ],
           ),
