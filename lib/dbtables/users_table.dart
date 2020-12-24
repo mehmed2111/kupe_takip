@@ -1,24 +1,3 @@
-import 'dart:convert';
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-
-/*
-//fetch the JSON data
-Future<List<Users>> fetchUsers() async {
-  final response = await http
-      .get('https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser');
-
-  return compute(parseUsers, response.body);
-}
-
-List<Users> parseUsers(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Users>((json) => Users.fromJson(json)).toList();
-}
-*/
 class Users {
   Users({
     this.id,
@@ -56,4 +35,19 @@ class Users {
         heatAlarm: json["heat_alarm"],
         sifre2: json["sifre2"],
       );
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['username'] = this.username;
+    data['password'] = this.password;
+    data['e_mail'] = this.eMail;
+    data['adress'] = this.adress;
+    data['telno'] = this.telno;
+    data['veteriner'] = this.veteriner;
+    data['region_alarm'] = this.regionAlarm;
+    data['heat_alarm'] = this.heatAlarm;
+    data['sifre2'] = this.sifre2;
+    return data;
+  }
 }

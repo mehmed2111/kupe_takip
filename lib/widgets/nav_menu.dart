@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,8 +13,39 @@ import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
+import 'package:http/http.dart' as http;
 
-class NavMenu extends StatelessWidget {
+class NavMenu extends StatefulWidget {
+  @override
+  _NavMenuState createState() => _NavMenuState();
+}
+
+class _NavMenuState extends State<NavMenu> {
+  //URL for json data to fetch USERS from DB
+  String url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+  List<Users> userList;
+
+  //fetch json data
+  Future<List<Users>> fetchUsers() async {
+    final response = await http.get(url);
+    var data = json.decode(response.body);
+    return (data as List).map((e) => Users.fromJson(e)).toList();
+  }
+
+  //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
+  void getUsersList() async {
+    var dataList = await fetchUsers();
+    userList = dataList;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //fetch json data on app start
+    getUsersList();
+    print(userList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(

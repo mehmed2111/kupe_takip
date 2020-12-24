@@ -16,9 +16,6 @@ import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
-  final List<Users> usersData;
-
-  const LoginPage({Key key, this.usersData}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -28,15 +25,15 @@ class _LoginPageState extends State<LoginPage> {
   bool showSpinner = false;
   String username;
   String password;
+
+  //URL for json data to fetch USERS from DB
+  String url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
   List<Users> userList;
 
   //fetch json data
   Future<List<Users>> fetchUsers() async {
-    final response = await http
-        .get('https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser');
-
+    final response = await http.get(url);
     var data = json.decode(response.body);
-
     return (data as List).map((e) => Users.fromJson(e)).toList();
   }
 
@@ -117,57 +114,64 @@ class _LoginPageState extends State<LoginPage> {
                 RoundedButton(
                   colour: kMainKupeColor,
                   buttonTitle: 'GİRİŞ YAP',
-                  onPressed: () async {
-                    int i = 0;
-                    setState(() {
-                      showSpinner = true;
-                    });
+                  onPressed: () {
                     try {
-                      if (userList.isNotEmpty) {
+                      if (userList != null) {
+                        int i = 0;
+                        outerloop:
                         for (i; i < userList.length; i++) {
-                          if (username == null && password != null ||
-                              username != null && password == null ||
-                              username == null && password == null) {
-                            showDialog(
-                                context: context,
-                                builder: (_) => AlertDialogWidget(
-                                    dialogTitle: 'Hata!',
-                                    dialogContent:
-                                        'Kullanıcı adı ve şifre boş bırakılamaz!',
-                                    btnTitle: 'Kapat',
-                                    onPressed: () => Navigator.pop(context)));
-                            i = userList.length + 1;
-                          } else if (username != userList[i].username &&
-                                  password == userList[i].password ||
-                              username == userList[i].username &&
-                                  password != userList[i].password ||
-                              username != userList[i].username &&
-                                  password != userList[i].password) {
-                            showDialog(
-                                context: context,
-                                builder: (_) => AlertDialogWidget(
-                                    dialogTitle: 'Giriş Başarısız!',
-                                    dialogContent:
-                                        'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
-                                    btnTitle: 'Kapat',
-                                    onPressed: () => Navigator.pop(context)));
-                            i = userList.length + 1;
-                          } else if (username == userList[i].username &&
+                          if (username == userList[i].username &&
                               password == userList[i].password) {
+                            setState(() {
+                              showSpinner = true;
+                            });
+                            //will be used for comparing
                             tutulanDeger = userList[i].id;
                             Navigator.pushNamed(context, HomePage.id);
-                            break;
+                            break outerloop;
                           }
-                        }
+                          innerloop:
+                          for (i; i < 1; i++) {
+                            if (username == null && password != null ||
+                                username != null && password == null ||
+                                username == null && password == null) {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialogWidget(
+                                      dialogTitle: 'Hata!',
+                                      dialogContent:
+                                          'Kullanıcı adı ve şifre boş bırakılamaz!',
+                                      btnTitle: 'Kapat',
+                                      onPressed: () => Navigator.pop(context)));
+                              continue innerloop;
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialogWidget(
+                                      dialogTitle: 'Giriş Başarısız!',
+                                      dialogContent:
+                                          'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
+                                      btnTitle: 'Kapat',
+                                      onPressed: () => Navigator.pop(context)));
+                              continue innerloop;
+                            }
+                          } //inner for loop
+                        } //outer for loop
+                        setState(() {
+                          showSpinner = false;
+                        });
                         //if userList is not empty ends here
                       } else {
-                        setState(() {
-                          showSpinner = true;
-                        });
+                        //if the data from JSON returns null
+                        showDialog(
+                            context: context,
+                            builder: (_) => AlertDialogWidget(
+                                dialogTitle: 'Sistem Hatası!',
+                                dialogContent:
+                                    'Kısa sürede sorun giderilecektir. Anlayışınız için teşekkür ederiz.',
+                                btnTitle: 'Kapat',
+                                onPressed: () => Navigator.pop(context)));
                       }
-                      setState(() {
-                        showSpinner = false;
-                      });
                       //try ends here
                     } catch (e) {
                       print(e);
