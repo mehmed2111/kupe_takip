@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -22,28 +21,27 @@ class NavMenu extends StatefulWidget {
 
 class _NavMenuState extends State<NavMenu> {
   //URL for json data to fetch USERS from DB
-  String url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
-  List<Users> userList;
+  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+  List<Users> _userList;
 
   //fetch json data
-  Future<List<Users>> fetchUsers() async {
-    final response = await http.get(url);
+  Future<List<Users>> _fetchUsers() async {
+    final response = await http.get(_url);
     var data = json.decode(response.body);
     return (data as List).map((e) => Users.fromJson(e)).toList();
   }
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
-  void getUsersList() async {
-    var dataList = await fetchUsers();
-    userList = dataList;
+  void _getUsersList() async {
+    var dataList = await _fetchUsers();
+    _userList = dataList;
   }
 
   @override
   void initState() {
     super.initState();
     //fetch json data on app start
-    getUsersList();
-    print(userList);
+    _getUsersList();
   }
 
   @override
@@ -89,13 +87,24 @@ class _NavMenuState extends State<NavMenu> {
                 ),
                 onTap: () => {
                   //Navigator.of(context).pop(),
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return KullaniciProfili();
-                      }))
+                  for (int i = 0; i < _userList.length; i++)
+                    {
+                      if (loggedUserID == _userList[i].id)
+                        {
+                          Navigator.of(context).push(PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) {
+                                return KullaniciProfili(
+                                    kullid: _userList[i].id,
+                                    ad: _userList[i].username,
+                                    adres: _userList[i].adress,
+                                    telNo: _userList[i].telno,
+                                    email: _userList[i].eMail,
+                                    kayitliVet: _userList[i].veteriner);
+                              }))
+                        }
+                    }
                 },
-                //{Navigator.pushNamed(context, KullaniciProfili.id)},
               ),
               ListTile(
                 leading:

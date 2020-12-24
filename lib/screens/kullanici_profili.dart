@@ -8,7 +8,7 @@ import 'package:kupe/widgets/kullanici_bilgileri.dart';
 class KullaniciProfili extends StatelessWidget {
   static const String id = 'dialog_popup';
 
-  final String kullid;
+  final int kullid;
   final String ad;
   final String adres;
   final String telNo;
@@ -69,22 +69,21 @@ class KullaniciProfili extends StatelessWidget {
                       children: [
                         KullaniciBilgileri(
                             kullaniciBilg: 'Kullanıcı ID:',
-                            kullaniciIcerik: 'icerik gelecek..'),
+                            kullaniciIcerik: kullid.toString()),
                         KullaniciBilgileri(
-                            kullaniciBilg: 'Adınız:',
-                            kullaniciIcerik: 'icerik gelecek..'),
+                            kullaniciBilg: 'Adınız:', kullaniciIcerik: ad),
                         KullaniciBilgileri(
                             kullaniciBilg: 'Adresiniz:',
-                            kullaniciIcerik: 'icerik gelecek..'),
+                            kullaniciIcerik: adres),
                         KullaniciBilgileri(
                             kullaniciBilg: 'Telefon numaranız:',
-                            kullaniciIcerik: 'icerik gelecek..'),
+                            kullaniciIcerik: telNo),
                         KullaniciBilgileri(
                             kullaniciBilg: 'Mail adresiniz:',
-                            kullaniciIcerik: 'icerik gelecek..'),
+                            kullaniciIcerik: email),
                         KullaniciBilgileri(
                             kullaniciBilg: 'Kayıtlı veterineriniz:',
-                            kullaniciIcerik: 'icerik gelecek..'),
+                            kullaniciIcerik: kayitliVet),
                       ],
                     ),
                   ),

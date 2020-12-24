@@ -27,27 +27,27 @@ class _LoginPageState extends State<LoginPage> {
   String password;
 
   //URL for json data to fetch USERS from DB
-  String url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
-  List<Users> userList;
+  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+  List<Users> _userList;
 
   //fetch json data
-  Future<List<Users>> fetchUsers() async {
-    final response = await http.get(url);
+  Future<List<Users>> _fetchUsers() async {
+    final response = await http.get(_url);
     var data = json.decode(response.body);
     return (data as List).map((e) => Users.fromJson(e)).toList();
   }
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
-  void getUsersList() async {
-    var dataList = await fetchUsers();
-    userList = dataList;
+  void _getUsersList() async {
+    var dataList = await _fetchUsers();
+    _userList = dataList;
   }
 
   @override
   void initState() {
     super.initState();
     //fetch json data on app start
-    getUsersList();
+    _getUsersList();
   }
 
   @override
@@ -116,17 +116,17 @@ class _LoginPageState extends State<LoginPage> {
                   buttonTitle: 'GİRİŞ YAP',
                   onPressed: () {
                     try {
-                      if (userList != null) {
+                      if (_userList != null) {
                         int i = 0;
                         outerloop:
-                        for (i; i < userList.length; i++) {
-                          if (username == userList[i].username &&
-                              password == userList[i].password) {
+                        for (i; i < _userList.length; i++) {
+                          if (username == _userList[i].username &&
+                              password == _userList[i].password) {
                             setState(() {
                               showSpinner = true;
                             });
                             //will be used for comparing
-                            tutulanDeger = userList[i].id;
+                            loggedUserID = _userList[i].id;
                             Navigator.pushNamed(context, HomePage.id);
                             break outerloop;
                           }

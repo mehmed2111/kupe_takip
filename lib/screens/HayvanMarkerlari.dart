@@ -9,7 +9,7 @@ class HayvanMarkerlari extends StatelessWidget {
   final String ad;
   final String sagDurumu;
   final String isi;
-  final String cinsiyet;
+  final int cinsiyet;
   final String renk;
   final String sonKonT;
   final MarkerId deger;
@@ -143,7 +143,7 @@ class HayvanMarkerlari extends StatelessWidget {
                             SizedBox(width: 5.0),
                             Flexible(
                               child: Text(
-                                cinsiyet,
+                                cinsiyet.toString(),
                                 style: TextStyle(
                                     color: kLoginDarkBackground,
                                     fontSize: 18.0),

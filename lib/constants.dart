@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-int tutulanDeger = 0;
+int loggedUserID = 0;
 
 //App const colors
 const kMainKupeColor = Color(0xFF5CB3AB);

@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 icon: Icon(Icons.notifications_active_outlined),
                 onPressed: () {
-                  print(tutulanDeger);
+                  print(loggedUserID);
                   Navigator.pushNamed(context, BildirimDeneme.id);
                 }),
           ],
