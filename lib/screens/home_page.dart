@@ -5,6 +5,7 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 import '../bildirim_deneme.dart';
+import 'google_maps_page.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_page';

@@ -14,6 +14,9 @@ import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:http/http.dart' as http;
 
+import '../screens/login_page.dart';
+import '../screens/login_page.dart';
+
 class NavMenu extends StatefulWidget {
   @override
   _NavMenuState createState() => _NavMenuState();
@@ -204,7 +207,12 @@ class _NavMenuState extends State<NavMenu> {
                   'Çıkış',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                onTap: () => {Navigator.pushNamed(context, LoginPage.id)},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                  /*Navigator.of(context).pushNamedAndRemoveUntil(
+                      LoginPage.id, (Route<dynamic> route) => false);*/
+                },
               ),
             ],
           ),

@@ -14,6 +14,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
+
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
 
@@ -115,6 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                   colour: kMainKupeColor,
                   buttonTitle: 'GİRİŞ YAP',
                   onPressed: () {
+                    setState(() {
+                      showSpinner = true;
+                    });
                     try {
                       if (_userList != null) {
                         int i = 0;
@@ -122,10 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                         for (i; i < _userList.length; i++) {
                           if (username == _userList[i].username &&
                               password == _userList[i].password) {
-                            setState(() {
-                              showSpinner = true;
-                            });
-                            //will be used for comparing
+                            //loggedUserID will be used for comparing
                             loggedUserID = _userList[i].id;
                             Navigator.pushNamed(context, HomePage.id);
                             break outerloop;
@@ -157,9 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           } //inner for loop
                         } //outer for loop
-                        setState(() {
-                          showSpinner = false;
-                        });
+
                         //if userList is not empty ends here
                       } else {
                         //if the data from JSON returns null
@@ -170,9 +170,15 @@ class _LoginPageState extends State<LoginPage> {
                                 dialogContent:
                                     'Kısa sürede sorun giderilecektir. Anlayışınız için teşekkür ederiz.',
                                 btnTitle: 'Kapat',
-                                onPressed: () => Navigator.pop(context)));
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, LoginPage.id);
+                                }));
                       }
                       //try ends here
+                      setState(() {
+                        showSpinner = false;
+                      });
                     } catch (e) {
                       print(e);
                     }
