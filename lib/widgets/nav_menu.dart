@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin.dart';
 import 'package:kupe/screens/home_page.dart';
@@ -13,9 +14,7 @@ import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:http/http.dart' as http;
-
-import '../screens/login_page.dart';
-import '../screens/login_page.dart';
+import 'package:kupe/widgets/alert_dialog.dart';
 
 class NavMenu extends StatefulWidget {
   @override
@@ -23,6 +22,7 @@ class NavMenu extends StatefulWidget {
 }
 
 class _NavMenuState extends State<NavMenu> {
+  NetworkCheck _networkCheck = NetworkCheck();
   //URL for json data to fetch USERS from DB
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
   List<Users> _userList;
@@ -88,12 +88,12 @@ class _NavMenuState extends State<NavMenu> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: () => {
-                  //Navigator.of(context).pop(),
-                  for (int i = 0; i < _userList.length; i++)
-                    {
-                      if (loggedUserID == _userList[i].id)
-                        {
+                onTap: () {
+                  _networkCheck.check().then((internet) {
+                    if (internet != null && internet) {
+                      _getUsersList();
+                      for (int i = 0; i < _userList.length; i++) {
+                        if (loggedUserID == _userList[i].id) {
                           Navigator.of(context).push(PageRouteBuilder(
                               opaque: false,
                               pageBuilder: (BuildContext context, _, __) {
@@ -104,9 +104,23 @@ class _NavMenuState extends State<NavMenu> {
                                     telNo: _userList[i].telno,
                                     email: _userList[i].eMail,
                                     kayitliVet: _userList[i].veteriner);
-                              }))
+                              }));
                         }
+                      }
+                    } else {
+                      //if there is no internet connection
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialogWidget(
+                              dialogTitle: 'İnternet hatası!',
+                              dialogContent:
+                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                              btnTitle: 'Kapat',
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }));
                     }
+                  });
                 },
               ),
               ListTile(
@@ -116,7 +130,7 @@ class _NavMenuState extends State<NavMenu> {
                   'Sağlık Takip',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                onTap: () => {Navigator.pushNamed(context, SaglikTakip.id)},
+                onTap: () => Navigator.pushNamed(context, SaglikTakip.id),
               ),
               ListTile(
                 leading: Icon(Icons.mobile_friendly, color: Colors.white),
@@ -124,13 +138,13 @@ class _NavMenuState extends State<NavMenu> {
                   'Dostların',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                onTap: () => {
+                onTap: () {
                   //Navigator.of(context).pop()
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
                         return Dostlarin();
-                      })),
+                      }));
                 },
               ),
               ListTile(
@@ -208,10 +222,9 @@ class _NavMenuState extends State<NavMenu> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
-                  /*Navigator.of(context).pushNamedAndRemoveUntil(
-                      LoginPage.id, (Route<dynamic> route) => false);*/
+                  //close all previous screens and take the user to login page
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      LoginPage.id, (Route<dynamic> route) => false);
                 },
               ),
             ],

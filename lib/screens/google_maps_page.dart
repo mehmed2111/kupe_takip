@@ -17,8 +17,8 @@ class GoogleMapsPage extends StatefulWidget {
 }
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
-  //On map start; default coordinates set to Istanbul
-  final LatLng _defaultIstanbul = const LatLng(41.015137, 28.979530);
+  //On map start; default coordinates set to Turkey
+  final LatLng _defaultIstanbul = const LatLng(39.1667, 35.6667);
   bool showSpinner = false;
   //Location
   final Location location = Location();
@@ -114,7 +114,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     }
   }
 
-  //Marker icons
+  //dog marker icons
   void _markerIconDog() async {
     BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'images/kopek_64.png')
         .then((onValue) {
@@ -122,6 +122,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     });
   }
 
+  //cat marker icon
   void _markerIconCat() async {
     BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'images/kedi_64.png')
         .then((value) {
@@ -158,7 +159,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _markerIconCat();
     _checkLocationPermission();
     //_getUsersAnimalsList(googleMapController);
-    //print('USERS LİSTESİ BURADA: $_userAnimalList');
   }
 
   @override
@@ -170,7 +170,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           GoogleMap(
             initialCameraPosition: CameraPosition(
               target: _defaultIstanbul,
-              zoom: 9.0,
+              zoom: 5.0,
             ),
             mapType: _mapType,
             markers: Set<Marker>.of(markers.values), //_markers,

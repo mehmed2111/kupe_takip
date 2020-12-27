@@ -4,7 +4,6 @@ import 'package:kupe/bildirim_deneme.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:kupe/screens/google_maps_page.dart';
-import '../bildirim_deneme.dart';
 import 'google_maps_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: _onBackPressed,
       child: Scaffold(
         backgroundColor: Colors.white,
-        //navigation menu sayfasına git
+        //opens nav menu page
         drawer: NavMenu(),
         appBar: AppBar(
           centerTitle: true,
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                 }),
           ],
         ),
-        //google maps sayfasına git
+        //opens google maps page
         body: GoogleMapsPage(),
       ),
     );

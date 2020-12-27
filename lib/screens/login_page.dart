@@ -5,16 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/users_table.dart';
-import 'package:kupe/functions/beni_hatirla.dart';
+import 'package:kupe/models/beni_hatirla.dart';
+import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/sifremi_unuttum.dart';
 import 'package:kupe/widgets/alert_dialog.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:kupe/widgets/sifremi_unuttum_butonu.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:http/http.dart' as http;
-
-import '../constants.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
@@ -24,9 +23,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool showSpinner = false;
   String username;
   String password;
+  //check for internet connection
+  NetworkCheck _networkCheck = NetworkCheck();
 
   //URL for json data to fetch USERS from DB
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<List<Users>> _fetchUsers() async {
     final response = await http.get(_url);
     var data = json.decode(response.body);
+
     return (data as List).map((e) => Users.fromJson(e)).toList();
   }
 
@@ -57,143 +58,141 @@ class _LoginPageState extends State<LoginPage> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        body: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Flexible(
-                  child: Hero(
-                    tag: 'logo',
-                    child: Container(
-                      height: 200.0,
-                      child: Image.asset('images/logo_transparent.png'),
-                    ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Flexible(
+                child: Hero(
+                  tag: 'logo',
+                  child: Container(
+                    height: 200.0,
+                    child: Image.asset('images/logo_transparent.png'),
                   ),
                 ),
-                TypewriterAnimatedTextKit(
-                  text: ['Küpe Takip'],
-                  textAlign: TextAlign.center,
-                  textStyle: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                    color: kLoginDarkBackground,
-                  ),
+              ),
+              TypewriterAnimatedTextKit(
+                text: ['Küpe Takip'],
+                textAlign: TextAlign.center,
+                textStyle: TextStyle(
+                  fontSize: 45.0,
+                  fontWeight: FontWeight.w900,
+                  color: kLoginDarkBackground,
                 ),
-                SizedBox(
-                  height: 24.0,
+              ),
+              SizedBox(
+                height: 24.0,
+              ),
+              TextField(
+                keyboardType: TextInputType.text,
+                textAlign: TextAlign.center,
+                cursorColor: kMainKupeColor,
+                onChanged: (value) {
+                  username = value;
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: 'Kullanıcı adı',
                 ),
-                TextField(
-                  keyboardType: TextInputType.text,
-                  textAlign: TextAlign.center,
-                  cursorColor: kMainKupeColor,
-                  onChanged: (value) {
-                    username = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Kullanıcı adı',
-                  ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                obscureText: true,
+                cursorColor: kMainKupeColor,
+                onChanged: (value) {
+                  password = value;
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: 'Şifre',
                 ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextField(
-                  textAlign: TextAlign.center,
-                  obscureText: true,
-                  cursorColor: kMainKupeColor,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Şifre',
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                BeniHatirla(),
-                RoundedButton(
-                  colour: kMainKupeColor,
-                  buttonTitle: 'GİRİŞ YAP',
-                  onPressed: () {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    try {
-                      if (_userList != null) {
-                        int i = 0;
-                        outerloop:
-                        for (i; i < _userList.length; i++) {
-                          if (username == _userList[i].username &&
-                              password == _userList[i].password) {
-                            //loggedUserID will be used for comparing
-                            loggedUserID = _userList[i].id;
-                            Navigator.pushNamed(context, HomePage.id);
-                            break outerloop;
-                          }
-                          innerloop:
-                          for (i; i < 1; i++) {
-                            if (username == null && password != null ||
-                                username != null && password == null ||
-                                username == null && password == null) {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialogWidget(
-                                      dialogTitle: 'Hata!',
-                                      dialogContent:
-                                          'Kullanıcı adı ve şifre boş bırakılamaz!',
-                                      btnTitle: 'Kapat',
-                                      onPressed: () => Navigator.pop(context)));
-                              continue innerloop;
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialogWidget(
-                                      dialogTitle: 'Giriş Başarısız!',
-                                      dialogContent:
-                                          'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
-                                      btnTitle: 'Kapat',
-                                      onPressed: () => Navigator.pop(context)));
-                              continue innerloop;
+              ),
+              SizedBox(height: 8.0),
+              BeniHatirla(),
+              RoundedButton(
+                colour: kMainKupeColor,
+                buttonTitle: 'GİRİŞ YAP',
+                onPressed: () {
+                  //every time on button press, make request to json data
+                  _getUsersList();
+                  try {
+                    _networkCheck.check().then((internet) {
+                      if (internet != null && internet) {
+                        if (_userList != null) {
+                          int i = 0;
+                          outerloop:
+                          for (i; i < _userList.length; i++) {
+                            if (username == _userList[i].username &&
+                                password == _userList[i].password) {
+                              //loggedUserID will be used for comparing
+                              loggedUserID = _userList[i].id;
+                              Navigator.pushNamed(context, LoadingScreen.id);
+                              break outerloop;
                             }
-                          } //inner for loop
-                        } //outer for loop
-
-                        //if userList is not empty ends here
+                            innerloop:
+                            for (i; i < 1; i++) {
+                              if (username == null && password != null ||
+                                  username != null && password == null ||
+                                  username == null && password == null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialogWidget(
+                                        dialogTitle: 'Hata!',
+                                        dialogContent:
+                                            'Kullanıcı adı ve şifre boş bırakılamaz!',
+                                        btnTitle: 'Kapat',
+                                        onPressed: () =>
+                                            Navigator.pop(context)));
+                                continue innerloop;
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialogWidget(
+                                        dialogTitle: 'Giriş Başarısız!',
+                                        dialogContent:
+                                            'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
+                                        btnTitle: 'Kapat',
+                                        onPressed: () =>
+                                            Navigator.pop(context)));
+                                continue innerloop;
+                              }
+                            } //inner for loop
+                          } //outer for loop
+                          //if userList is not empty ends here
+                        } else {
+                          print('Json bos geldi... ');
+                        }
                       } else {
-                        //if the data from JSON returns null
+                        //if there is no internet connection
                         showDialog(
                             context: context,
                             builder: (_) => AlertDialogWidget(
-                                dialogTitle: 'Sistem Hatası!',
+                                dialogTitle: 'İnternet hatası!',
                                 dialogContent:
-                                    'Kısa sürede sorun giderilecektir. Anlayışınız için teşekkür ederiz.',
+                                    'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
                                 btnTitle: 'Kapat',
                                 onPressed: () {
                                   Navigator.pop(context);
-                                  Navigator.pushNamed(context, LoginPage.id);
                                 }));
                       }
-                      //try ends here
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                ),
-                //SizedBox(height: 8.0),
-                SifremiUnuttumButonu(onPressed: () {
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return SifremiUnuttum();
-                      }));
-                }),
-              ],
-            ),
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
+                },
+              ),
+              //SizedBox(height: 8.0),
+              SifremiUnuttumButonu(onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return SifremiUnuttum();
+                    }));
+              }),
+            ],
           ),
         ),
       ),
@@ -248,5 +247,21 @@ class _LoginPageState extends State<LoginPage> {
           },
         ) ??
         false;
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  static const String id = 'loading_screen';
+  @override
+  Widget build(BuildContext context) {
+    return SplashScreen(
+      seconds: 3,
+      navigateAfterSeconds: HomePage.id,
+      title: Text('Küpe Takip', textScaleFactor: 2),
+      image: Image.asset('images/logo_transparent.png'),
+      loadingText: Text('Giriş Başarılı'),
+      loaderColor: kMainKupeColor,
+      photoSize: 100.0,
+    );
   }
 }

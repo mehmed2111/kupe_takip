@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/functions/bolge_ihlal_onchanged.dart';
-import 'package:kupe/functions/isi_alarmi.dart';
+import 'package:kupe/models/bolge_ihlal_onchanged.dart';
+import 'package:kupe/models/isi_alarmi.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
