@@ -3,9 +3,35 @@ import 'package:flutter/services.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/kapat_butonu.dart';
 import 'package:kupe/widgets/rounded_button.dart';
+import 'package:kupe/dbtables/users_table.dart';
+import 'package:kupe/network/network_check.dart';
+import 'package:kupe/widgets/alert_dialog.dart';
 
-class SifreDegistir extends StatelessWidget {
+class SifreDegistir extends StatefulWidget {
   static const String id = 'sifre_degistir';
+  @override
+  _SifreDegistirState createState() => _SifreDegistirState();
+}
+
+class _SifreDegistirState extends State<SifreDegistir> {
+  String password;
+
+  NetworkCheck _networkCheck = NetworkCheck();
+  Users _getUsers = Users();
+  List<Users> _userList;
+
+  //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
+  void _getUsersList() async {
+    var dataList = await _getUsers.fetchUsers();
+    _userList = dataList;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //fetch json data on app start
+    _getUsersList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +71,9 @@ class SifreDegistir extends StatelessWidget {
                             cursorColor: kMainKupeColor,
                             decoration: kTextFieldDecoration.copyWith(
                                 hintText: 'Lütfen yeni şifrenizi giriniz..'),
+                            onChanged: (value) {
+                              password = value;
+                            },
                           ),
                         ),
                         Padding(
@@ -54,6 +83,40 @@ class SifreDegistir extends StatelessWidget {
                             buttonTitle: 'GÜNCELLE',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
+                              setState(() {
+                                _getUsersList();
+                              });
+                              try {
+                                _networkCheck.check().then((internet) {
+                                  if (internet != null && internet) {
+                                    if (_userList != null) {
+                                      for (int i = 0;
+                                          i < _userList.length;
+                                          i++) {
+                                        if (loggedUserID == _userList[i].id) {
+                                          _userList[i].password = password;
+                                        }
+                                      }
+                                    } else {
+                                      print('json data bos geldi');
+                                    }
+                                  } else {
+                                    //if there is no internet connection
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialogWidget(
+                                            dialogTitle: 'İnternet hatası!',
+                                            dialogContent:
+                                                'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                            btnTitle: 'Kapat',
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            }));
+                                  }
+                                });
+                              } catch (e) {
+                                print(e);
+                              }
                             },
                           ),
                         ),

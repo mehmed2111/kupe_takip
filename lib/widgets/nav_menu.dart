@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +12,6 @@ import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
-import 'package:http/http.dart' as http;
 import 'package:kupe/widgets/alert_dialog.dart';
 
 class NavMenu extends StatefulWidget {
@@ -23,20 +21,12 @@ class NavMenu extends StatefulWidget {
 
 class _NavMenuState extends State<NavMenu> {
   NetworkCheck _networkCheck = NetworkCheck();
-  //URL for json data to fetch USERS from DB
-  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+  Users _getUsers = Users();
   List<Users> _userList;
-
-  //fetch json data
-  Future<List<Users>> _fetchUsers() async {
-    final response = await http.get(_url);
-    var data = json.decode(response.body);
-    return (data as List).map((e) => Users.fromJson(e)).toList();
-  }
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUsersList() async {
-    var dataList = await _fetchUsers();
+    var dataList = await _getUsers.fetchUsers();
     _userList = dataList;
   }
 
@@ -89,38 +79,44 @@ class _NavMenuState extends State<NavMenu> {
                   ),
                 ),
                 onTap: () {
-                  _networkCheck.check().then((internet) {
-                    if (internet != null && internet) {
-                      _getUsersList();
-                      for (int i = 0; i < _userList.length; i++) {
-                        if (loggedUserID == _userList[i].id) {
-                          Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return KullaniciProfili(
-                                    kullid: _userList[i].id,
-                                    ad: _userList[i].username,
-                                    adres: _userList[i].adress,
-                                    telNo: _userList[i].telno,
-                                    email: _userList[i].eMail,
-                                    kayitliVet: _userList[i].veteriner);
-                              }));
-                        }
-                      }
-                    } else {
-                      //if there is no internet connection
-                      showDialog(
-                          context: context,
-                          builder: (_) => AlertDialogWidget(
-                              dialogTitle: 'İnternet hatası!',
-                              dialogContent:
-                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                              btnTitle: 'Kapat',
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }));
-                    }
+                  setState(() {
+                    _getUsersList();
                   });
+                  try {
+                    _networkCheck.check().then((internet) {
+                      if (internet != null && internet) {
+                        for (int i = 0; i < _userList.length; i++) {
+                          if (loggedUserID == _userList[i].id) {
+                            Navigator.of(context).push(PageRouteBuilder(
+                                opaque: false,
+                                pageBuilder: (BuildContext context, _, __) {
+                                  return KullaniciProfili(
+                                      kullid: _userList[i].id,
+                                      ad: _userList[i].username,
+                                      adres: _userList[i].adress,
+                                      telNo: _userList[i].telno,
+                                      email: _userList[i].eMail,
+                                      kayitliVet: _userList[i].veteriner);
+                                }));
+                          }
+                        }
+                      } else {
+                        //if there is no internet connection
+                        showDialog(
+                            context: context,
+                            builder: (_) => AlertDialogWidget(
+                                dialogTitle: 'İnternet hatası!',
+                                dialogContent:
+                                    'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                btnTitle: 'Kapat',
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }));
+                      }
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
                 },
               ),
               ListTile(
@@ -174,13 +170,13 @@ class _NavMenuState extends State<NavMenu> {
                           color: Colors.white),
                       title: Text('Şifre Değiştir',
                           style: TextStyle(fontSize: 18, color: Colors.white)),
-                      onTap: () => {
+                      onTap: () {
                         //Navigator.of(context).pop(),
                         Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
                               return SifreDegistir();
-                            })),
+                            }));
                       },
                     ),
                     ListTile(

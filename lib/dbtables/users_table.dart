@@ -1,4 +1,31 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class Users {
+  //URL for json data to fetch USERS from DB
+  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+  //fetch json data
+  Future<List<Users>> fetchUsers() async {
+    final response = await http.get(_url);
+
+    var data = json.decode(response.body);
+    return (data as List).map((e) => Users.fromJson(e)).toList();
+  }
+
+  //post data to json
+  postUsers(Users users) async {
+    var bodyValue = users.toJson();
+
+    var bodyData = json.encode(bodyValue);
+    print('Body data burada: $bodyData');
+
+    final response = await http.post(_url, body: bodyData);
+
+    print('Status kod burada: ${response.statusCode}');
+    print('Response body burada: ${response.body}');
+    return response;
+  }
+
   Users({
     this.id,
     this.username,

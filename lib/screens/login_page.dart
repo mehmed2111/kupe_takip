@@ -117,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                 buttonTitle: 'GİRİŞ YAP',
                 onPressed: () {
                   //every time on button press, make request to json data
-                  _getUsersList();
+                  setState(() {
+                    _getUsersList();
+                  });
                   try {
                     _networkCheck.check().then((internet) {
                       if (internet != null && internet) {
@@ -227,9 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Hayır',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
+                  onPressed: () => Navigator.of(context).pop(false),
                 ),
                 FlatButton(
                   shape: RoundedRectangleBorder(
