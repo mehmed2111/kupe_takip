@@ -19,6 +19,11 @@ class _SifreDegistirState extends State<SifreDegistir> {
   NetworkCheck _networkCheck = NetworkCheck();
   Users _getUsers = Users();
   List<Users> _userList;
+  List<Users> _updateList;
+
+  Future<List<Users>> _futureUsers;
+  Users _users = Users();
+  final _controller = TextEditingController();
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUsersList() async {
@@ -26,11 +31,18 @@ class _SifreDegistirState extends State<SifreDegistir> {
     _userList = dataList;
   }
 
+  /*void _updatePassword(String password) async {
+    var dataList = await _getUsers.updateUsers(password);
+    _updateList = dataList;
+  }*/
+
   @override
   void initState() {
     super.initState();
     //fetch json data on app start
     _getUsersList();
+    //_updatePassword();
+    //_futureUsers = _users.fetchUsers();
   }
 
   @override
@@ -66,14 +78,15 @@ class _SifreDegistirState extends State<SifreDegistir> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextField(
+                            controller: _controller,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.center,
                             cursorColor: kMainKupeColor,
                             decoration: kTextFieldDecoration.copyWith(
                                 hintText: 'Lütfen yeni şifrenizi giriniz..'),
-                            onChanged: (value) {
+                            /*onChanged: (value) {
                               password = value;
-                            },
+                            },*/
                           ),
                         ),
                         Padding(
@@ -94,7 +107,11 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                           i < _userList.length;
                                           i++) {
                                         if (loggedUserID == _userList[i].id) {
-                                          _userList[i].password = password;
+                                          setState(() {
+                                            _userList[i].password =
+                                                _getUsers.updateUsers(
+                                                    _controller.text) as String;
+                                          });
                                         }
                                       }
                                     } else {

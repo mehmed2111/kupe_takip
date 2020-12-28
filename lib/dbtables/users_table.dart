@@ -12,18 +12,27 @@ class Users {
     return (data as List).map((e) => Users.fromJson(e)).toList();
   }
 
-  //post data to json
-  postUsers(Users users) async {
-    var bodyValue = users.toJson();
+  Future<Users> fetchU() async {
+    final response = await http.get(_url);
 
-    var bodyData = json.encode(bodyValue);
-    print('Body data burada: $bodyData');
+    if (response.statusCode == 200) {
+      return Users.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load users');
+    }
+  }
 
-    final response = await http.post(_url, body: bodyData);
+  Future<Users> updateUsers(String password) async {
+    final http.Response response = await http.put(_url,
+        body: jsonEncode(<String, String>{
+          'password': password,
+        }));
 
-    print('Status kod burada: ${response.statusCode}');
-    print('Response body burada: ${response.body}');
-    return response;
+    if (response.statusCode == 200) {
+      return Users.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load Users');
+    }
   }
 
   Users({
@@ -78,3 +87,18 @@ class Users {
     return data;
   }
 }
+
+/*
+  //post data to json
+  postUsers(Users users) async {
+    var bodyValue = users.toJson();
+
+    var bodyData = json.encode(bodyValue);
+    print('Body data burada: $bodyData');
+
+    final response = await http.post(_url, body: bodyData);
+
+    print('Status kod burada: ${response.statusCode}');
+    print('Response body burada: ${response.body}');
+    return response;
+  }*/
