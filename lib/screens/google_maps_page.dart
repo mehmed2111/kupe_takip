@@ -1,12 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/screens/HayvanMarkerlari.dart';
 import 'package:location/location.dart';
-import 'package:http/http.dart' as http;
-import 'package:kupe/widgets/alert_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class GoogleMapsPage extends StatefulWidget {
@@ -32,21 +29,14 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   BitmapDescriptor _mIconCat;
   //create markers list
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-
-  //URL for json data to fetch USERS from DB
-  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllAnimal';
-  List<UserAnimals> _userAnimalList = [];
-  //fetch json data
-  Future<List<UserAnimals>> _fetchUsersAnimals() async {
-    final response = await http.get(_url);
-    var data = json.decode(response.body);
-    return (data as List).map((e) => UserAnimals.fromJson(e)).toList();
-  }
+  //
+  UserAnimals _userAnimals = UserAnimals();
+  List<UserAnimals> _userAnimalList;
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   //and show user's animals on the map
   void _getUsersAnimalsList(GoogleMapController controller) async {
-    var dataList = await _fetchUsersAnimals();
+    var dataList = await _userAnimals.fetchUsersAnimals();
     _userAnimalList = dataList;
 
     googleMapController = controller;
@@ -94,17 +84,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           }
         }
       } else {
-        //if the data from JSON returns null
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialogWidget(
-                dialogTitle: 'Sistem Hatası!',
-                dialogContent:
-                    'Kısa sürede sorun giderilecektir. Anlayışınız için teşekkür ederiz.',
-                btnTitle: 'Kapat',
-                onPressed: () {
-                  Navigator.pop(context);
-                }));
+        throw Exception('Json data could not load');
       }
       setState(() {
         showSpinner = false;

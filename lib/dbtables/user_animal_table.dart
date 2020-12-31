@@ -1,7 +1,20 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class UserAnimals {
-  //MarkerId markerId;
+  //URL for json data to fetch USERS from DB
+  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllAnimal';
+  //fetch json data
+  Future<List<UserAnimals>> fetchUsersAnimals() async {
+    final response = await http.get(_url);
+    var data = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return (data as List).map((e) => UserAnimals.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load users');
+    }
+  }
 
   int id;
   int userId;
@@ -13,8 +26,7 @@ class UserAnimals {
   String color;
 
   UserAnimals(
-      { //this.markerId,
-      this.id,
+      {this.id,
       this.userId,
       this.name,
       this.lat,
@@ -24,7 +36,6 @@ class UserAnimals {
       this.color});
 
   UserAnimals.fromJson(Map<String, dynamic> json) {
-    //markerId = json['marker_id'];
     id = json['id'];
     userId = json['user_id'];
     name = json['name'];

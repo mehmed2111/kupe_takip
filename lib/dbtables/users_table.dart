@@ -4,32 +4,28 @@ import 'package:http/http.dart' as http;
 class Users {
   //URL for json data to fetch USERS from DB
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+
   //fetch json data
   Future<List<Users>> fetchUsers() async {
     final response = await http.get(_url);
-
     var data = json.decode(response.body);
-    return (data as List).map((e) => Users.fromJson(e)).toList();
-  }
-
-  Future<Users> fetchU() async {
-    final response = await http.get(_url);
 
     if (response.statusCode == 200) {
-      return Users.fromJson(jsonDecode(response.body));
+      return (data as List).map((e) => Users.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load users');
     }
   }
 
-  Future<Users> updateUsers(String password) async {
+  Future<List<Users>> updateUsers(String password) async {
     final http.Response response = await http.put(_url,
         body: jsonEncode(<String, String>{
           'password': password,
         }));
 
+    var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return Users.fromJson(jsonDecode(response.body));
+      return (data as List).map((e) => Users.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load Users');
     }

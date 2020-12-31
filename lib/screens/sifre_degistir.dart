@@ -17,32 +17,30 @@ class _SifreDegistirState extends State<SifreDegistir> {
   String password;
 
   NetworkCheck _networkCheck = NetworkCheck();
-  Users _getUsers = Users();
   List<Users> _userList;
-  List<Users> _updateList;
-
-  Future<List<Users>> _futureUsers;
   Users _users = Users();
   final _controller = TextEditingController();
+  //Future<Users> _futureUsers;
+  List<Users> _userUpdate;
+
+  void _userUpdateList() async {
+    var dataList = await _users.updateUsers(password);
+    _userUpdate = dataList;
+  }
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUsersList() async {
-    var dataList = await _getUsers.fetchUsers();
+    var dataList = await _users.fetchUsers();
     _userList = dataList;
   }
-
-  /*void _updatePassword(String password) async {
-    var dataList = await _getUsers.updateUsers(password);
-    _updateList = dataList;
-  }*/
 
   @override
   void initState() {
     super.initState();
     //fetch json data on app start
     _getUsersList();
-    //_updatePassword();
-    //_futureUsers = _users.fetchUsers();
+    //_userUpdateList();
+    //_futureUsers = _users.fetchU();
   }
 
   @override
@@ -84,9 +82,9 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             cursorColor: kMainKupeColor,
                             decoration: kTextFieldDecoration.copyWith(
                                 hintText: 'Lütfen yeni şifrenizi giriniz..'),
-                            /*onChanged: (value) {
+                            onChanged: (value) {
                               password = value;
-                            },*/
+                            },
                           ),
                         ),
                         Padding(
@@ -95,27 +93,35 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             colour: kMainKupeColor,
                             buttonTitle: 'GÜNCELLE',
                             onPressed: () {
-                              /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
                               setState(() {
                                 _getUsersList();
+                                //_userUpdateList();
+                                //_futureUsers = _users.fetchU();
                               });
                               try {
                                 _networkCheck.check().then((internet) {
                                   if (internet != null && internet) {
-                                    if (_userList != null) {
+                                    if (_userList != null &&
+                                        _userUpdate != null) {
                                       for (int i = 0;
                                           i < _userList.length;
                                           i++) {
-                                        if (loggedUserID == _userList[i].id) {
+                                        if (loggedUserID ==
+                                                _userList[i]
+                                                    .id /*&&
+                                            _userList[i].password ==
+                                                _userUpdate[i].password*/
+                                            ) {
                                           setState(() {
                                             _userList[i].password =
-                                                _getUsers.updateUsers(
-                                                    _controller.text) as String;
+                                                _users.updateUsers(password)
+                                                    as String;
                                           });
                                         }
                                       }
                                     } else {
-                                      print('json data bos geldi');
+                                      throw Exception(
+                                          'Json data could not load');
                                     }
                                   } else {
                                     //if there is no internet connection
@@ -134,6 +140,30 @@ class _SifreDegistirState extends State<SifreDegistir> {
                               } catch (e) {
                                 print(e);
                               }
+
+                              /*FutureBuilder<List<Users>>(
+                                  future: _users.fetchUsers(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        for (int i = 0;
+                                            i < _userList.length;
+                                            i++) {
+                                          if (loggedUserID == _userList[i].id) {
+                                            /* _futureUsers = _users
+                                                .updateUsers(_controller.text);*/
+                                            setState(() {
+                                              _userList[i].password = _users
+                                                  .updateUsers(_controller.text)
+                                                  .toString();
+                                            });
+                                          }
+                                        }
+                                      }
+                                    }
+                                    return CircularProgressIndicator();
+                                  });*/
                             },
                           ),
                         ),

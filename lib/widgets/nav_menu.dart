@@ -149,7 +149,25 @@ class _NavMenuState extends State<NavMenu> {
                   'Yenile',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                onTap: () => {Navigator.popAndPushNamed(context, HomePage.id)},
+                onTap: () {
+                  _networkCheck.check().then((internet) {
+                    if (internet != null && internet) {
+                      Navigator.popAndPushNamed(context, HomePage.id);
+                    } else {
+                      //if there is no internet connection
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialogWidget(
+                              dialogTitle: 'İnternet hatası!',
+                              dialogContent:
+                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                              btnTitle: 'Kapat',
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }));
+                    }
+                  });
+                },
               ),
               //burada Submenu oluşturuldu
               Divider(color: Colors.white, thickness: 0.3),
