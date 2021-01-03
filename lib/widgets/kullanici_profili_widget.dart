@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
-class KullaniciBilgileri extends StatelessWidget {
+class KullaniciProfiliWidget extends StatelessWidget {
   final String kullaniciBilg;
   final String kullaniciIcerik;
 
-  KullaniciBilgileri({this.kullaniciBilg, this.kullaniciIcerik});
+  KullaniciProfiliWidget({this.kullaniciBilg, this.kullaniciIcerik});
   @override
   Widget build(BuildContext context) {
     return Column(

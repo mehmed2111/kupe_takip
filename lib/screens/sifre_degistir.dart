@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
+import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/network/network_check.dart';
-import 'package:kupe/widgets/alert_dialog.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
+
+import '../dbtables/users_table.dart';
 
 class SifreDegistir extends StatefulWidget {
   static const String id = 'sifre_degistir';
@@ -14,19 +16,19 @@ class SifreDegistir extends StatefulWidget {
 }
 
 class _SifreDegistirState extends State<SifreDegistir> {
-  String password;
+  String _password;
 
   NetworkCheck _networkCheck = NetworkCheck();
   List<Users> _userList;
   Users _users = Users();
   final _controller = TextEditingController();
   //Future<Users> _futureUsers;
-  List<Users> _userUpdate;
-
-  void _userUpdateList() async {
+  List<Users> _updateUsersList;
+/*
+  void _updateUsers(String password) async {
     var dataList = await _users.updateUsers(password);
-    _userUpdate = dataList;
-  }
+    _updateUsersList = dataList;
+  }*/
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUsersList() async {
@@ -39,6 +41,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
     super.initState();
     //fetch json data on app start
     _getUsersList();
+    //_updateUsers(_password);
     //_userUpdateList();
     //_futureUsers = _users.fetchU();
   }
@@ -83,26 +86,30 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             decoration: kTextFieldDecoration.copyWith(
                                 hintText: 'Lütfen yeni şifrenizi giriniz..'),
                             onChanged: (value) {
-                              password = value;
+                              _password = value;
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 16.0),
                           child: RoundedButton(
                             colour: kMainKupeColor,
-                            buttonTitle: 'GÜNCELLE',
+                            buttonTitle: 'Güncelle',
                             onPressed: () {
                               setState(() {
                                 _getUsersList();
+                                //_updateUsers(_password);
                                 //_userUpdateList();
                                 //_futureUsers = _users.fetchU();
                               });
                               try {
                                 _networkCheck.check().then((internet) {
                                   if (internet != null && internet) {
-                                    if (_userList != null &&
-                                        _userUpdate != null) {
+                                    if (_userList !=
+                                            null /*&&
+                                        _updateUsersList != null*/
+                                        ) {
                                       for (int i = 0;
                                           i < _userList.length;
                                           i++) {
@@ -110,13 +117,13 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                                 _userList[i]
                                                     .id /*&&
                                             _userList[i].password ==
-                                                _userUpdate[i].password*/
+                                                _updateUsersList[i].password*/
                                             ) {
-                                          setState(() {
-                                            _userList[i].password =
-                                                _users.updateUsers(password)
-                                                    as String;
-                                          });
+                                          //setState(() {
+                                          _userList[i].password = _users
+                                                  .updateUsers(_controller.text)
+                                              as String;
+                                          //});
                                         }
                                       }
                                     } else {
@@ -170,7 +177,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
                       ],
                     ),
                   )),
-                  KapatButonu(onPressed: () {
+                  KapatButton(onPressed: () {
                     Navigator.pop(context);
                   }),
                 ],

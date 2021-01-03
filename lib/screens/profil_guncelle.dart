@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
-import 'package:kupe/widgets/profil_bilgileri.dart';
+import 'package:kupe/widgets/kapat_button.dart';
+import 'package:kupe/widgets/profil_guncelle_widget.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
 class ProfilGuncelle extends StatelessWidget {
@@ -51,41 +51,43 @@ class ProfilGuncelle extends StatelessWidget {
                     child: ListView(
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
-                        ProfilBilgileri(
+                        ProfilGuncelleWidget(
                           titleBilg: 'Mail adresi:',
                           hintText: 'Mail adresinizi giriniz..',
                           //onChanged: (newValue) {},
                         ),
-                        ProfilBilgileri(
+                        ProfilGuncelleWidget(
                           titleBilg: 'Telefon numarası:',
                           hintText: 'Telefon numaranızı giriniz..',
                           //onChanged: (newValue) {},
                         ),
-                        ProfilBilgileri(
+                        ProfilGuncelleWidget(
                           titleBilg: 'Adres bilgisi:',
                           hintText: 'Adresinizi giriniz..',
                           //onChanged: (newValue) {},
                         ),
-                        ProfilBilgileri(
+                        ProfilGuncelleWidget(
                           titleBilg: 'Veteriner:',
                           hintText: 'Yeni veteriner adını giriniz..',
                           //onChanged: (newValue) {},
                         ),
+                        SizedBox(height: 6.0),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: RoundedButton(
                             colour: kMainKupeColor,
-                            buttonTitle: 'GÜNCELLE',
+                            buttonTitle: 'Güncelle',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
                             },
                           ),
                         ),
+                        SizedBox(height: 16.0),
                       ],
                     ),
                   ),
                 ),
-                KapatButonu(onPressed: () {
+                KapatButton(onPressed: () {
                   Navigator.pop(context);
                 }),
               ],

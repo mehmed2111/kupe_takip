@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
-import 'kapat_butonu.dart';
+import 'kapat_button.dart';
 
 class SaglikTakipWidget extends StatelessWidget {
   final int hayvanID;
@@ -225,7 +225,7 @@ class SaglikTakipWidget extends StatelessWidget {
                   SizedBox(
                     height: 30.0,
                   ),
-                  KapatButonu(onPressed: () {
+                  KapatButton(onPressed: () {
                     Navigator.pop(context);
                   }),
                 ],

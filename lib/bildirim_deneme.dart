@@ -49,7 +49,7 @@ class _BildirimDenemeState extends State<BildirimDeneme> {
           children: <Widget>[
             RoundedButton(
                 colour: kMainKupeColor,
-                buttonTitle: 'BİLDİRİM GÖNDER',
+                buttonTitle: 'Bildirim Gönder',
                 onPressed: showNotification),
           ],
         ),

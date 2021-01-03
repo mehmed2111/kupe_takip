@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/deneme.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin.dart';
@@ -12,7 +13,7 @@ import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
-import 'package:kupe/widgets/alert_dialog.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
 
 class NavMenu extends StatefulWidget {
   @override
@@ -239,6 +240,17 @@ class _NavMenuState extends State<NavMenu> {
                   //close all previous screens and take the user to login page
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       LoginPage.id, (Route<dynamic> route) => false);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.white),
+                title: Text(
+                  'Deneme',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyApp()));
                 },
               ),
             ],

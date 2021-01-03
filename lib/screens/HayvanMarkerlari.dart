@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
+import 'package:kupe/widgets/kapat_button.dart';
 import '../constants.dart';
 
 class HayvanMarkerlari extends StatelessWidget {
@@ -221,7 +221,7 @@ class HayvanMarkerlari extends StatelessWidget {
                     ),
                   ),
                 ),
-                KapatButonu(onPressed: () {
+                KapatButton(onPressed: () {
                   Navigator.pop(context);
                 }),
               ],

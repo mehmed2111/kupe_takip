@@ -18,7 +18,7 @@ class Users {
   }
 
   Future<List<Users>> updateUsers(String password) async {
-    final http.Response response = await http.put(_url,
+    final http.Response response = await http.post(_url,
         body: jsonEncode(<String, String>{
           'password': password,
         }));

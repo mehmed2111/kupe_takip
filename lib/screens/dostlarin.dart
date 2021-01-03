@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/widgets/dostlarin_bilgileri.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
+import 'package:kupe/widgets/dostlarin_widget.dart';
+import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
 class Dostlarin extends StatelessWidget {
@@ -35,30 +35,30 @@ class Dostlarin extends StatelessWidget {
                     ),
                     child: ListView(
                       children: [
-                        DostlarinBilgileri(
+                        DostlarinWidget(
                           textTitle: 'Adı:',
                           hintText: 'Dostunuzun adını giriniz..',
                           onChanged: (newValue) {},
                         ),
                         SizedBox(height: 10.0),
                         //BURAYA IMAGE GELECEK
-                        DostlarinBilgileri(
+                        DostlarinWidget(
                           textTitle: 'Cinsiyeti:',
                           hintText: 'Dostunuzun cinsiyeti (E/D)..',
                           onChanged: (newValue) {},
                         ),
                         SizedBox(height: 10.0),
-                        DostlarinBilgileri(
+                        DostlarinWidget(
                           textTitle: 'Rengi:',
                           hintText: 'Dostunuzun rengini giriniz..',
                           onChanged: (newValue) {},
                         ),
-
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 16.0),
                           child: RoundedButton(
                             colour: kMainKupeColor,
-                            buttonTitle: 'TÜMÜNÜ KAYDET',
+                            buttonTitle: 'Tümünü Kaydet',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
                             },
@@ -68,7 +68,7 @@ class Dostlarin extends StatelessWidget {
                     ),
                   ),
                 ),
-                KapatButonu(onPressed: () {
+                KapatButton(onPressed: () {
                   Navigator.pop(context);
                 }),
               ],

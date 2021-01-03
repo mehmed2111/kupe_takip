@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
-class DostlarinBilgileri extends StatelessWidget {
+class DostlarinWidget extends StatelessWidget {
   final String textTitle;
   final String hintText;
   final Function onChanged;
 
-  DostlarinBilgileri({this.textTitle, this.hintText, this.onChanged});
+  DostlarinWidget({this.textTitle, this.hintText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {

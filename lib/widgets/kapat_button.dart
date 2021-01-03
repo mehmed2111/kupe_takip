@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
-class KapatButonu extends StatelessWidget {
+class KapatButton extends StatelessWidget {
   final Function onPressed;
 
-  KapatButonu({@required this.onPressed});
+  KapatButton({@required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(
-        //MediaQuery olmadan kapat butonu ortalanamıyor ve display'e göre responsive olmasını sağlıyor
+        //MediaQuery olmadan kapat butonu ortalanamıyor ve display'e göre responsive olmuyor.
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [

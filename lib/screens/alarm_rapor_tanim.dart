@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/models/bolge_ihlal_onchanged.dart';
 import 'package:kupe/models/isi_alarmi.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
+import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
 class AlarmRaporTanim extends StatelessWidget {
@@ -19,7 +19,7 @@ class AlarmRaporTanim extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Container(
-              height: 350.0,
+              height: 380.0,
               //width: 360.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,10 +42,11 @@ class AlarmRaporTanim extends StatelessWidget {
                           BolgeihlalOnChanged(),
                           IsiAlarmi(),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 16.0),
                             child: RoundedButton(
                               colour: kMainKupeColor,
-                              buttonTitle: 'GÜNCELLE',
+                              buttonTitle: 'Güncelle',
                               onPressed: () {
                                 /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
                               },
@@ -56,7 +57,7 @@ class AlarmRaporTanim extends StatelessWidget {
                     ),
                   ),
                   //SizedBox(height: 20.0),
-                  KapatButonu(onPressed: () {
+                  KapatButton(onPressed: () {
                     Navigator.pop(context);
                   }),
                 ],

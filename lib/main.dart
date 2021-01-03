@@ -11,12 +11,15 @@ import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/screens/sifremi_unuttum.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(Kupe());
 
 class Kupe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //use the app only in portrait mode. Disables device orientation
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       initialRoute: LoginPage.id,
       routes: {

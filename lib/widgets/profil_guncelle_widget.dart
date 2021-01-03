@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
-class ProfilBilgileri extends StatelessWidget {
+class ProfilGuncelleWidget extends StatelessWidget {
   final String titleBilg;
   final String hintText;
   final Function onChanged;
 
-  ProfilBilgileri({this.titleBilg, this.hintText, this.onChanged});
+  ProfilGuncelleWidget({this.titleBilg, this.hintText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {

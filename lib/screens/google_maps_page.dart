@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
@@ -83,12 +85,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             });
           }
         }
+        setState(() {
+          showSpinner = false;
+        });
       } else {
         throw Exception('Json data could not load');
       }
-      setState(() {
-        showSpinner = false;
-      });
     } catch (e) {
       print(e);
     }
@@ -132,13 +134,30 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     });
   }
 
+  //call json data every 20 seconds
+  Timer timer;
+  int counter = 0;
+
   @override
   void initState() {
     super.initState();
     _markerIconDog();
     _markerIconCat();
     _checkLocationPermission();
-    //_getUsersAnimalsList(googleMapController);
+    timer = Timer.periodic(Duration(seconds: 20), (Timer t) => addValue());
+    //print('Timer called $counter');
+  }
+
+  void addValue() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,11 +7,9 @@ import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/models/beni_hatirla.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/sifremi_unuttum.dart';
-import 'package:kupe/widgets/alert_dialog.dart';
-import 'package:kupe/widgets/rounded_button.dart';
-import 'package:kupe/widgets/sifremi_unuttum_butonu.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
+import 'package:kupe/widgets/login_page_buttons.dart';
 import 'package:kupe/screens/home_page.dart';
-import 'package:http/http.dart' as http;
 import 'package:splashscreen/splashscreen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,22 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   String password;
   //check for internet connection
   NetworkCheck _networkCheck = NetworkCheck();
-
-  //URL for json data to fetch USERS from DB
-  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+  //fetch users and assign them to a List of object of Users
   List<Users> _userList;
-
-  //fetch json data
-  Future<List<Users>> _fetchUsers() async {
-    final response = await http.get(_url);
-    var data = json.decode(response.body);
-
-    return (data as List).map((e) => Users.fromJson(e)).toList();
-  }
+  Users _getUsers = Users();
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUsersList() async {
-    var dataList = await _fetchUsers();
+    var dataList = await _getUsers.fetchUsers();
     _userList = dataList;
   }
 
@@ -112,9 +100,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 8.0),
               BeniHatirla(),
-              RoundedButton(
-                colour: kMainKupeColor,
-                buttonTitle: 'GİRİŞ YAP',
+              SizedBox(height: 8.0),
+              LoginPageButtons(
+                btnTitle: 'Giriş Yap',
+                icon: Icon(Icons.login_rounded, color: Colors.white),
+                color: kMainKupeColor,
                 onPressed: () {
                   //every time on button press, make request to json data
                   setState(() {
@@ -165,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                           } //outer for loop
                           //if userList is not empty ends here
                         } else {
-                          print('Json bos geldi... ');
+                          throw Exception('Failed to load users');
                         }
                       } else {
                         //if there is no internet connection
@@ -186,14 +176,18 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
               ),
-              //SizedBox(height: 8.0),
-              SifremiUnuttumButonu(onPressed: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return SifremiUnuttum();
-                    }));
-              }),
+              SizedBox(height: 16.0),
+              LoginPageButtons(
+                  btnTitle: 'Şifremi Unuttum',
+                  icon: Icon(Icons.vpn_key_rounded, color: Colors.white),
+                  color: kLoginDarkBackground,
+                  onPressed: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) {
+                          return SifremiUnuttum();
+                        }));
+                  }),
             ],
           ),
         ),
@@ -201,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  //Alert Dialog to ask to exit from the App onBackButton pressed
+  //Alert Dialog to ask to exit from the App onBackButton pressed on Android devices
   Future<bool> _onBackPressed() {
     return showDialog(
           context: context,
@@ -221,20 +215,22 @@ class _LoginPageState extends State<LoginPage> {
                   style:
                       TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
               actions: [
-                FlatButton(
+                MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
                   color: kLoginDarkBackground,
+                  elevation: 5.0,
                   child: Text(
                     'Hayır',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
-                FlatButton(
+                MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
                   color: kLoginDarkBackground,
+                  elevation: 5.0,
                   child: Text(
                     'Evet',
                     style: TextStyle(color: Colors.white),

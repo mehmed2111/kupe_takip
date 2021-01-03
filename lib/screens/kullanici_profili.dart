@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
-import 'package:kupe/widgets/kullanici_bilgileri.dart';
+import 'package:kupe/widgets/kapat_button.dart';
+import 'package:kupe/widgets/kullanici_profili_widget.dart';
 
 class KullaniciProfili extends StatelessWidget {
   static const String id = 'dialog_popup';
@@ -67,28 +67,28 @@ class KullaniciProfili extends StatelessWidget {
                     child: ListView(
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
-                        KullaniciBilgileri(
+                        KullaniciProfiliWidget(
                             kullaniciBilg: 'Kullanıcı ID:',
                             kullaniciIcerik: kullid.toString()),
-                        KullaniciBilgileri(
+                        KullaniciProfiliWidget(
                             kullaniciBilg: 'Adınız:', kullaniciIcerik: ad),
-                        KullaniciBilgileri(
+                        KullaniciProfiliWidget(
                             kullaniciBilg: 'Adresiniz:',
                             kullaniciIcerik: adres),
-                        KullaniciBilgileri(
+                        KullaniciProfiliWidget(
                             kullaniciBilg: 'Telefon numaranız:',
                             kullaniciIcerik: telNo),
-                        KullaniciBilgileri(
+                        KullaniciProfiliWidget(
                             kullaniciBilg: 'Mail adresiniz:',
                             kullaniciIcerik: email),
-                        KullaniciBilgileri(
+                        KullaniciProfiliWidget(
                             kullaniciBilg: 'Kayıtlı veterineriniz:',
                             kullaniciIcerik: kayitliVet),
                       ],
                     ),
                   ),
                 ),
-                KapatButonu(onPressed: () {
+                KapatButton(onPressed: () {
                   Navigator.pop(context);
                 }),
               ],

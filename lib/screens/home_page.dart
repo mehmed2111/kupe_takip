@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  //Alert Dialog to ask to exit from the App onBackButton pressed
+  //Alert Dialog to ask to exit from the App onBackButton pressed on Android devices
   Future<bool> _onBackPressed() {
     return showDialog(
           context: context,
@@ -61,22 +61,22 @@ class _HomePageState extends State<HomePage> {
                   style:
                       TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
               actions: [
-                FlatButton(
+                MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
                   color: kLoginDarkBackground,
+                  elevation: 5.0,
                   child: Text(
                     'Hayır',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
+                  onPressed: () => Navigator.of(context).pop(false),
                 ),
-                FlatButton(
+                MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
                   color: kLoginDarkBackground,
+                  elevation: 5.0,
                   child: Text(
                     'Evet',
                     style: TextStyle(color: Colors.white),

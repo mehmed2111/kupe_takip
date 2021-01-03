@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/widgets/kapat_butonu.dart';
+import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
 class SifremiUnuttum extends StatelessWidget {
@@ -57,11 +57,12 @@ class SifremiUnuttum extends StatelessWidget {
                             onChanged: (newValue) {},
                           ),
                         ),
+                        SizedBox(height: 16.0),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: RoundedButton(
                             colour: kMainKupeColor,
-                            buttonTitle: 'GÖNDER',
+                            buttonTitle: 'Gönder',
                             onPressed: () {
                               /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
                             },
@@ -71,7 +72,7 @@ class SifremiUnuttum extends StatelessWidget {
                     ),
                   ),
                 ),
-                KapatButonu(onPressed: () {
+                KapatButton(onPressed: () {
                   Navigator.pop(context);
                 }),
               ],
