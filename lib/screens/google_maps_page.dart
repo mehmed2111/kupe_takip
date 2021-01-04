@@ -136,7 +136,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   //call json data every 20 seconds
   Timer timer;
-  int counter = 0;
 
   @override
   void initState() {
@@ -144,14 +143,9 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _markerIconDog();
     _markerIconCat();
     _checkLocationPermission();
-    timer = Timer.periodic(Duration(seconds: 20), (Timer t) => addValue());
-    //print('Timer called $counter');
-  }
-
-  void addValue() {
-    setState(() {
-      counter++;
-    });
+    timer = Timer.periodic(Duration(seconds: 20),
+        (Timer t) => _getUsersAnimalsList(googleMapController));
+    print('Timer called $timer');
   }
 
   @override
