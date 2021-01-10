@@ -7,8 +7,6 @@ import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 
-import '../dbtables/users_table.dart';
-
 class SifreDegistir extends StatefulWidget {
   static const String id = 'sifre_degistir';
   @override
@@ -19,11 +17,11 @@ class _SifreDegistirState extends State<SifreDegistir> {
   String _password;
 
   NetworkCheck _networkCheck = NetworkCheck();
-  List<Users> _userList;
-  Users _users = Users();
+  List<User> _userList;
+  User _users = User();
   final _controller = TextEditingController();
   //Future<Users> _futureUsers;
-  List<Users> _updateUsersList;
+  List<User> _updateUsersList;
 /*
   void _updateUsers(String password) async {
     var dataList = await _users.updateUsers(password);
@@ -32,8 +30,8 @@ class _SifreDegistirState extends State<SifreDegistir> {
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUsersList() async {
-    var dataList = await _users.fetchUsers();
-    _userList = dataList;
+    //var dataList = await _users.fetchUsers();
+    //_userList = dataList;
   }
 
   @override
@@ -120,9 +118,9 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                                 _updateUsersList[i].password*/
                                             ) {
                                           //setState(() {
-                                          _userList[i].password = _users
-                                                  .updateUsers(_controller.text)
-                                              as String;
+                                          _userList[i].password =
+                                              _users.updateUserPassword(
+                                                  _controller.text) as String;
                                           //});
                                         }
                                       }

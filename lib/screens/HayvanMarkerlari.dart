@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import '../constants.dart';
 
@@ -9,10 +8,9 @@ class HayvanMarkerlari extends StatelessWidget {
   final String ad;
   final String sagDurumu;
   final String isi;
-  final int cinsiyet;
+  final String cinsiyet;
   final String renk;
   final String sonKonT;
-  final MarkerId deger;
 
   HayvanMarkerlari(
       {this.ad,
@@ -20,8 +18,7 @@ class HayvanMarkerlari extends StatelessWidget {
       this.isi,
       this.cinsiyet,
       this.renk,
-      this.sonKonT,
-      this.deger});
+      this.sonKonT});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +31,7 @@ class HayvanMarkerlari extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Container(
-            height: 450.0,
-            //width: 360.0,
+            height: 380.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -59,7 +55,7 @@ class HayvanMarkerlari extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0),
+                //SizedBox(height: 10.0),
                 Expanded(
                   child: Theme(
                     data:
@@ -188,28 +184,6 @@ class HayvanMarkerlari extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 sonKonT,
-                                style: TextStyle(
-                                    color: kLoginDarkBackground,
-                                    fontSize: 18.0),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10.0),
-                        Row(
-                          children: [
-                            SizedBox(width: 10.0),
-                            Text(
-                              'Gelen Değer:',
-                              style: TextStyle(
-                                  color: kLoginDarkBackground,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(width: 5.0),
-                            Flexible(
-                              child: Text(
-                                deger.toString(),
                                 style: TextStyle(
                                     color: kLoginDarkBackground,
                                     fontSize: 18.0),

@@ -37,8 +37,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   //and show user's animals on the map
-  void _getUsersAnimalsList(GoogleMapController controller) async {
-    var dataList = await _userAnimals.fetchUsersAnimals();
+  void _getUserAnimals(GoogleMapController controller) async {
+    var dataList = await _userAnimals.fetchUserAnimals(loggedUserID);
     _userAnimalList = dataList;
 
     googleMapController = controller;
@@ -63,13 +63,15 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           pageBuilder: (BuildContext context, _, __) {
                             return HayvanMarkerlari(
                               ad: _userAnimalList[i].name,
-                              sagDurumu: 'animal.sagDurumu',
-                              isi: 'animal.isi',
-                              cinsiyet: _userAnimalList[i].gender,
+                              sagDurumu: 'İyi',
+                              isi: '37',
+                              cinsiyet: _userAnimalList[i].gender == 0
+                                  ? 'Erkek'
+                                  : _userAnimalList[i].gender == 1
+                                      ? 'Dişi'
+                                      : null,
                               renk: _userAnimalList[i].color,
-                              sonKonT: 'animal.sonKonT',
-                              deger: MarkerId(
-                                  '${_userAnimalList[i].id.toString()}'),
+                              sonKonT: 'Eklenecek',
                             );
                           }));
                     }),
@@ -89,7 +91,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           showSpinner = false;
         });
       } else {
-        throw Exception('Json data could not load');
+        throw Exception('Could not load user animals');
       }
     } catch (e) {
       print(e);
@@ -144,8 +146,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _markerIconCat();
     _checkLocationPermission();
     timer = Timer.periodic(Duration(seconds: 20),
-        (Timer t) => _getUsersAnimalsList(googleMapController));
-    print('Timer called $timer');
+        (Timer t) => _getUserAnimals(googleMapController));
+    //print('Timer called $timer');
   }
 
   @override
@@ -167,7 +169,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             ),
             mapType: _mapType,
             markers: Set<Marker>.of(markers.values), //_markers,
-            onMapCreated: _getUsersAnimalsList,
+            onMapCreated: _getUserAnimals,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 16.0),

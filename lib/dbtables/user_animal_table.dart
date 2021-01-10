@@ -3,16 +3,18 @@ import 'package:http/http.dart' as http;
 
 class UserAnimals {
   //URL for json data to fetch USERS from DB
-  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllAnimal';
+  //https://www.aractakipsistemleri.com/canli3/Takip/GetSelectedAnimal?user_id=5
+  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
+
   //fetch json data
-  Future<List<UserAnimals>> fetchUsersAnimals() async {
-    final response = await http.get(_url);
+  Future<List<UserAnimals>> fetchUserAnimals(int id) async {
+    final response = await http.get(_url + 'GetSelectedAnimal?user_id=$id');
     var data = json.decode(response.body);
 
     if (response.statusCode == 200) {
       return (data as List).map((e) => UserAnimals.fromJson(e)).toList();
     } else {
-      throw Exception('Failed to load users');
+      throw Exception('Failed to load user animals');
     }
   }
 

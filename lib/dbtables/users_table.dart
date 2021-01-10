@@ -1,37 +1,54 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:kupe/constants.dart';
 
-class Users {
-  //URL for json data to fetch USERS from DB
-  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/GetAllUser';
+class User {
+  //URL for json to fetch data from DB
+  String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
+  //Map<String, String> headers = {};
 
-  //fetch json data
-  Future<List<Users>> fetchUsers() async {
-    final response = await http.get(_url);
+  Future<List<User>> fetchLoginUser(String username, String password) async {
+    final response = await http
+        .post(_url + 'MobileLogin?username=$username&password=$password');
     var data = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      return (data as List).map((e) => Users.fromJson(e)).toList();
+      return (data as List).map((e) => User.fromJson(e)).toList();
     } else {
-      throw Exception('Failed to load users');
+      throw Exception('Failed to load user');
     }
   }
 
-  Future<List<Users>> updateUsers(String password) async {
-    final http.Response response = await http.post(_url,
+  Future<List<User>> fetchUserData(int id) async {
+    final response = await http.post(_url + 'GetSelectedUser?user_id=$id');
+
+    var data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return (data as List).map((e) => User.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+  Future<List<User>> updateUserPassword(String password) async {
+    //Map<String, String> headers = {};
+    //headers['user_cookie'] = "$loggedUserID";
+    final http.Response response = await http.post(_url + "UpdatePassword",
         body: jsonEncode(<String, String>{
+          'id': "$loggedUserID",
           'password': password,
+          //buralara telno lar fln da gelecek
         }));
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return (data as List).map((e) => Users.fromJson(e)).toList();
+      return (data as List).map((e) => User.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load Users');
     }
   }
 
-  Users({
+  User({
     this.id,
     this.username,
     this.password,
@@ -55,7 +72,7 @@ class Users {
   int heatAlarm;
   String sifre2;
 
-  factory Users.fromJson(Map<String, dynamic> json) => Users(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         username: json["username"],
         password: json["password"],

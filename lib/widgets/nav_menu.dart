@@ -22,20 +22,20 @@ class NavMenu extends StatefulWidget {
 
 class _NavMenuState extends State<NavMenu> {
   NetworkCheck _networkCheck = NetworkCheck();
-  Users _getUsers = Users();
-  List<Users> _userList;
+  User _getUsers = User();
+  List<User> _userData;
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
-  void _getUsersList() async {
-    var dataList = await _getUsers.fetchUsers();
-    _userList = dataList;
+  void _getUserData(int id) async {
+    var dataList = await _getUsers.fetchUserData(id);
+    _userData = dataList;
   }
 
   @override
   void initState() {
     super.initState();
     //fetch json data on app start
-    _getUsersList();
+    _getUserData(loggedUserID);
   }
 
   @override
@@ -81,24 +81,26 @@ class _NavMenuState extends State<NavMenu> {
                 ),
                 onTap: () {
                   setState(() {
-                    _getUsersList();
+                    _getUserData(loggedUserID);
                   });
                   try {
                     _networkCheck.check().then((internet) {
                       if (internet != null && internet) {
-                        for (int i = 0; i < _userList.length; i++) {
-                          if (loggedUserID == _userList[i].id) {
+                        for (int i = 0; i < _userData.length; i++) {
+                          if (loggedUserID == _userData[i].id) {
                             Navigator.of(context).push(PageRouteBuilder(
                                 opaque: false,
                                 pageBuilder: (BuildContext context, _, __) {
                                   return KullaniciProfili(
-                                      kullid: _userList[i].id,
-                                      ad: _userList[i].username,
-                                      adres: _userList[i].adress,
-                                      telNo: _userList[i].telno,
-                                      email: _userList[i].eMail,
-                                      kayitliVet: _userList[i].veteriner);
+                                      kullid: _userData[i].id,
+                                      ad: _userData[i].username,
+                                      adres: _userData[i].adress,
+                                      telNo: _userData[i].telno,
+                                      email: _userData[i].eMail,
+                                      kayitliVet: _userData[i].veteriner);
                                 }));
+                          } else {
+                            throw Exception('Could not find selected user');
                           }
                         }
                       } else {
