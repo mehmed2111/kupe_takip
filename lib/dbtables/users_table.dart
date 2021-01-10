@@ -19,7 +19,7 @@ class User {
     }
   }
 
-  Future<List<User>> fetchUserData(int id) async {
+  Future<List<User>> fetchUserProfile(int id) async {
     final response = await http.post(_url + 'GetSelectedUser?user_id=$id');
 
     var data = json.decode(response.body);
@@ -34,17 +34,35 @@ class User {
     //Map<String, String> headers = {};
     //headers['user_cookie'] = "$loggedUserID";
     final http.Response response = await http.post(_url + "UpdatePassword",
+        body: jsonEncode(
+            <String, String>{'id': "$loggedUserID", 'password': password}));
+
+    var data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return (data as List).map((e) => User.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load password update');
+    }
+  }
+
+  Future<List<User>> updateUserProfile(
+      String email, String telNo, String address, String veteriner) async {
+    //Map<String, String> headers = {};
+    //headers['user_cookie'] = "$loggedUserID";
+    final http.Response response = await http.post(_url + "UpdateUser",
         body: jsonEncode(<String, String>{
           'id': "$loggedUserID",
-          'password': password,
-          //buralara telno lar fln da gelecek
+          'eMail': email,
+          'telno': telNo,
+          'adress': address,
+          'veteriner': veteriner
         }));
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
       return (data as List).map((e) => User.fromJson(e)).toList();
     } else {
-      throw Exception('Failed to load Users');
+      throw Exception('Failed to load profile update');
     }
   }
 

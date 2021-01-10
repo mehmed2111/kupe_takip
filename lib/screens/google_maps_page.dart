@@ -45,10 +45,14 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     setState(() {
       showSpinner = true;
     });
+    //int count = 0;
     try {
       if (_userAnimalList != null) {
         for (int i = 0; i < _userAnimalList.length; i++) {
           if (loggedUserID == _userAnimalList[i].userId) {
+            //animalID[count] = _userAnimalList[i].id;
+            //count++;
+
             setState(() {
               Marker markerList = Marker(
                 markerId: MarkerId('${_userAnimalList[i].id.toString()}'),

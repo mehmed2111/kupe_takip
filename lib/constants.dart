@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //fetched id's
 int loggedUserID = 0;
-List animalID = [];
+List<int> animalID = [];
 
 //App const colors
 const kMainKupeColor = Color(0xFF5CB3AB);

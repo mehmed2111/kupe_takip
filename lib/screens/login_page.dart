@@ -28,19 +28,12 @@ class _LoginPageState extends State<LoginPage> {
   NetworkCheck _networkCheck = NetworkCheck();
   //fetch users and assign them to a List of object of Users
   User _getUser = User();
-  List<User> _user;
+  List<User> _loginUser;
 
   //call fetchLoginUser() function inside this function in order to prevent 'instance of Users' error
   void checkLogin(String username, String password) async {
     var user = await _getUser.fetchLoginUser(username, password);
-    _user = user;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //fetch json data on app start
-    checkLogin('user', '123');
+    _loginUser = user;
   }
 
   @override
@@ -82,7 +75,10 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                   cursorColor: kMainKupeColor,
                   onChanged: (value) {
-                    _username = value;
+                    setState(() {
+                      _username = value;
+                      checkLogin(_username, _password);
+                    });
                   },
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Kullanıcı adı',
@@ -96,7 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   cursorColor: kMainKupeColor,
                   onChanged: (value) {
-                    _password = value;
+                    setState(() {
+                      _password = value;
+                      checkLogin(_username, _password);
+                    });
                   },
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Şifre',
@@ -118,11 +117,11 @@ class _LoginPageState extends State<LoginPage> {
                     try {
                       _networkCheck.check().then((internet) {
                         if (internet != null && internet) {
-                          if (_user != null) {
-                            if (_username == _user[0].username &&
-                                _password == _user[0].password) {
+                          if (_loginUser != null) {
+                            if (_username == _loginUser[0].username &&
+                                _password == _loginUser[0].password) {
                               //loggedUserID will be used for comparing
-                              loggedUserID = _user[0].id;
+                              loggedUserID = _loginUser[0].id;
                               Navigator.pushNamed(context, LoadingScreen.id);
                             } else {
                               showDialog(
@@ -139,9 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                             showDialog(
                                 context: context,
                                 builder: (_) => AlertDialogWidget(
-                                    dialogTitle: 'Hata!',
+                                    dialogTitle: 'Giriş Başarısız!',
                                     dialogContent:
-                                        'Kullanıcı adı ve şifre boş bırakılamaz!',
+                                        'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
                                     btnTitle: 'Kapat',
                                     onPressed: () => Navigator.pop(context)));
                           }

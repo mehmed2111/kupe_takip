@@ -22,12 +22,12 @@ class NavMenu extends StatefulWidget {
 
 class _NavMenuState extends State<NavMenu> {
   NetworkCheck _networkCheck = NetworkCheck();
-  User _getUsers = User();
+  User _getUser = User();
   List<User> _userData;
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
   void _getUserData(int id) async {
-    var dataList = await _getUsers.fetchUserData(id);
+    var dataList = await _getUser.fetchUserProfile(id);
     _userData = dataList;
   }
 
@@ -86,22 +86,35 @@ class _NavMenuState extends State<NavMenu> {
                   try {
                     _networkCheck.check().then((internet) {
                       if (internet != null && internet) {
-                        for (int i = 0; i < _userData.length; i++) {
-                          if (loggedUserID == _userData[i].id) {
-                            Navigator.of(context).push(PageRouteBuilder(
-                                opaque: false,
-                                pageBuilder: (BuildContext context, _, __) {
-                                  return KullaniciProfili(
-                                      kullid: _userData[i].id,
-                                      ad: _userData[i].username,
-                                      adres: _userData[i].adress,
-                                      telNo: _userData[i].telno,
-                                      email: _userData[i].eMail,
-                                      kayitliVet: _userData[i].veteriner);
-                                }));
-                          } else {
-                            throw Exception('Could not find selected user');
+                        if (_userData != null) {
+                          for (int i = 0; i < _userData.length; i++) {
+                            if (loggedUserID == _userData[i].id) {
+                              Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) {
+                                    return KullaniciProfili(
+                                        kullid: _userData[i].id,
+                                        ad: _userData[i].username,
+                                        adres: _userData[i].adress,
+                                        telNo: _userData[i].telno,
+                                        email: _userData[i].eMail,
+                                        kayitliVet: _userData[i].veteriner);
+                                  }));
+                            } else {
+                              throw Exception('Could not find selected user');
+                            }
                           }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialogWidget(
+                                  dialogTitle: 'Hata!',
+                                  dialogContent:
+                                      'Verileriniz yüklenemedi. Lüfen daha sonra tekrar deneyin.',
+                                  btnTitle: 'Kapat',
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }));
                         }
                       } else {
                         //if there is no internet connection
