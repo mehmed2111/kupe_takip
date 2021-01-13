@@ -6,6 +6,7 @@ class User {
   //URL for json to fetch data from DB
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
   //Map<String, String> headers = {};
+  //headers['user_cookie'] = "$loggedUserID";
 
   Future<List<User>> fetchLoginUser(String username, String password) async {
     final response = await http
@@ -19,8 +20,8 @@ class User {
     }
   }
 
-  Future<List<User>> fetchUserProfile(int id) async {
-    final response = await http.post(_url + 'GetSelectedUser?user_id=$id');
+  Future<List<User>> fetchUserProfile(int userId) async {
+    final response = await http.get(_url + 'GetSelectedUser?user_id=$userId');
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -30,10 +31,9 @@ class User {
     }
   }
 
-  Future<List<User>> updateUserPassword(String password) async {
-    //Map<String, String> headers = {};
-    //headers['user_cookie'] = "$loggedUserID";
-    final http.Response response = await http.post(_url + "UpdatePassword",
+  Future<List<User>> updateUserPassword(int userId, String password) async {
+    final http.Response response = await http.post(
+        _url + "UpdatePassword?id=$userId&password=$password",
         body: jsonEncode(
             <String, String>{'id': "$loggedUserID", 'password': password}));
 
@@ -45,17 +45,17 @@ class User {
     }
   }
 
-  Future<List<User>> updateUserProfile(
-      String email, String telNo, String address, String veteriner) async {
-    //Map<String, String> headers = {};
-    //headers['user_cookie'] = "$loggedUserID";
-    final http.Response response = await http.post(_url + "UpdateUser",
+  Future<List<User>> updateUserProfile(int userId, String email, String address,
+      String telNo, String vet) async {
+    final http.Response response = await http.post(
+        _url +
+            "UpdateUser?id=$userId&e_mail=$email&adress=$address&telno=$telNo&veteriner=$vet",
         body: jsonEncode(<String, String>{
           'id': "$loggedUserID",
           'eMail': email,
           'telno': telNo,
           'adress': address,
-          'veteriner': veteriner
+          'veteriner': vet
         }));
 
     var data = json.decode(response.body);
@@ -118,18 +118,3 @@ class User {
     return data;
   }
 }
-
-/*
-  //post data to json
-  postUsers(Users users) async {
-    var bodyValue = users.toJson();
-
-    var bodyData = json.encode(bodyValue);
-    print('Body data burada: $bodyData');
-
-    final response = await http.post(_url, body: bodyData);
-
-    print('Status kod burada: ${response.statusCode}');
-    print('Response body burada: ${response.body}');
-    return response;
-  }*/

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/deneme.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin.dart';
@@ -80,6 +79,7 @@ class _NavMenuState extends State<NavMenu> {
                   ),
                 ),
                 onTap: () {
+                  Navigator.of(context).pop();
                   setState(() {
                     _getUserData(loggedUserID);
                   });
@@ -110,7 +110,7 @@ class _NavMenuState extends State<NavMenu> {
                               builder: (_) => AlertDialogWidget(
                                   dialogTitle: 'Hata!',
                                   dialogContent:
-                                      'Verileriniz yüklenemedi. Lüfen daha sonra tekrar deneyin.',
+                                      'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
                                   btnTitle: 'Kapat',
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -136,14 +136,16 @@ class _NavMenuState extends State<NavMenu> {
                 },
               ),
               ListTile(
-                leading:
-                    Icon(Icons.medical_services_outlined, color: Colors.white),
-                title: Text(
-                  'Sağlık Takip',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                onTap: () => Navigator.pushNamed(context, SaglikTakip.id),
-              ),
+                  leading: Icon(Icons.medical_services_outlined,
+                      color: Colors.white),
+                  title: Text(
+                    'Sağlık Takip',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, SaglikTakip.id);
+                  }),
               ListTile(
                 leading: Icon(Icons.mobile_friendly, color: Colors.white),
                 title: Text(
@@ -151,7 +153,7 @@ class _NavMenuState extends State<NavMenu> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 onTap: () {
-                  //Navigator.of(context).pop()
+                  Navigator.of(context).pop();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -166,6 +168,7 @@ class _NavMenuState extends State<NavMenu> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 onTap: () {
+                  //Navigator.of(context).pop();
                   _networkCheck.check().then((internet) {
                     if (internet != null && internet) {
                       Navigator.popAndPushNamed(context, HomePage.id);
@@ -205,7 +208,7 @@ class _NavMenuState extends State<NavMenu> {
                       title: Text('Şifre Değiştir',
                           style: TextStyle(fontSize: 18, color: Colors.white)),
                       onTap: () {
-                        //Navigator.of(context).pop(),
+                        Navigator.of(context).pop();
                         Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
@@ -217,13 +220,13 @@ class _NavMenuState extends State<NavMenu> {
                       leading: Icon(Icons.switch_account, color: Colors.white),
                       title: Text('Profil Güncelle',
                           style: TextStyle(fontSize: 18, color: Colors.white)),
-                      onTap: () => {
-                        //Navigator.of(context).pop(),
+                      onTap: () {
+                        Navigator.of(context).pop();
                         Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
                               return ProfilGuncelle();
-                            })),
+                            }));
                       },
                     ),
                     ListTile(
@@ -233,7 +236,7 @@ class _NavMenuState extends State<NavMenu> {
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () => {
-                        //Navigator.of(context).pop(),
+                        Navigator.of(context).pop(),
                         Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
@@ -252,12 +255,12 @@ class _NavMenuState extends State<NavMenu> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 onTap: () {
-                  //close all previous screens and take the user to login page
+                  //close all previous screens and take the user to the login page
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       LoginPage.id, (Route<dynamic> route) => false);
                 },
               ),
-              ListTile(
+              /*ListTile(
                 leading: Icon(Icons.logout, color: Colors.white),
                 title: Text(
                   'Deneme',
@@ -267,7 +270,7 @@ class _NavMenuState extends State<NavMenu> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MyApp()));
                 },
-              ),
+              ),*/
             ],
           ),
         ),

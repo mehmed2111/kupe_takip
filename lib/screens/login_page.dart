@@ -242,7 +242,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 3,
+      seconds: 2,
       navigateAfterSeconds: HomePage.id,
       title: Text('Küpe Takip', textScaleFactor: 2),
       image: Image.asset('images/logo_transparent.png'),

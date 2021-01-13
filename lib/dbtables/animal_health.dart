@@ -6,12 +6,14 @@ class AnimalHealth {
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
 
   Future<List<AnimalHealth>> fetchAnimalHealth(int id) async {
-    final response = await http.post(_url + 'GetSelectedHealth?animal_id=$id');
+    final response = await http.get(_url + 'GetSelectedHealth?animal_id=$id');
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
+      print('Success!');
       return (data as List).map((e) => AnimalHealth.fromJson(e)).toList();
     } else {
+      print('Failed to load animal health!');
       throw Exception('Could not load animal health');
     }
   }

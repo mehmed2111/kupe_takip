@@ -14,34 +14,33 @@ class SifreDegistir extends StatefulWidget {
 }
 
 class _SifreDegistirState extends State<SifreDegistir> {
-  String _password;
+  String _oldPassword;
+  String _newPassword;
+  String _newPassAgain;
 
   NetworkCheck _networkCheck = NetworkCheck();
-  List<User> _userList;
-  User _users = User();
-  final _controller = TextEditingController();
-  //Future<Users> _futureUsers;
-  List<User> _updateUsersList;
-/*
-  void _updateUsers(String password) async {
-    var dataList = await _users.updateUsers(password);
-    _updateUsersList = dataList;
-  }*/
+  User _user = User();
+  List<User> updateUserPass;
+
+  //added in order to fetch old password
+  User _getUser = User();
+  List<User> _userData;
+  void _getUserData(int id) async {
+    var dataList = await _getUser.fetchUserProfile(id);
+    _userData = dataList;
+  }
 
   //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
-  void _getUsersList() async {
-    //var dataList = await _users.fetchUsers();
-    //_userList = dataList;
+  void _updateUserPassword(int userId, String password) async {
+    var userData = await _user.updateUserPassword(userId, password);
+    updateUserPass = userData;
   }
 
   @override
   void initState() {
     super.initState();
-    //fetch json data on app start
-    _getUsersList();
-    //_updateUsers(_password);
-    //_userUpdateList();
-    //_futureUsers = _users.fetchU();
+    //fetch user data on app start
+    _getUserData(loggedUserID);
   }
 
   @override
@@ -55,8 +54,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Container(
-              height: 290,
-              //width: 360,
+              height: 400.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -77,14 +75,53 @@ class _SifreDegistirState extends State<SifreDegistir> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextField(
-                            controller: _controller,
-                            keyboardType: TextInputType.text,
+                            //controller: _controller,
+                            keyboardType: TextInputType.visiblePassword,
                             textAlign: TextAlign.center,
                             cursorColor: kMainKupeColor,
                             decoration: kTextFieldDecoration.copyWith(
-                                hintText: 'Lütfen yeni şifrenizi giriniz..'),
+                                hintText: 'Eski Şifre'),
                             onChanged: (value) {
-                              _password = value;
+                              setState(() {
+                                _oldPassword = value;
+                                //_getUserData(loggedUserID);
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextField(
+                            //controller: _controller,
+                            keyboardType: TextInputType.visiblePassword,
+                            textAlign: TextAlign.center,
+                            cursorColor: kMainKupeColor,
+                            decoration: kTextFieldDecoration.copyWith(
+                                hintText: 'Yeni Şifre'),
+                            onChanged: (value) {
+                              setState(() {
+                                _newPassword = value;
+                                //_updateUserPassword(loggedUserID, _newPassword);
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextField(
+                            //controller: _controller,
+                            keyboardType: TextInputType.visiblePassword,
+                            textAlign: TextAlign.center,
+                            cursorColor: kMainKupeColor,
+                            decoration: kTextFieldDecoration.copyWith(
+                                hintText: 'Tekrar Yeni Şifre'),
+                            onChanged: (value) {
+                              setState(() {
+                                _newPassAgain = value;
+                                //_updateUserPassword(loggedUserID, _newPassword);
+                              });
                             },
                           ),
                         ),
@@ -95,38 +132,56 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             colour: kMainKupeColor,
                             buttonTitle: 'Güncelle',
                             onPressed: () {
-                              setState(() {
-                                _getUsersList();
-                                //_updateUsers(_password);
-                                //_userUpdateList();
-                                //_futureUsers = _users.fetchU();
-                              });
                               try {
                                 _networkCheck.check().then((internet) {
                                   if (internet != null && internet) {
-                                    if (_userList !=
-                                            null /*&&
-                                        _updateUsersList != null*/
-                                        ) {
-                                      for (int i = 0;
-                                          i < _userList.length;
-                                          i++) {
-                                        if (loggedUserID ==
-                                                _userList[i]
-                                                    .id /*&&
-                                            _userList[i].password ==
-                                                _updateUsersList[i].password*/
-                                            ) {
-                                          //setState(() {
-                                          _userList[i].password =
-                                              _users.updateUserPassword(
-                                                  _controller.text) as String;
-                                          //});
+                                    if (_newPassword != null &&
+                                        _oldPassword != null) {
+                                      if (_oldPassword ==
+                                              _userData[0].password &&
+                                          _newPassword == _newPassAgain) {
+                                        if (loggedUserID == _userData[0].id) {
+                                          setState(() {
+                                            _updateUserPassword(
+                                                loggedUserID, _newPassAgain);
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    AlertDialogWidget(
+                                                        dialogTitle:
+                                                            'Güncelleme Başarılı',
+                                                        dialogContent:
+                                                            'Şifreniz başarılı bir şekilde güncellendi.',
+                                                        btnTitle: 'Kapat',
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        }));
+                                          });
                                         }
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialogWidget(
+                                                dialogTitle: 'Şifre Hatası!',
+                                                dialogContent:
+                                                    'Lütfen şifrenizi kontrol edin ve tekrar deneyin.',
+                                                btnTitle: 'Kapat',
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                }));
                                       }
                                     } else {
-                                      throw Exception(
-                                          'Json data could not load');
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => AlertDialogWidget(
+                                              dialogTitle: 'Hata!',
+                                              dialogContent:
+                                                  'Şifre alanı boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
+                                              btnTitle: 'Kapat',
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              }));
                                     }
                                   } else {
                                     //if there is no internet connection
@@ -145,30 +200,6 @@ class _SifreDegistirState extends State<SifreDegistir> {
                               } catch (e) {
                                 print(e);
                               }
-
-                              /*FutureBuilder<List<Users>>(
-                                  future: _users.fetchUsers(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      if (snapshot.hasData) {
-                                        for (int i = 0;
-                                            i < _userList.length;
-                                            i++) {
-                                          if (loggedUserID == _userList[i].id) {
-                                            /* _futureUsers = _users
-                                                .updateUsers(_controller.text);*/
-                                            setState(() {
-                                              _userList[i].password = _users
-                                                  .updateUsers(_controller.text)
-                                                  .toString();
-                                            });
-                                          }
-                                        }
-                                      }
-                                    }
-                                    return CircularProgressIndicator();
-                                  });*/
                             },
                           ),
                         ),

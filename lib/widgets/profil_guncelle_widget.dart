@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
 class ProfilGuncelleWidget extends StatelessWidget {
-  final String titleBilg;
+  final String title;
   final String hintText;
+  final controllerText;
   final Function onChanged;
 
-  ProfilGuncelleWidget({this.titleBilg, this.hintText, this.onChanged});
+  ProfilGuncelleWidget(
+      {this.title, this.controllerText, this.hintText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          titleBilg,
+          title,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: kLoginDarkBackground,
@@ -24,6 +26,7 @@ class ProfilGuncelleWidget extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: TextField(
+            controller: controllerText,
             keyboardType: TextInputType.text,
             textAlign: TextAlign.center,
             cursorColor: kMainKupeColor,

@@ -3,9 +3,68 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/profil_guncelle_widget.dart';
 import 'package:kupe/widgets/rounded_button.dart';
+import 'package:kupe/dbtables/users_table.dart';
+import 'package:kupe/network/network_check.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
 
-class ProfilGuncelle extends StatelessWidget {
+import '../constants.dart';
+
+class ProfilGuncelle extends StatefulWidget {
   static const String id = 'profil_guncelle';
+
+  @override
+  _ProfilGuncelleState createState() => _ProfilGuncelleState();
+}
+
+class _ProfilGuncelleState extends State<ProfilGuncelle> {
+  String eMail;
+  String telNo;
+  String address;
+  String vet;
+
+  final textEmail = TextEditingController();
+  final textTelno = TextEditingController();
+  final textAddress = TextEditingController();
+  final textVet = TextEditingController();
+
+  NetworkCheck _networkCheck = NetworkCheck();
+  //added in order to fetch user data
+  User _user = User();
+  List<User> _userData;
+  List<User> updateUserProf;
+
+  void _getUserData(int id) async {
+    var dataList = await _user.fetchUserProfile(id);
+    _userData = dataList;
+
+    //should be assigned here in to show them in TextField controller
+    textEmail.text = _userData[0].eMail;
+    textTelno.text = _userData[0].telno;
+    textAddress.text = _userData[0].adress;
+    textVet.text = _userData[0].veteriner;
+  }
+
+  void _updateUserProfile(int userId, String email, String address,
+      String telNo, String vet) async {
+    var userData =
+        await _user.updateUserProfile(userId, email, address, telNo, vet);
+    updateUserProf = userData;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData(loggedUserID);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    textEmail.dispose();
+    textTelno.dispose();
+    textAddress.dispose();
+    textVet.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +111,24 @@ class ProfilGuncelle extends StatelessWidget {
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
                         ProfilGuncelleWidget(
-                          titleBilg: 'Mail adresi:',
-                          hintText: 'Mail adresinizi giriniz..',
-                          //onChanged: (newValue) {},
+                          title: 'Mail adresiniz:',
+                          hintText: 'Mail adresinizi giriniz.',
+                          controllerText: textEmail,
                         ),
                         ProfilGuncelleWidget(
-                          titleBilg: 'Telefon numarası:',
+                          title: 'Telefon numarası:',
                           hintText: 'Telefon numaranızı giriniz..',
-                          //onChanged: (newValue) {},
+                          controllerText: textTelno,
                         ),
                         ProfilGuncelleWidget(
-                          titleBilg: 'Adres bilgisi:',
+                          title: 'Adres bilgisi:',
                           hintText: 'Adresinizi giriniz..',
-                          //onChanged: (newValue) {},
+                          controllerText: textAddress,
                         ),
                         ProfilGuncelleWidget(
-                          titleBilg: 'Veteriner:',
+                          title: 'Veteriner:',
                           hintText: 'Yeni veteriner adını giriniz..',
-                          //onChanged: (newValue) {},
+                          controllerText: textVet,
                         ),
                         SizedBox(height: 6.0),
                         Padding(
@@ -78,7 +137,84 @@ class ProfilGuncelle extends StatelessWidget {
                             colour: kMainKupeColor,
                             buttonTitle: 'Güncelle',
                             onPressed: () {
-                              /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
+                              try {
+                                _networkCheck.check().then((internet) {
+                                  if (internet != null && internet) {
+                                    if (textEmail.text != '' &&
+                                        textAddress.text != '' &&
+                                        textTelno.text != '' &&
+                                        textVet.text != '') {
+                                      if (loggedUserID == _userData[0].id &&
+                                          textEmail.text ==
+                                              _userData[0].eMail &&
+                                          textAddress.text ==
+                                              _userData[0].adress &&
+                                          textTelno.text ==
+                                              _userData[0].telno &&
+                                          textVet.text ==
+                                              _userData[0].veteriner) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialogWidget(
+                                                dialogTitle:
+                                                    'Profiliniz Güncel!',
+                                                dialogContent:
+                                                    'Profilinizde yer alan bilgiler zaten güncel bilgilerinizdir.',
+                                                btnTitle: 'Kapat',
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                }));
+                                      } else if (loggedUserID ==
+                                          _userData[0].id) {
+                                        setState(() {
+                                          _updateUserProfile(
+                                              loggedUserID,
+                                              textEmail.text,
+                                              textAddress.text,
+                                              textTelno.text,
+                                              textVet.text);
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialogWidget(
+                                                  dialogTitle:
+                                                      'Güncelleme Başarılı!',
+                                                  dialogContent:
+                                                      'Verileriniz başarılı bir şekilde güncellendi.',
+                                                  btnTitle: 'Kapat',
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  }));
+                                        });
+                                      }
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => AlertDialogWidget(
+                                              dialogTitle: 'Hata!',
+                                              dialogContent:
+                                                  'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
+                                              btnTitle: 'Kapat',
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              }));
+                                    }
+                                  } else {
+                                    //if there is no internet connection
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialogWidget(
+                                            dialogTitle: 'İnternet hatası!',
+                                            dialogContent:
+                                                'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                            btnTitle: 'Kapat',
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            }));
+                                  }
+                                });
+                              } catch (e) {
+                                print(e);
+                              }
                             },
                           ),
                         ),

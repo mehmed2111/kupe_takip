@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/dbtables/animal_health.dart';
 import 'package:kupe/widgets/saglik_takip_widget.dart';
 
 class SaglikTakip extends StatefulWidget {
@@ -12,8 +13,8 @@ class SaglikTakip extends StatefulWidget {
   _SaglikTakipState createState() => _SaglikTakipState();
 }
 
-class Hayvanlarim {
-  int hayvanID;
+class UAnimals {
+  int animalID;
   String name;
   String parazitler;
   String karma;
@@ -21,8 +22,8 @@ class Hayvanlarim {
   String mantar;
   String lyme;
 
-  Hayvanlarim(
-      {this.hayvanID,
+  UAnimals(
+      {this.animalID,
       this.name,
       this.parazitler,
       this.karma,
@@ -30,26 +31,26 @@ class Hayvanlarim {
       this.mantar,
       this.lyme});
 
-  static List<Hayvanlarim> getHayvanlarim() {
-    return <Hayvanlarim>[
-      Hayvanlarim(
-          hayvanID: 10267,
+  static List<UAnimals> getUAnimals() {
+    return <UAnimals>[
+      UAnimals(
+          animalID: 10267,
           name: 'Boncuk',
           parazitler: 'Henüz aşı bilgisi yok',
           karma: '11.03.2020 de aşısı yapıldı',
           kuduz: 'Henüz aşı bilgisi yok',
           mantar: '01.06.2020 de aşısı yapıldı',
           lyme: 'Henüz aşı bilgisi yok'),
-      Hayvanlarim(
-          hayvanID: 2,
+      UAnimals(
+          animalID: 2,
           name: 'Dost2',
           parazitler: 'Parazit aşısı yapıldı',
           karma: 'Karma aşısı yapıldı',
           kuduz: 'Kuduz aşısı yapıldı',
           mantar: 'Mantar aşısı yapıldı',
           lyme: 'Lyme aşısı yapıldı'),
-      Hayvanlarim(
-          hayvanID: 3,
+      UAnimals(
+          animalID: 3,
           name: 'Dost3',
           parazitler: 'Parazit aşısı yapıldı',
           karma: 'Karma aşısı yapıldı',
@@ -61,46 +62,59 @@ class Hayvanlarim {
 }
 
 class _SaglikTakipState extends State<SaglikTakip> {
-  List<Hayvanlarim> _hayvanlar = Hayvanlarim.getHayvanlarim();
-  List<DropdownMenuItem<Hayvanlarim>> _dropdownMenuItems;
-  Hayvanlarim _secilenHayvan;
+  List<UAnimals> _animals = UAnimals.getUAnimals();
+  List<DropdownMenuItem<UAnimals>> _dropdownMenuItems;
+  UAnimals _selectedAnimal;
+
+  AnimalHealth _animalHealth = AnimalHealth();
+  List<AnimalHealth> animalHealthList;
+  //fetch animal health
+  void _getAnimalHealth(int id) async {
+    var animalData = await _animalHealth.fetchAnimalHealth(id);
+    animalHealthList = animalData;
+
+    print('Animal Health Animal id: ${animalHealthList[0].animalId}');
+  }
 
   @override
   void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_hayvanlar);
-    _secilenHayvan = _dropdownMenuItems[0].value;
     super.initState();
+    _dropdownMenuItems = buildDropdownMenuItems(_animals);
+    _selectedAnimal = _dropdownMenuItems[0].value;
+    setState(() {
+      _getAnimalHealth(10);
+    });
   }
 
   //Kullanıcı da kaç tane hayvan varsa, dropdown menüde göster
-  List<DropdownMenuItem<Hayvanlarim>> buildDropdownMenuItems(List hayvanlar) {
-    List<DropdownMenuItem<Hayvanlarim>> items = List();
-    for (Hayvanlarim hayvan in hayvanlar) {
+  List<DropdownMenuItem<UAnimals>> buildDropdownMenuItems(List animals) {
+    List<DropdownMenuItem<UAnimals>> items = List();
+    for (UAnimals animal in animals) {
       items.add(
         DropdownMenuItem(
-          value: hayvan,
-          child: Text(hayvan.name),
+          value: animal,
+          child: Text(animal.name),
         ),
       );
     }
     return items;
   }
 
-  onChangedDropdownItem(Hayvanlarim secilenhayvan) {
+  onChangedDropdownItem(UAnimals secilenhayvan) {
     setState(() {
-      _secilenHayvan = secilenhayvan;
+      _selectedAnimal = secilenhayvan;
 
       Navigator.of(context).push(PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
             return SaglikTakipWidget(
-                hayvanID: _secilenHayvan.hayvanID,
-                name: _secilenHayvan.name,
-                parazitler: _secilenHayvan.parazitler,
-                karma: _secilenHayvan.karma,
-                kuduz: _secilenHayvan.kuduz,
-                mantar: _secilenHayvan.mantar,
-                lyme: _secilenHayvan.lyme);
+                hayvanID: _selectedAnimal.animalID,
+                name: _selectedAnimal.name,
+                parazitler: _selectedAnimal.parazitler,
+                karma: _selectedAnimal.karma,
+                kuduz: _selectedAnimal.kuduz,
+                mantar: _selectedAnimal.mantar,
+                lyme: _selectedAnimal.lyme);
           }));
     });
   }
@@ -130,7 +144,7 @@ class _SaglikTakipState extends State<SaglikTakip> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0)),
               child: DropdownButton(
-                value: _secilenHayvan,
+                value: _selectedAnimal,
                 items: _dropdownMenuItems,
                 onChanged: onChangedDropdownItem,
                 icon: Icon(Icons.arrow_drop_down),

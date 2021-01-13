@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/screens/HayvanMarkerlari.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -31,11 +32,11 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   BitmapDescriptor _mIconCat;
   //create markers list
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  //
+  //fetch data
   UserAnimals _userAnimals = UserAnimals();
   List<UserAnimals> _userAnimalList;
 
-  //call fetchUsers() function inside this function in order to prevent 'instance of Users' error
+  //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error
   //and show user's animals on the map
   void _getUserAnimals(GoogleMapController controller) async {
     var dataList = await _userAnimals.fetchUserAnimals(loggedUserID);
@@ -45,14 +46,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     setState(() {
       showSpinner = true;
     });
-    //int count = 0;
     try {
       if (_userAnimalList != null) {
         for (int i = 0; i < _userAnimalList.length; i++) {
           if (loggedUserID == _userAnimalList[i].userId) {
-            //animalID[count] = _userAnimalList[i].id;
-            //count++;
-
+            //take the ids of the animals in a user
+            animalID = _userAnimalList[i].id;
             setState(() {
               Marker markerList = Marker(
                 markerId: MarkerId('${_userAnimalList[i].id.toString()}'),
@@ -95,7 +94,16 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           showSpinner = false;
         });
       } else {
-        throw Exception('Could not load user animals');
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialogWidget(
+                dialogTitle: 'Hata!',
+                dialogContent:
+                    'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
+                btnTitle: 'Kapat',
+                onPressed: () {
+                  Navigator.pop(context);
+                }));
       }
     } catch (e) {
       print(e);
