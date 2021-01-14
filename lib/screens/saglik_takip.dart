@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/animal_health.dart';
+import 'package:kupe/dbtables/user_animal_table.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:kupe/widgets/saglik_takip_widget.dart';
 
 class SaglikTakip extends StatefulWidget {
@@ -13,83 +15,50 @@ class SaglikTakip extends StatefulWidget {
   _SaglikTakipState createState() => _SaglikTakipState();
 }
 
-class UAnimals {
-  int animalID;
-  String name;
-  String parazitler;
-  String karma;
-  String kuduz;
-  String mantar;
-  String lyme;
-
-  UAnimals(
-      {this.animalID,
-      this.name,
-      this.parazitler,
-      this.karma,
-      this.kuduz,
-      this.mantar,
-      this.lyme});
-
-  static List<UAnimals> getUAnimals() {
-    return <UAnimals>[
-      UAnimals(
-          animalID: 10267,
-          name: 'Boncuk',
-          parazitler: 'Henüz aşı bilgisi yok',
-          karma: '11.03.2020 de aşısı yapıldı',
-          kuduz: 'Henüz aşı bilgisi yok',
-          mantar: '01.06.2020 de aşısı yapıldı',
-          lyme: 'Henüz aşı bilgisi yok'),
-      UAnimals(
-          animalID: 2,
-          name: 'Dost2',
-          parazitler: 'Parazit aşısı yapıldı',
-          karma: 'Karma aşısı yapıldı',
-          kuduz: 'Kuduz aşısı yapıldı',
-          mantar: 'Mantar aşısı yapıldı',
-          lyme: 'Lyme aşısı yapıldı'),
-      UAnimals(
-          animalID: 3,
-          name: 'Dost3',
-          parazitler: 'Parazit aşısı yapıldı',
-          karma: 'Karma aşısı yapıldı',
-          kuduz: 'Kuduz aşısı yapıldı',
-          mantar: 'Mantar aşısı yapıldı',
-          lyme: 'Lyme aşısı yapıldı'),
-    ];
-  }
-}
-
 class _SaglikTakipState extends State<SaglikTakip> {
-  List<UAnimals> _animals = UAnimals.getUAnimals();
-  List<DropdownMenuItem<UAnimals>> _dropdownMenuItems;
-  UAnimals _selectedAnimal;
+  List<DropdownMenuItem<UserAnimals>> _dropdownMenuItems;
+  UserAnimals _selectedAnimal;
 
   AnimalHealth _animalHealth = AnimalHealth();
   List<AnimalHealth> animalHealthList;
-  //fetch animal health
-  void _getAnimalHealth(int id) async {
-    var animalData = await _animalHealth.fetchAnimalHealth(id);
-    animalHealthList = animalData;
 
-    print('Animal Health Animal id: ${animalHealthList[0].animalId}');
+  UserAnimals _userAnimals = UserAnimals();
+  List<UserAnimals> _userAnimalList;
+
+  //call fetchAnimalHealth() function inside this function in order to prevent 'instance of Users' error
+  void _getAnimalHealth(int animalId) async {
+    var animalData = await _animalHealth.fetchAnimalHealth(animalId);
+    animalHealthList = animalData;
+  }
+
+  //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error
+  void _getUserAnimals(int userId) async {
+    var dataList = await _userAnimals.fetchUserAnimals(userId);
+    _userAnimalList = dataList;
+
+    setState(() {
+      _dropdownMenuItems = buildDropdownMenuItems(_userAnimalList);
+      _selectedAnimal = _dropdownMenuItems[0].value;
+      for (int i = 0; i < _userAnimalList.length; i++) {
+        if (loggedUserID == _userAnimalList[i].userId) {
+          //send animals ids in a user
+          _getAnimalHealth(_userAnimalList[i].id);
+        }
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    _dropdownMenuItems = buildDropdownMenuItems(_animals);
-    _selectedAnimal = _dropdownMenuItems[0].value;
-    setState(() {
-      _getAnimalHealth(10);
-    });
+    _getUserAnimals(loggedUserID);
   }
 
-  //Kullanıcı da kaç tane hayvan varsa, dropdown menüde göster
-  List<DropdownMenuItem<UAnimals>> buildDropdownMenuItems(List animals) {
-    List<DropdownMenuItem<UAnimals>> items = List();
-    for (UAnimals animal in animals) {
+  //Show all animals in a user by name
+  List<DropdownMenuItem<UserAnimals>> buildDropdownMenuItems(
+      List<UserAnimals> userAnimals) {
+    List<DropdownMenuItem<UserAnimals>> items = List();
+    for (UserAnimals animal in userAnimals) {
       items.add(
         DropdownMenuItem(
           value: animal,
@@ -100,23 +69,41 @@ class _SaglikTakipState extends State<SaglikTakip> {
     return items;
   }
 
-  onChangedDropdownItem(UAnimals secilenhayvan) {
-    setState(() {
-      _selectedAnimal = secilenhayvan;
+  onChangedDropdownItem(UserAnimals selectedAnimal) {
+    if (_userAnimalList != null) {
+      for (int i = 0; i < _userAnimalList.length; i++) {
+        if (_userAnimalList[i].id == animalHealthList[i].animalId) {
+          setState(() {
+            _selectedAnimal = selectedAnimal;
 
-      Navigator.of(context).push(PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (BuildContext context, _, __) {
-            return SaglikTakipWidget(
-                hayvanID: _selectedAnimal.animalID,
-                name: _selectedAnimal.name,
-                parazitler: _selectedAnimal.parazitler,
-                karma: _selectedAnimal.karma,
-                kuduz: _selectedAnimal.kuduz,
-                mantar: _selectedAnimal.mantar,
-                lyme: _selectedAnimal.lyme);
-          }));
-    });
+            Navigator.of(context).push(PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (BuildContext context, _, __) {
+                  return SaglikTakipWidget(
+                    hayvanID: _selectedAnimal.id,
+                    name: _selectedAnimal.name,
+                    parazitler: animalHealthList[i].parazitler,
+                    karma: animalHealthList[i].parazitler,
+                    kuduz: animalHealthList[i].kuduz,
+                    mantar: animalHealthList[i].mantar,
+                    lyme: animalHealthList[i].lyme,
+                  );
+                }));
+          });
+        }
+      }
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialogWidget(
+              dialogTitle: 'Hata!',
+              dialogContent:
+                  'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
+              btnTitle: 'Kapat',
+              onPressed: () {
+                Navigator.pop(context);
+              }));
+    }
   }
 
   @override

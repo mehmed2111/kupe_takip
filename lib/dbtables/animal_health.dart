@@ -5,8 +5,9 @@ class AnimalHealth {
   //https://www.aractakipsistemleri.com/canli3/Takip/GetSelectedHealth?animal_id=10
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
 
-  Future<List<AnimalHealth>> fetchAnimalHealth(int id) async {
-    final response = await http.get(_url + 'GetSelectedHealth?animal_id=$id');
+  Future<List<AnimalHealth>> fetchAnimalHealth(int animalId) async {
+    final response =
+        await http.get(_url + 'GetSelectedHealth?animal_id=$animalId');
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -35,15 +36,15 @@ class AnimalHealth {
       this.mantar,
       this.lyme});
 
-  AnimalHealth.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    animalId = json['animal_id'];
-    parazitler = json['parazitler'];
-    karma = json['karma'];
-    kuduz = json['kuduz'];
-    mantar = json['mantar'];
-    lyme = json['lyme'];
-  }
+  factory AnimalHealth.fromJson(Map<String, dynamic> json) => AnimalHealth(
+        id: json["id"],
+        animalId: json["animal_id"],
+        parazitler: json["parazitler"],
+        karma: json["karma"],
+        kuduz: json["kuduz"],
+        mantar: json["mantar"],
+        lyme: json["lyme"],
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

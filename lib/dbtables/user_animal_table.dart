@@ -7,8 +7,8 @@ class UserAnimals {
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
 
   //fetch json data
-  Future<List<UserAnimals>> fetchUserAnimals(int id) async {
-    final response = await http.get(_url + 'GetSelectedAnimal?user_id=$id');
+  Future<List<UserAnimals>> fetchUserAnimals(int userId) async {
+    final response = await http.get(_url + 'GetSelectedAnimal?user_id=$userId');
     var data = json.decode(response.body);
 
     if (response.statusCode == 200) {

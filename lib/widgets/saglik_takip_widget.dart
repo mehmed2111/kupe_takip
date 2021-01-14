@@ -13,13 +13,13 @@ class SaglikTakipWidget extends StatelessWidget {
   final String lyme;
 
   SaglikTakipWidget(
-      {@required this.hayvanID,
-      @required this.name,
-      @required this.parazitler,
-      @required this.karma,
-      @required this.kuduz,
-      @required this.mantar,
-      @required this.lyme});
+      {this.hayvanID,
+      this.name,
+      this.parazitler,
+      this.karma,
+      this.kuduz,
+      this.mantar,
+      this.lyme});
 
   @override
   Widget build(BuildContext context) {

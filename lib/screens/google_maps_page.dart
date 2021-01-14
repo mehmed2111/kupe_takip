@@ -51,7 +51,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
         for (int i = 0; i < _userAnimalList.length; i++) {
           if (loggedUserID == _userAnimalList[i].userId) {
             //take the ids of the animals in a user
-            animalID = _userAnimalList[i].id;
+            //animalID = _userAnimalList[i].id;
+            //print(animalID);
             setState(() {
               Marker markerList = Marker(
                 markerId: MarkerId('${_userAnimalList[i].id.toString()}'),
