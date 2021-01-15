@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   bool showSpinner = false;
   String _username;
   String _password;
+
   //check for internet connection
   NetworkCheck _networkCheck = NetworkCheck();
   //fetch users and assign them to a List of object of Users
@@ -40,10 +41,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onBackPressed,
-      child: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Scaffold(
-          body: Padding(
+      child: Scaffold(
+        body: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,15 +75,15 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.text,
                   textAlign: TextAlign.center,
                   cursorColor: kMainKupeColor,
-                  onChanged: (value) {
-                    setState(() {
-                      _username = value;
-                      checkLogin(_username, _password);
-                    });
-                  },
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Kullanıcı adı',
                   ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _username = newValue;
+                      checkLogin(_username, _password);
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 8.0,
@@ -91,15 +92,15 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                   obscureText: true,
                   cursorColor: kMainKupeColor,
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value;
-                      checkLogin(_username, _password);
-                    });
-                  },
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Şifre',
                   ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _password = newValue;
+                      checkLogin(_username, _password);
+                    });
+                  },
                 ),
                 SizedBox(height: 8.0),
                 BeniHatirla(),
@@ -114,24 +115,28 @@ class _LoginPageState extends State<LoginPage> {
                       showSpinner = true;
                       checkLogin(_username, _password);
                     });
+                    User user;
                     try {
                       _networkCheck.check().then((internet) {
                         if (internet != null && internet) {
                           if (_loginUser != null) {
-                            if (_username == _loginUser[0].username &&
-                                _password == _loginUser[0].password) {
-                              //loggedUserID will be used for comparing
-                              loggedUserID = _loginUser[0].id;
-                              Navigator.pushNamed(context, LoadingScreen.id);
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialogWidget(
-                                      dialogTitle: 'Giriş Başarısız!',
-                                      dialogContent:
-                                          'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
-                                      btnTitle: 'Kapat',
-                                      onPressed: () => Navigator.pop(context)));
+                            for (user in _loginUser) {
+                              if (_username == user.username &&
+                                  _password == user.password) {
+                                //loggedUserID will be used for comparing
+                                loggedUserID = user.id;
+                                Navigator.pushNamed(context, LoadingScreen.id);
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialogWidget(
+                                        dialogTitle: 'Giriş Başarısız!',
+                                        dialogContent:
+                                            'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
+                                        btnTitle: 'Kapat',
+                                        onPressed: () =>
+                                            Navigator.pop(context)));
+                              }
                             }
                           } else {
                             //throw Exception('Failed to load users');

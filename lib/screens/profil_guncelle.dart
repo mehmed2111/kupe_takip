@@ -37,11 +37,16 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
     var dataList = await _user.fetchUserProfile(id);
     _userData = dataList;
 
-    //should be assigned here in to show them in TextField controller
-    textEmail.text = _userData[0].eMail;
-    textTelno.text = _userData[0].telno;
-    textAddress.text = _userData[0].adress;
-    textVet.text = _userData[0].veteriner;
+    User user;
+    //should be assigned here in order to show them in TextField controller
+    for (user in _userData) {
+      if (loggedUserID == user.id) {
+        textEmail.text = user.eMail;
+        textTelno.text = user.telno;
+        textAddress.text = user.adress;
+        textVet.text = user.veteriner;
+      }
+    }
   }
 
   void _updateUserProfile(int userId, String email, String address,
@@ -137,6 +142,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                             colour: kMainKupeColor,
                             buttonTitle: 'Güncelle',
                             onPressed: () {
+                              User user;
                               try {
                                 _networkCheck.check().then((internet) {
                                   if (internet != null && internet) {
@@ -144,47 +150,51 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                         textAddress.text != '' &&
                                         textTelno.text != '' &&
                                         textVet.text != '') {
-                                      if (loggedUserID == _userData[0].id &&
-                                          textEmail.text ==
-                                              _userData[0].eMail &&
-                                          textAddress.text ==
-                                              _userData[0].adress &&
-                                          textTelno.text ==
-                                              _userData[0].telno &&
-                                          textVet.text ==
-                                              _userData[0].veteriner) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialogWidget(
-                                                dialogTitle:
-                                                    'Profiliniz Güncel!',
-                                                dialogContent:
-                                                    'Profilinizde yer alan bilgiler zaten güncel bilgilerinizdir.',
-                                                btnTitle: 'Kapat',
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                }));
-                                      } else if (loggedUserID ==
-                                          _userData[0].id) {
-                                        setState(() {
-                                          _updateUserProfile(
-                                              loggedUserID,
-                                              textEmail.text,
-                                              textAddress.text,
-                                              textTelno.text,
-                                              textVet.text);
+                                      for (user in _userData) {
+                                        if (loggedUserID == user.id &&
+                                            textEmail.text == user.eMail &&
+                                            textAddress.text == user.adress &&
+                                            textTelno.text == user.telno &&
+                                            textVet.text == user.veteriner) {
                                           showDialog(
                                               context: context,
                                               builder: (_) => AlertDialogWidget(
                                                   dialogTitle:
-                                                      'Güncelleme Başarılı!',
+                                                      'Profiliniz Güncel!',
                                                   dialogContent:
-                                                      'Verileriniz başarılı bir şekilde güncellendi.',
+                                                      'Profilinizde yer alan bilgiler zaten güncel bilgilerinizdir.',
                                                   btnTitle: 'Kapat',
                                                   onPressed: () {
                                                     Navigator.pop(context);
                                                   }));
-                                        });
+                                        } else if (loggedUserID == user.id) {
+                                          setState(() {
+                                            _updateUserProfile(
+                                                loggedUserID,
+                                                textEmail.text,
+                                                textAddress.text,
+                                                textTelno.text,
+                                                textVet.text);
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    AlertDialogWidget(
+                                                        dialogTitle:
+                                                            'Güncelleme Başarılı!',
+                                                        dialogContent:
+                                                            'Verileriniz başarılı bir şekilde güncellendi.',
+                                                        btnTitle: 'Kapat',
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          //close this page
+                                                          Navigator.pop(
+                                                              context,
+                                                              ProfilGuncelle
+                                                                  .id);
+                                                        }));
+                                          });
+                                        }
                                       }
                                     } else {
                                       showDialog(

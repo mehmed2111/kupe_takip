@@ -34,7 +34,7 @@ class SaglikTakipWidget extends StatelessWidget {
           child: Theme(
             data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
             child: Container(
-              height: 540.0,
+              height: 450.0,
               //width: 360.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

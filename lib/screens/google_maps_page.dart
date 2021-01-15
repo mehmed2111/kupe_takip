@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
+import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/HayvanMarkerlari.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:location/location.dart';
@@ -17,6 +18,9 @@ class GoogleMapsPage extends StatefulWidget {
 }
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
+  NetworkCheck _networkCheck = NetworkCheck();
+  //call json data every 20 seconds
+  Timer timer;
   //On map start; default coordinates set to Turkey
   final LatLng _defaultIstanbul = const LatLng(39.1667, 35.6667);
   bool showSpinner = false;
@@ -43,69 +47,84 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _userAnimalList = dataList;
 
     googleMapController = controller;
+    UserAnimals animal;
     setState(() {
       showSpinner = true;
     });
     try {
-      if (_userAnimalList != null) {
-        for (int i = 0; i < _userAnimalList.length; i++) {
-          if (loggedUserID == _userAnimalList[i].userId) {
-            //take the ids of the animals in a user
-            //animalID = _userAnimalList[i].id;
-            //print(animalID);
-            setState(() {
-              Marker markerList = Marker(
-                markerId: MarkerId('${_userAnimalList[i].id.toString()}'),
-                position:
-                    LatLng(_userAnimalList[i].lat, _userAnimalList[i].lng),
-                infoWindow: InfoWindow(
-                    title: _userAnimalList[i].name,
-                    snippet: 'Daha fazla bilgi için tıklayınız..',
-                    onTap: () {
-                      Navigator.of(context).push(PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) {
-                            return HayvanMarkerlari(
-                              ad: _userAnimalList[i].name,
-                              sagDurumu: 'İyi',
-                              isi: '37',
-                              cinsiyet: _userAnimalList[i].gender == 0
-                                  ? 'Erkek'
-                                  : _userAnimalList[i].gender == 1
-                                      ? 'Dişi'
-                                      : null,
-                              renk: _userAnimalList[i].color,
-                              sonKonT: 'Eklenecek',
-                            );
-                          }));
-                    }),
-                icon: _userAnimalList[i].category == 1
-                    ? _mIconDog
-                    : _userAnimalList[i].category == 0
-                        ? _mIconCat
-                        : null,
-              );
-              //add all animals which are in _animalMarkers
-              markers[MarkerId('${_userAnimalList[i].id.toString()}')] =
-                  markerList;
-            });
+      _networkCheck.check().then((internet) {
+        if (internet != null && internet) {
+          if (_userAnimalList != null) {
+            for (animal in _userAnimalList) {
+              if (loggedUserID == animal.userId) {
+                //take the ids of the animals in a user
+                animalID = animal.id;
+                //print(animalID);
+                setState(() {
+                  Marker markerList = Marker(
+                    markerId: MarkerId('${animal.id.toString()}'),
+                    position: LatLng(animal.lat, animal.lng),
+                    infoWindow: InfoWindow(
+                        title: animal.name,
+                        snippet: 'Daha fazla bilgi için tıklayınız..',
+                        onTap: () {
+                          Navigator.of(context).push(PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) {
+                                return HayvanMarkerlari(
+                                  ad: animal.name,
+                                  sagDurumu: 'İyi',
+                                  isi: '37',
+                                  cinsiyet: animal.gender == 0
+                                      ? 'Erkek'
+                                      : animal.gender == 1
+                                          ? 'Dişi'
+                                          : null,
+                                  renk: animal.color,
+                                  sonKonT: 'Eklenecek',
+                                );
+                              }));
+                        }),
+                    icon: animal.category == 1
+                        ? _mIconDog
+                        : animal.category == 0
+                            ? _mIconCat
+                            : null,
+                  );
+                  //add all animals which are in _animalMarkers
+                  markers[MarkerId('${animal.id.toString()}')] = markerList;
+                });
+              }
+            }
+          } else {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialogWidget(
+                    dialogTitle: 'Hata!',
+                    dialogContent:
+                        'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
+                    btnTitle: 'Kapat',
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }));
           }
+        } else {
+          //if there is no internet connection
+          showDialog(
+              context: context,
+              builder: (_) => AlertDialogWidget(
+                  dialogTitle: 'İnternet hatası!',
+                  dialogContent:
+                      'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                  btnTitle: 'Kapat',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }));
         }
-        setState(() {
-          showSpinner = false;
-        });
-      } else {
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialogWidget(
-                dialogTitle: 'Hata!',
-                dialogContent:
-                    'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
-                btnTitle: 'Kapat',
-                onPressed: () {
-                  Navigator.pop(context);
-                }));
-      }
+      });
+      setState(() {
+        showSpinner = false;
+      });
     } catch (e) {
       print(e);
     }
@@ -148,9 +167,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       locationData = currLocation;
     });
   }
-
-  //call json data every 20 seconds
-  Timer timer;
 
   @override
   void initState() {

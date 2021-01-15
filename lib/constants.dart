@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kupe/dbtables/user_animal_table.dart';
 
 //fetched id's
 int loggedUserID = 0;
-var animalID;
+var animalID = 0;
 
 //App const colors
 const kMainKupeColor = Color(0xFF5CB3AB);
