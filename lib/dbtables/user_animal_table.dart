@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 class UserAnimals {
   //URL for json data to fetch USERS from DB
   //https://www.aractakipsistemleri.com/canli3/Takip/GetSelectedAnimal?user_id=5
+  //https://www.aractakipsistemleri.com/canli3/Takip/UpdateAnimal?id=10&name=hayvan10&color=Beyaz&gender=0
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
 
   //fetch json data
@@ -15,6 +16,26 @@ class UserAnimals {
       return (data as List).map((e) => UserAnimals.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load user animals');
+    }
+  }
+
+  Future<List<UserAnimals>> updateUserAnimal(int animalId, String animalName,
+      String animalColor, int animalGender) async {
+    final http.Response response = await http.post(
+        _url +
+            'UpdateAnimal?id=$animalId&name=$animalName&color=$animalColor&gender=$animalGender',
+        body: jsonEncode(<String, String>{
+          'id': "$animalId",
+          'name': animalName,
+          'color': animalColor,
+          'gender': "$animalGender",
+        }));
+
+    var data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return (data as List).map((e) => UserAnimals.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load user animal update json');
     }
   }
 

@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
-import 'package:kupe/screens/dostlarin.dart';
+import 'package:kupe/screens/dostlarin_guncelle.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
@@ -84,14 +84,15 @@ class _NavMenuState extends State<NavMenu> {
                   ),
                   onTap: () {
                     setState(() {
-                      //_getUserData(loggedUserID);
+                      _getUserData(loggedUserID);
                       showSpinner = true;
                     });
-                    Navigator.of(context).pop();
+
                     User user;
                     try {
                       _networkCheck.check().then((internet) {
                         if (internet != null && internet) {
+                          Navigator.of(context).pop();
                           if (_userData != null) {
                             for (user in _userData) {
                               if (loggedUserID == user.id) {
@@ -158,7 +159,7 @@ class _NavMenuState extends State<NavMenu> {
                 ListTile(
                   leading: Icon(Icons.mobile_friendly, color: Colors.white),
                   title: Text(
-                    'Dostların',
+                    'Dostlarını Güncelle',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                   onTap: () {
@@ -166,7 +167,7 @@ class _NavMenuState extends State<NavMenu> {
                     Navigator.of(context).push(PageRouteBuilder(
                         opaque: false,
                         pageBuilder: (BuildContext context, _, __) {
-                          return Dostlarin();
+                          return DostlariniGuncelle();
                         }));
                   },
                 ),

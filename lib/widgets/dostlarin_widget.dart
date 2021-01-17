@@ -4,9 +4,11 @@ import 'package:kupe/constants.dart';
 class DostlarinWidget extends StatelessWidget {
   final String textTitle;
   final String hintText;
+  final controllerText;
   final Function onChanged;
 
-  DostlarinWidget({this.textTitle, this.hintText, this.onChanged});
+  DostlarinWidget(
+      {this.textTitle, this.hintText, this.controllerText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +16,8 @@ class DostlarinWidget extends StatelessWidget {
       Text(
         textTitle,
         textAlign: TextAlign.center,
-        style: TextStyle(
-            color: kLoginDarkBackground,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold),
+        style:
+            TextStyle(color: kLoginDarkBackground, fontWeight: FontWeight.bold),
       ),
       SizedBox(height: 10.0),
       Padding(
@@ -27,6 +27,7 @@ class DostlarinWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           cursorColor: kMainKupeColor,
           decoration: kTextFieldDecoration.copyWith(hintText: hintText),
+          controller: controllerText,
           onChanged: onChanged,
         ),
       ),

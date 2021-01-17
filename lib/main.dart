@@ -3,6 +3,7 @@ import 'package:kupe/bildirim_deneme.dart';
 import 'package:kupe/screens/HayvanMarkerlari.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin.dart';
+import 'package:kupe/screens/dostlarin_guncelle.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 import 'package:kupe/screens/home_page.dart';
@@ -36,6 +37,7 @@ class Kupe extends StatelessWidget {
         BildirimDeneme.id: (context) => BildirimDeneme(),
         HayvanMarkerlari.id: (context) => HayvanMarkerlari(),
         LoadingScreen.id: (context) => LoadingScreen(),
+        DostlariniGuncelle.id: (context) => DostlariniGuncelle(),
       },
     );
   }

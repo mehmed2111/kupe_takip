@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 int loggedUserID = 0;
 var animalID = 0;
 
+//for progress indicator control
+bool showSpinner = false;
+
 //App const colors
 const kMainKupeColor = Color(0xFF5CB3AB);
 const kLoginDarkBackground = Color(0xFF1d2136);

@@ -10,7 +10,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 class SaglikTakip extends StatefulWidget {
   SaglikTakip() : super();
   final String title = 'Sağlık Takip';
-
   static const String id = 'saglik_takip';
 
   @override

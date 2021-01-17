@@ -47,7 +47,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _userAnimalList = dataList;
 
     googleMapController = controller;
-    UserAnimals animal;
     setState(() {
       showSpinner = true;
     });
@@ -55,44 +54,46 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       _networkCheck.check().then((internet) {
         if (internet != null && internet) {
           if (_userAnimalList != null) {
-            for (animal in _userAnimalList) {
-              if (loggedUserID == animal.userId) {
+            for (int i = 0; i < _userAnimalList.length; i++) {
+              if (loggedUserID == _userAnimalList[i].userId) {
                 //take the ids of the animals in a user
-                animalID = animal.id;
+                animalID = _userAnimalList[i].id;
                 //print(animalID);
                 setState(() {
                   Marker markerList = Marker(
-                    markerId: MarkerId('${animal.id.toString()}'),
-                    position: LatLng(animal.lat, animal.lng),
+                    markerId: MarkerId('${_userAnimalList[i].id.toString()}'),
+                    position:
+                        LatLng(_userAnimalList[i].lat, _userAnimalList[i].lng),
                     infoWindow: InfoWindow(
-                        title: animal.name,
+                        title: _userAnimalList[i].name,
                         snippet: 'Daha fazla bilgi için tıklayınız..',
                         onTap: () {
                           Navigator.of(context).push(PageRouteBuilder(
                               opaque: false,
                               pageBuilder: (BuildContext context, _, __) {
                                 return HayvanMarkerlari(
-                                  ad: animal.name,
+                                  ad: _userAnimalList[i].name,
                                   sagDurumu: 'İyi',
                                   isi: '37',
-                                  cinsiyet: animal.gender == 0
+                                  cinsiyet: _userAnimalList[i].gender == 0
                                       ? 'Erkek'
-                                      : animal.gender == 1
+                                      : _userAnimalList[i].gender == 1
                                           ? 'Dişi'
                                           : null,
-                                  renk: animal.color,
+                                  renk: _userAnimalList[i].color,
                                   sonKonT: 'Eklenecek',
                                 );
                               }));
                         }),
-                    icon: animal.category == 1
+                    icon: _userAnimalList[i].category == 1
                         ? _mIconDog
-                        : animal.category == 0
+                        : _userAnimalList[i].category == 0
                             ? _mIconCat
                             : null,
                   );
                   //add all animals which are in _animalMarkers
-                  markers[MarkerId('${animal.id.toString()}')] = markerList;
+                  markers[MarkerId('${_userAnimalList[i].id.toString()}')] =
+                      markerList;
                 });
               }
             }
