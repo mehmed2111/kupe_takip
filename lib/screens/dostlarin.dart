@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
+import 'package:kupe/screens/dostlarin_guncelle.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:kupe/widgets/dostlarin_widget.dart';
 import 'package:kupe/widgets/kapat_button.dart';
@@ -43,9 +44,14 @@ class _DostlarinState extends State<Dostlarin> {
     var dataList = await _userAnimals.fetchUserAnimals(userId);
     _userAnimalList = dataList;
 
+    UserAnimals animal;
     //assign animal which come from animal_update page dropDownMenu
-    animalName.text = widget.name;
-    animalColor.text = widget.color;
+    for (animal in _userAnimalList) {
+      if (widget.selectedAnimalId == animal.id) {
+        animalName.text = widget.name;
+        animalColor.text = widget.color;
+      }
+    }
   }
 
   @override
@@ -214,6 +220,14 @@ class _DostlarinState extends State<Dostlarin> {
                                                             Navigator.pop(
                                                                 context,
                                                                 Dostlarin.id);
+                                                            Navigator.pop(
+                                                                context,
+                                                                DostlariniGuncelle
+                                                                    .id);
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                DostlariniGuncelle
+                                                                    .id);
                                                           }));
                                             });
                                           }

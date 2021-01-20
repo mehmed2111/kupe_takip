@@ -51,7 +51,7 @@ class SaglikTakipWidget extends StatelessWidget {
                         width: 10.0,
                       ),
                       Text(
-                        'Sağlık Takibi',
+                        name,
                         style: TextStyle(
                           color: kLoginDarkBackground,
                           fontSize: 25.0,

@@ -25,10 +25,10 @@ class UserAnimals {
         _url +
             'UpdateAnimal?id=$animalId&name=$animalName&color=$animalColor&gender=$animalGender',
         body: jsonEncode(<String, String>{
-          'id': "$animalId",
+          'id': '$animalId',
           'name': animalName,
           'color': animalColor,
-          'gender': "$animalGender",
+          'gender': '$animalGender',
         }));
 
     var data = json.decode(response.body);

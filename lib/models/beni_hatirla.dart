@@ -32,8 +32,21 @@ class _BeniHatirlaState extends State<BeniHatirla> {
       ),
       value: beniHatirla,
       onChanged: _beniHatirlaOnChanged,
-      activeColor: kLoginDarkBackground,
+      activeColor: kMainKupeColor,
       controlAffinity: ListTileControlAffinity.leading,
     );
+
+    /*Row(
+      children: [
+        Switch(
+          value: beniHatirla,
+          onChanged: _beniHatirlaOnChanged,
+          activeTrackColor: kMainKupeColor,
+          activeColor: Colors.white,
+        ),
+        Text('Beni Hatırla',
+            style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
+      ],
+    );*/
   }
 }

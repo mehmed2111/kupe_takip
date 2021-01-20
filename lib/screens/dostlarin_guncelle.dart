@@ -4,7 +4,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/constants.dart';
-import '../constants.dart';
 import 'dostlarin.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 
