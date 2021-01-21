@@ -86,60 +86,73 @@ class _NavMenuState extends State<NavMenu> {
                     ),
                   ),
                   onTap: () {
-                    setState(() {
-                      _getUserData(loggedUserID);
-                      showSpinner = true;
-                    });
+                    setState(
+                      () {
+                        _getUserData(loggedUserID);
+                        showSpinner = true;
+                      },
+                    );
 
                     User user;
                     try {
-                      _networkCheck.check().then((internet) {
-                        if (internet != null && internet) {
-                          Navigator.of(context).pop();
-                          if (_userData != null) {
-                            for (user in _userData) {
-                              if (loggedUserID == user.id) {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    opaque: false,
-                                    pageBuilder: (BuildContext context, _, __) {
-                                      return KullaniciProfili(
-                                          kullid: user.id,
-                                          ad: user.username,
-                                          adres: user.adress,
-                                          telNo: user.telno,
-                                          email: user.eMail,
-                                          kayitliVet: user.veteriner);
-                                    }));
-                              } else {
-                                throw Exception('Could not find selected user');
+                      _networkCheck.check().then(
+                        (internet) {
+                          if (internet != null && internet) {
+                            Navigator.of(context).pop();
+                            if (_userData != null) {
+                              for (user in _userData) {
+                                if (loggedUserID == user.id) {
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder:
+                                          (BuildContext context, _, __) {
+                                        return KullaniciProfili(
+                                            kullid: user.id,
+                                            ad: user.username,
+                                            adres: user.adress,
+                                            telNo: user.telno,
+                                            email: user.eMail,
+                                            kayitliVet: user.veteriner);
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  throw Exception(
+                                      'Could not find selected user');
+                                }
                               }
-                            }
-                          } else {
-                            showDialog(
+                            } else {
+                              showDialog(
                                 context: context,
                                 builder: (_) => AlertDialogWidget(
-                                    dialogTitle: 'Hata!',
-                                    dialogContent:
-                                        'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
-                                    btnTitle: 'Kapat',
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    }));
-                          }
-                        } else {
-                          //if there is no internet connection
-                          showDialog(
-                              context: context,
-                              builder: (_) => AlertDialogWidget(
-                                  dialogTitle: 'İnternet hatası!',
+                                  dialogTitle: 'Hata!',
                                   dialogContent:
-                                      'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                      'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
                                   btnTitle: 'Kapat',
                                   onPressed: () {
-                                    Navigator.pop(context);
-                                  }));
-                        }
-                      });
+                                    Navigator.pop(_);
+                                  },
+                                ),
+                              );
+                            }
+                          } else {
+                            //if there is no internet connection
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialogWidget(
+                                dialogTitle: 'İnternet hatası!',
+                                dialogContent:
+                                    'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                btnTitle: 'Kapat',
+                                onPressed: () {
+                                  Navigator.pop(_);
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      );
                       setState(() {
                         showSpinner = false;
                       });
@@ -156,8 +169,28 @@ class _NavMenuState extends State<NavMenu> {
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.pushNamed(context, SaglikTakip.id);
+                      _networkCheck.check().then(
+                        (internet) {
+                          if (internet != null && internet) {
+                            Navigator.of(context).pop();
+                            Navigator.pushNamed(context, SaglikTakip.id);
+                          } else {
+                            //if there is no internet connection
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialogWidget(
+                                dialogTitle: 'İnternet hatası!',
+                                dialogContent:
+                                    'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                btnTitle: 'Kapat',
+                                onPressed: () {
+                                  Navigator.pop(_);
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      );
                     }),
                 ListTile(
                   leading: Icon(Icons.mobile_friendly, color: Colors.white),
@@ -166,12 +199,33 @@ class _NavMenuState extends State<NavMenu> {
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(PageRouteBuilder(
-                        opaque: false,
-                        pageBuilder: (BuildContext context, _, __) {
-                          return DostlariniGuncelle();
-                        }));
+                    _networkCheck.check().then((internet) {
+                      if (internet != null && internet) {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) {
+                              return DostlariniGuncelle();
+                            },
+                          ),
+                        );
+                      } else {
+                        //if there is no internet connection
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialogWidget(
+                            dialogTitle: 'İnternet hatası!',
+                            dialogContent:
+                                'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                            btnTitle: 'Kapat',
+                            onPressed: () {
+                              Navigator.pop(_);
+                            },
+                          ),
+                        );
+                      }
+                    });
                   },
                 ),
                 ListTile(
@@ -182,23 +236,25 @@ class _NavMenuState extends State<NavMenu> {
                   ),
                   onTap: () {
                     //Navigator.of(context).pop();
-                    _networkCheck.check().then((internet) {
-                      if (internet != null && internet) {
-                        Navigator.popAndPushNamed(context, HomePage.id);
-                      } else {
-                        //if there is no internet connection
-                        showDialog(
-                            context: context,
-                            builder: (_) => AlertDialogWidget(
-                                dialogTitle: 'İnternet hatası!',
-                                dialogContent:
-                                    'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                                btnTitle: 'Kapat',
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                }));
-                      }
-                    });
+                    _networkCheck.check().then(
+                      (internet) {
+                        if (internet != null && internet) {
+                          Navigator.popAndPushNamed(context, HomePage.id);
+                        } else {
+                          //if there is no internet connection
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialogWidget(
+                                  dialogTitle: 'İnternet hatası!',
+                                  dialogContent:
+                                      'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                  btnTitle: 'Kapat',
+                                  onPressed: () {
+                                    Navigator.pop(_);
+                                  }));
+                        }
+                      },
+                    );
                   },
                 ),
                 //burada Submenu oluşturuldu
@@ -222,12 +278,30 @@ class _NavMenuState extends State<NavMenu> {
                             style:
                                 TextStyle(fontSize: 18, color: Colors.white)),
                         onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return SifreDegistir();
-                              }));
+                          _networkCheck.check().then(
+                            (internet) {
+                              if (internet != null && internet) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder: (BuildContext context, _, __) {
+                                      return SifreDegistir();
+                                    }));
+                              } else {
+                                //if there is no internet connection
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialogWidget(
+                                        dialogTitle: 'İnternet hatası!',
+                                        dialogContent:
+                                            'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                        btnTitle: 'Kapat',
+                                        onPressed: () {
+                                          Navigator.pop(_);
+                                        }));
+                              }
+                            },
+                          );
                         },
                       ),
                       ListTile(
@@ -237,12 +311,32 @@ class _NavMenuState extends State<NavMenu> {
                             style:
                                 TextStyle(fontSize: 18, color: Colors.white)),
                         onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return ProfilGuncelle();
-                              }));
+                          _networkCheck.check().then(
+                            (internet) {
+                              if (internet != null && internet) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder: (BuildContext context, _, __) {
+                                      return ProfilGuncelle();
+                                    }));
+                              } else {
+                                //if there is no internet connection
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialogWidget(
+                                    dialogTitle: 'İnternet hatası!',
+                                    dialogContent:
+                                        'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                    btnTitle: 'Kapat',
+                                    onPressed: () {
+                                      Navigator.pop(_);
+                                    },
+                                  ),
+                                );
+                              }
+                            },
+                          );
                         },
                       ),
                       ListTile(
@@ -251,13 +345,33 @@ class _NavMenuState extends State<NavMenu> {
                           'Alarm & Rapor Tanımlama',
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
-                        onTap: () => {
-                          Navigator.of(context).pop(),
-                          Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return AlarmRaporTanim();
-                              })),
+                        onTap: () {
+                          _networkCheck.check().then(
+                            (internet) {
+                              if (internet != null && internet) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder: (BuildContext context, _, __) {
+                                      return AlarmRaporTanim();
+                                    }));
+                              } else {
+                                //if there is no internet connection
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialogWidget(
+                                    dialogTitle: 'İnternet hatası!',
+                                    dialogContent:
+                                        'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                    btnTitle: 'Kapat',
+                                    onPressed: () {
+                                      Navigator.pop(_);
+                                    },
+                                  ),
+                                );
+                              }
+                            },
+                          );
                         },
                       ),
                     ],
@@ -278,10 +392,12 @@ class _NavMenuState extends State<NavMenu> {
                           await SharedPreferences.getInstance();
                       var username = prefs.getString('username');
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext ctx) =>
-                                  LoginPage(username: username)));
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext ctx) =>
+                              LoginPage(username: username),
+                        ),
+                      );
                     } else if (widget.rememberMeValue == null ||
                         widget.rememberMeValue) {
                       WidgetsFlutterBinding.ensureInitialized();
@@ -289,11 +405,12 @@ class _NavMenuState extends State<NavMenu> {
                           await SharedPreferences.getInstance();
                       var username = prefs.getString('username');
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext ctx) => LoginPage(
-                                    username: username,
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext ctx) =>
+                              LoginPage(username: username),
+                        ),
+                      );
                     }
 
                     //close all previous screens and take the user to the login page
@@ -301,6 +418,7 @@ class _NavMenuState extends State<NavMenu> {
                         LoginPage.id, (Route<dynamic> route) => false);*/
                   },
                 ),
+
                 /*ListTile(
                   leading: Icon(Icons.logout, color: Colors.white),
                   title: Text(

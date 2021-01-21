@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
-import 'file:///D:/ATC_MEHMED/Mobil_Uygulamalar/Flutter_Uygulamar/kupe/lib/widgets/hayvan_marker_widget.dart';
+import 'package:kupe/widgets/hayvan_marker_widget.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -106,7 +105,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                         'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
                     btnTitle: 'Kapat',
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(_);
                     }));
           }
         } else {
@@ -119,7 +118,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                       'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
                   btnTitle: 'Kapat',
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(_);
                   }));
         }
       });

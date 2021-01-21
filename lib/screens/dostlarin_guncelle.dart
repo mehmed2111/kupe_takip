@@ -97,7 +97,7 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
                         'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
                     btnTitle: 'Kapat',
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(_);
                     }));
           }
         } else {
@@ -110,7 +110,7 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
                       'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
                   btnTitle: 'Kapat',
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(_);
                   }));
         }
       });

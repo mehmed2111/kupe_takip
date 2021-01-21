@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
-import 'package:kupe/screens/dostlarin_guncelle.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:kupe/widgets/dostlarin_widget.dart';
 import 'package:kupe/widgets/kapat_button.dart';
@@ -183,81 +182,84 @@ class _DostlarinState extends State<Dostlarin> {
                                 });
                                 UserAnimals animal;
                                 try {
-                                  _networkCheck.check().then((internet) {
-                                    if (internet != null && internet) {
-                                      if (animalName.text != '' &&
-                                          animalColor.text != '' &&
-                                          dropDownAnimalGender !=
-                                              'Cinsiyetini seç..') {
-                                        for (animal in _userAnimalList) {
-                                          if (widget.selectedAnimalId ==
-                                              animal.id) {
-                                            setState(() {
-                                              _updateUserAnimal(
-                                                  widget.selectedAnimalId,
-                                                  animalName.text,
-                                                  animalColor.text,
-                                                  dropDownAnimalGender ==
-                                                          'Erkek'
-                                                      ? 0
-                                                      : dropDownAnimalGender ==
-                                                              'Dişi'
-                                                          ? 1
-                                                          : null);
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) =>
-                                                      AlertDialogWidget(
-                                                          dialogTitle:
-                                                              'Güncelleme Başarılı!',
-                                                          dialogContent:
-                                                              'Verileriniz başarılı bir şekilde güncellendi.',
-                                                          btnTitle: 'Kapat',
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            //close this page
-                                                            Navigator.pop(
-                                                                context,
-                                                                Dostlarin.id);
-                                                            Navigator.pop(
-                                                                context,
-                                                                DostlariniGuncelle
-                                                                    .id);
-                                                            Navigator.pushNamed(
-                                                                context,
-                                                                DostlariniGuncelle
-                                                                    .id);
-                                                          }));
-                                            });
+                                  _networkCheck.check().then(
+                                    (internet) {
+                                      if (internet != null && internet) {
+                                        if (animalName.text != '' &&
+                                            animalColor.text != '' &&
+                                            dropDownAnimalGender !=
+                                                'Cinsiyetini seç..') {
+                                          for (animal in _userAnimalList) {
+                                            if (widget.selectedAnimalId ==
+                                                animal.id) {
+                                              setState(
+                                                () {
+                                                  _updateUserAnimal(
+                                                    widget.selectedAnimalId,
+                                                    animalName.text,
+                                                    animalColor.text,
+                                                    dropDownAnimalGender ==
+                                                            'Erkek'
+                                                        ? 0
+                                                        : dropDownAnimalGender ==
+                                                                'Dişi'
+                                                            ? 1
+                                                            : null,
+                                                  );
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        AlertDialogWidget(
+                                                      dialogTitle:
+                                                          'Güncelleme Başarılı!',
+                                                      dialogContent:
+                                                          'Verileriniz başarılı bir şekilde güncellendi.',
+                                                      btnTitle: 'Kapat',
+                                                      onPressed: () {
+                                                        Navigator.pop(_);
+                                                        //close this page
+                                                        Navigator.pop(context,
+                                                            Dostlarin.id);
+                                                        //Navigator.pop(context, DostlariniGuncelle.id);
+                                                        //Navigator.pushNamed(context, DostlariniGuncelle.id);
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }
                                           }
-                                        }
-                                      } else {
-                                        showDialog(
+                                        } else {
+                                          showDialog(
                                             context: context,
                                             builder: (_) => AlertDialogWidget(
-                                                dialogTitle: 'Hata!',
-                                                dialogContent:
-                                                    'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
-                                                btnTitle: 'Kapat',
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                }));
-                                      }
-                                    } else {
-                                      //if there is no internet connection
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => AlertDialogWidget(
-                                              dialogTitle: 'İnternet hatası!',
+                                              dialogTitle: 'Hata!',
                                               dialogContent:
-                                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                                  'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
                                               btnTitle: 'Kapat',
                                               onPressed: () {
-                                                Navigator.pop(context);
-                                              }));
-                                    }
-                                  });
+                                                Navigator.pop(_);
+                                              },
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        //if there is no internet connection
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => AlertDialogWidget(
+                                            dialogTitle: 'İnternet hatası!',
+                                            dialogContent:
+                                                'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
+                                            btnTitle: 'Kapat',
+                                            onPressed: () {
+                                              Navigator.pop(_);
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
                                   setState(() {
                                     showSpinner = false;
                                   });

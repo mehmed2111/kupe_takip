@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.0
   google_maps_flutter: ^1.0.6
   modal_progress_hud: ^0.1.3
@@ -23,7 +22,7 @@ dependencies:
   http: ^0.12.2
   # check internet connection
   connectivity: ^2.0.2
-  # for auto login. Store data on local storage
+  # for auto login/remember_me. Store data on local storage
   shared_preferences: ^0.5.12+4
 
 dev_dependencies:

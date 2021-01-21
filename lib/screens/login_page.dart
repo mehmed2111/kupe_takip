@@ -25,8 +25,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool showSpinner = false;
   //String _username;
+  //String _password;
   TextEditingController _username = TextEditingController();
-  String _password;
+  TextEditingController _password = TextEditingController();
 
   //check for internet connection
   NetworkCheck _networkCheck = NetworkCheck();
@@ -47,11 +48,11 @@ class _LoginPageState extends State<LoginPage> {
     print(_username.text);
   }
 
-  /* @override
+  @override
   void dispose() {
     super.dispose();
     _username.dispose();
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,12 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Kullanıcı adı',
                   ),
                   controller: _username,
-                  /*onChanged: (newValue) {
-                    setState(() {
-                      _username = newValue;
-                      checkLogin(_username, _password);
-                    });
-                  },*/
                 ),
                 SizedBox(
                   height: 8.0,
@@ -112,12 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Şifre',
                   ),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _password = newValue;
-                      checkLogin(_username.text, _password);
-                    });
-                  },
+                  controller: _password,
                 ),
                 SizedBox(height: 8.0),
                 RememberMe(username: _username.text),
@@ -130,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     //every time on button press, make request to json and send input parameters
                     setState(() {
                       showSpinner = true;
-                      checkLogin(_username.text, _password);
+                      checkLogin(_username.text, _password.text);
                     });
                     User user;
                     try {
@@ -139,24 +129,15 @@ class _LoginPageState extends State<LoginPage> {
                           if (_loginUser != null) {
                             for (user in _loginUser) {
                               if (_username.text == user.username &&
-                                  _password == user.password) {
+                                  _password.text == user.password) {
                                 //loggedUserID will be used for comparing
                                 loggedUserID = user.id;
-                                //after the login REST api call && response code ==200
-                                /*SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setString('username', _username);
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext ctx) =>
-                                            LoadingScreen()));*/
-
-                                //Navigator.pushNamed(context, LoadingScreen.id);
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoadingScreen()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoadingScreen(),
+                                  ),
+                                );
                               } else {
                                 showDialog(
                                     context: context,
@@ -165,8 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                                         dialogContent:
                                             'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
                                         btnTitle: 'Kapat',
-                                        onPressed: () =>
-                                            Navigator.pop(context)));
+                                        onPressed: () => Navigator.pop(_)));
                               }
                             }
                           } else {
@@ -178,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                                     dialogContent:
                                         'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
                                     btnTitle: 'Kapat',
-                                    onPressed: () => Navigator.pop(context)));
+                                    onPressed: () => Navigator.pop(_)));
                           }
                         } else {
                           //if there is no internet connection
@@ -190,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                       'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
                                   btnTitle: 'Kapat',
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Navigator.pop(_);
                                   }));
                         }
                       });

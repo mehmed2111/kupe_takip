@@ -165,8 +165,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                                             'Profilinizde yer alan bilgiler zaten güncel bilgilerinizdir.',
                                                         btnTitle: 'Kapat',
                                                         onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
+                                                          Navigator.pop(_);
                                                         }));
                                           } else if (loggedUserID == user.id) {
                                             setState(() {
@@ -186,13 +185,8 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                                               'Verileriniz başarılı bir şekilde güncellendi.',
                                                           btnTitle: 'Kapat',
                                                           onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            //close this page
-                                                            Navigator.pop(
-                                                                context,
-                                                                ProfilGuncelle
-                                                                    .id);
+                                                            Navigator.pop(_);
+                                                            Navigator.pop(context, ProfilGuncelle.id);
                                                           }));
                                             });
                                           }
@@ -206,7 +200,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                                     'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
                                                 btnTitle: 'Kapat',
                                                 onPressed: () {
-                                                  Navigator.pop(context);
+                                                  Navigator.pop(_);
                                                 }));
                                       }
                                     } else {
@@ -219,7 +213,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                                   'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
                                               btnTitle: 'Kapat',
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                Navigator.pop(_);
                                               }));
                                     }
                                   });

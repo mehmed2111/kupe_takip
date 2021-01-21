@@ -21,15 +21,17 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var username = prefs.getString('username');
   print(username);
-  runApp(MaterialApp(
-      home: username == null ? Kupe(username: '',) : Kupe(username: username)));
+  runApp(
+    MaterialApp(
+      home: username == null ? Kupe(username: null) : Kupe(username: username),
+    ),
+  );
 
   //runApp(Kupe());
 }
 
 class Kupe extends StatelessWidget {
   final String username;
-
   Kupe({this.username});
 
   @override
