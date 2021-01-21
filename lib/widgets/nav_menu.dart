@@ -14,8 +14,11 @@ import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavMenu extends StatefulWidget {
+  final bool rememberMeValue;
+  NavMenu({this.rememberMeValue});
   @override
   _NavMenuState createState() => _NavMenuState();
 }
@@ -267,10 +270,35 @@ class _NavMenuState extends State<NavMenu> {
                     'Çıkış',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    if (widget.rememberMeValue != null &&
+                        widget.rememberMeValue) {
+                      WidgetsFlutterBinding.ensureInitialized();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      var username = prefs.getString('username');
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext ctx) =>
+                                  LoginPage(username: username)));
+                    } else if (widget.rememberMeValue == null ||
+                        widget.rememberMeValue) {
+                      WidgetsFlutterBinding.ensureInitialized();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      var username = prefs.getString('username');
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext ctx) => LoginPage(
+                                    username: username,
+                                  )));
+                    }
+
                     //close all previous screens and take the user to the login page
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        LoginPage.id, (Route<dynamic> route) => false);
+                    /* Navigator.of(context).pushNamedAndRemoveUntil(
+                        LoginPage.id, (Route<dynamic> route) => false);*/
                   },
                 ),
                 /*ListTile(

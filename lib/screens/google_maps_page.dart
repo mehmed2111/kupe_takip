@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
-import 'package:kupe/screens/HayvanMarkerlari.dart';
+import 'file:///D:/ATC_MEHMED/Mobil_Uygulamalar/Flutter_Uygulamar/kupe/lib/widgets/hayvan_marker_widget.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -71,7 +71,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           Navigator.of(context).push(PageRouteBuilder(
                               opaque: false,
                               pageBuilder: (BuildContext context, _, __) {
-                                return HayvanMarkerlari(
+                                return HayvanMarker(
                                   ad: _userAnimalList[i].name,
                                   sagDurumu: 'İyi',
                                   isi: '37',

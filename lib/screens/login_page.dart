@@ -15,6 +15,8 @@ import 'package:splashscreen/splashscreen.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
+  final String username;
+  LoginPage({this.username});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -22,7 +24,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool showSpinner = false;
-  String _username;
+  //String _username;
+  TextEditingController _username = TextEditingController();
   String _password;
 
   //check for internet connection
@@ -36,6 +39,19 @@ class _LoginPageState extends State<LoginPage> {
     var user = await _getUser.fetchLoginUser(username, password);
     _loginUser = user;
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _username.text = widget.username;
+    print(_username.text);
+  }
+
+  /* @override
+  void dispose() {
+    super.dispose();
+    _username.dispose();
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -78,12 +94,13 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Kullanıcı adı',
                   ),
-                  onChanged: (newValue) {
+                  controller: _username,
+                  /*onChanged: (newValue) {
                     setState(() {
                       _username = newValue;
                       checkLogin(_username, _password);
                     });
-                  },
+                  },*/
                 ),
                 SizedBox(
                   height: 8.0,
@@ -98,12 +115,12 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (newValue) {
                     setState(() {
                       _password = newValue;
-                      checkLogin(_username, _password);
+                      checkLogin(_username.text, _password);
                     });
                   },
                 ),
                 SizedBox(height: 8.0),
-                BeniHatirla(),
+                RememberMe(username: _username.text),
                 SizedBox(height: 8.0),
                 LoginPageButtons(
                   btnTitle: 'Giriş Yap',
@@ -113,19 +130,33 @@ class _LoginPageState extends State<LoginPage> {
                     //every time on button press, make request to json and send input parameters
                     setState(() {
                       showSpinner = true;
-                      checkLogin(_username, _password);
+                      checkLogin(_username.text, _password);
                     });
                     User user;
                     try {
-                      _networkCheck.check().then((internet) {
+                      _networkCheck.check().then((internet) async {
                         if (internet != null && internet) {
                           if (_loginUser != null) {
                             for (user in _loginUser) {
-                              if (_username == user.username &&
+                              if (_username.text == user.username &&
                                   _password == user.password) {
                                 //loggedUserID will be used for comparing
                                 loggedUserID = user.id;
-                                Navigator.pushNamed(context, LoadingScreen.id);
+                                //after the login REST api call && response code ==200
+                                /*SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString('username', _username);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext ctx) =>
+                                            LoadingScreen()));*/
+
+                                //Navigator.pushNamed(context, LoadingScreen.id);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoadingScreen()));
                               } else {
                                 showDialog(
                                     context: context,
@@ -243,12 +274,12 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class LoadingScreen extends StatelessWidget {
-  static const String id = 'loading_screen';
+  //static const String id = 'loading_screen';
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 2,
-      navigateAfterSeconds: HomePage.id,
+      navigateAfterSeconds: HomePage(),
       title: Text('Küpe Takip', textScaleFactor: 2),
       image: Image.asset('images/logo_transparent.png'),
       loadingText: Text('Giriş Başarılı'),

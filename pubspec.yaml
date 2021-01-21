@@ -23,6 +23,8 @@ dependencies:
   http: ^0.12.2
   # check internet connection
   connectivity: ^2.0.2
+  # for auto login. Store data on local storage
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

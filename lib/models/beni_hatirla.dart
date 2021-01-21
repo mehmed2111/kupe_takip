@@ -2,30 +2,50 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/nav_menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class BeniHatirla extends StatefulWidget {
+class RememberMe extends StatefulWidget {
+  final String username;
+  RememberMe({this.username});
   @override
-  _BeniHatirlaState createState() => _BeniHatirlaState();
+  _RememberMeState createState() => _RememberMeState();
 }
 
-class _BeniHatirlaState extends State<BeniHatirla> {
-  bool beniHatirla = false;
+class _RememberMeState extends State<RememberMe> {
+  bool rememberMe = false;
 
-  void _beniHatirlaOnChanged(bool newValue) => setState(() {
-        beniHatirla = newValue;
+  void rememberMeOnChanged(bool newValue) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      rememberMe = newValue;
 
-        if (beniHatirla) {
-          print(beniHatirla);
-          print('if in içinde');
-        } else {
-          print(beniHatirla);
-          print('else in içinde');
-        }
-      });
+      if (rememberMe) {
+        prefs.setString('username', widget.username);
+        NavMenu(rememberMeValue: rememberMe);
+      } else {
+        prefs.setString('username', 'example');
+        NavMenu(rememberMeValue: rememberMe);
+      }
+    },);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
+    return Row(
+      children: [
+        Switch(
+          value: rememberMe,
+          onChanged: rememberMeOnChanged,
+          activeTrackColor: kMainKupeColor,
+          activeColor: Colors.white,
+        ),
+        Text('Beni Hatırla',
+            style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
+      ],
+    );
+
+    /*CheckboxListTile(
       title: Text(
         'Beni Hatırla',
         style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
@@ -34,19 +54,6 @@ class _BeniHatirlaState extends State<BeniHatirla> {
       onChanged: _beniHatirlaOnChanged,
       activeColor: kMainKupeColor,
       controlAffinity: ListTileControlAffinity.leading,
-    );
-
-    /*Row(
-      children: [
-        Switch(
-          value: beniHatirla,
-          onChanged: _beniHatirlaOnChanged,
-          activeTrackColor: kMainKupeColor,
-          activeColor: Colors.white,
-        ),
-        Text('Beni Hatırla',
-            style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
-      ],
     );*/
   }
 }

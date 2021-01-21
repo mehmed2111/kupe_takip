@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/widgets/kapat_button.dart';
-import '../constants.dart';
+import 'package:kupe/constants.dart';
 
-class HayvanMarkerlari extends StatelessWidget {
+class HayvanMarker extends StatelessWidget {
   static const String id = 'hayvan_marker';
 
   final String ad;
@@ -12,7 +12,7 @@ class HayvanMarkerlari extends StatelessWidget {
   final String renk;
   final String sonKonT;
 
-  HayvanMarkerlari(
+  HayvanMarker(
       {this.ad,
       this.sagDurumu,
       this.isi,
