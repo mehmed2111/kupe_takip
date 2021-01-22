@@ -17,17 +17,16 @@ class _RememberMeState extends State<RememberMe> {
 
   void rememberMeOnChanged(bool newValue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    rememberMe = newValue;
     setState(() {
-      rememberMe = newValue;
-
       if (rememberMe) {
         prefs.setString('username', widget.username);
         NavMenu(rememberMeValue: rememberMe);
       } else {
-        prefs.setString('username', 'example');
+        prefs.setString('username', null);
         NavMenu(rememberMeValue: rememberMe);
       }
-    },);
+    });
   }
 
   @override

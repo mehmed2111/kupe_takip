@@ -31,6 +31,34 @@ class User {
     }
   }
 
+  //https://www.aractakipsistemleri.com/canli3/Takip/ForgotPassword?mail_adres=deneme@aractakipsistemleri.com
+  Future<List<User>> fetchUserByEmail(String email) async {
+    final response = await http.get(_url + 'ForgotPassword?mail_adres=$email');
+
+    var data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return (data as List).map((e) => User.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to Load User by email');
+    }
+  }
+
+  //https://www.aractakipsistemleri.com/canli3/Takip/UpdateForgottenPassword?id=5&yeni_sifre=deneme1
+  Future<List<User>> updateForgottenPassword(
+      int userId, String password) async {
+    final http.Response response = await http.post(
+        _url + "UpdateForgottenPassword?id=$userId&yeni_sifre=$password",
+        body: jsonEncode(
+            <String, String>{'id': "$userId", 'password': password}));
+
+    var data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return (data as List).map((e) => User.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load forgotten password update');
+    }
+  }
+
   Future<List<User>> updateUserPassword(int userId, String password) async {
     final http.Response response = await http.post(
         _url + "UpdatePassword?id=$userId&password=$password",

@@ -26,8 +26,6 @@ Future<void> main() async {
       home: username == null ? Kupe(username: null) : Kupe(username: username),
     ),
   );
-
-  //runApp(Kupe());
 }
 
 class Kupe extends StatelessWidget {
@@ -53,7 +51,6 @@ class Kupe extends StatelessWidget {
         Dostlarin.id: (context) => Dostlarin(),
         BildirimDeneme.id: (context) => BildirimDeneme(),
         HayvanMarker.id: (context) => HayvanMarker(),
-        //LoadingScreen.id: (context) => LoadingScreen(),
         DostlariniGuncelle.id: (context) => DostlariniGuncelle(),
       },
     );

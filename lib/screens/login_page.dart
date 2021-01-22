@@ -25,9 +25,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool showSpinner = false;
   //String _username;
-  //String _password;
+  String _password;
   TextEditingController _username = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  //TextEditingController _password = TextEditingController();
 
   //check for internet connection
   NetworkCheck _networkCheck = NetworkCheck();
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _username.text = widget.username;
-    print(_username.text);
+    //print(_username.text);
   }
 
   @override
@@ -107,7 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Şifre',
                   ),
-                  controller: _password,
+                  onChanged: (value) {
+                    setState(() {
+                      _password = value;
+                      checkLogin(_username.text, _password);
+                    });
+                  },
                 ),
                 SizedBox(height: 8.0),
                 RememberMe(username: _username.text),
@@ -120,16 +125,16 @@ class _LoginPageState extends State<LoginPage> {
                     //every time on button press, make request to json and send input parameters
                     setState(() {
                       showSpinner = true;
-                      checkLogin(_username.text, _password.text);
+                      checkLogin(_username.text, _password);
                     });
                     User user;
                     try {
-                      _networkCheck.check().then((internet) async {
+                      _networkCheck.check().then((internet) {
                         if (internet != null && internet) {
                           if (_loginUser != null) {
                             for (user in _loginUser) {
                               if (_username.text == user.username &&
-                                  _password.text == user.password) {
+                                  _password == user.password) {
                                 //loggedUserID will be used for comparing
                                 loggedUserID = user.id;
                                 Navigator.push(
@@ -254,7 +259,6 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class LoadingScreen extends StatelessWidget {
-  //static const String id = 'loading_screen';
   @override
   Widget build(BuildContext context) {
     return SplashScreen(

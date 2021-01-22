@@ -85,7 +85,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
                               textAlign: TextAlign.center,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Eski Şifre'),
+                                  hintText: 'Geçerli Şifre'),
                               onChanged: (value) {
                                 setState(() {
                                   _oldPassword = value;
@@ -121,7 +121,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
                               textAlign: TextAlign.center,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Tekrar Yeni Şifre'),
+                                  hintText: 'Yeni Şifre (Tekrar)'),
                               onChanged: (value) {
                                 setState(() {
                                   _newPassAgain = value;
@@ -155,43 +155,59 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                                   _updateUserPassword(
                                                       loggedUserID,
                                                       _newPassAgain);
-                                                  showDialog(context: context,
-                                                      builder: (_) => AlertDialogWidget(
-                                                              dialogTitle: 'Güncelleme Başarılı',
-                                                              dialogContent: 'Şifreniz başarılı bir şekilde güncellendi.',
-                                                              btnTitle: 'Kapat',
-                                                              onPressed: () {
-                                                                Navigator.pop(_);
-                                                                Navigator.pop(context, SifreDegistir.id);
-                                                              }));
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        AlertDialogWidget(
+                                                      dialogTitle:
+                                                          'Güncelleme Başarılı',
+                                                      dialogContent:
+                                                          'Şifreniz başarılı bir şekilde güncellendi.',
+                                                      btnTitle: 'Kapat',
+                                                      onPressed: () {
+                                                        Navigator.pop(_);
+                                                        Navigator.pop(context,
+                                                            SifreDegistir.id);
+                                                      },
+                                                    ),
+                                                  );
                                                 });
                                               }
                                             } else {
-                                              showDialog(context: context,
-                                                  builder: (_) => AlertDialogWidget(
-                                                          dialogTitle: 'Şifre Hatası!',
-                                                          dialogContent: 'Lütfen şifrenizi kontrol edin ve tekrar deneyin.',
-                                                          btnTitle: 'Kapat',
-                                                          onPressed: () {
-                                                            Navigator.pop(_);
-                                                          }));
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    AlertDialogWidget(
+                                                  dialogTitle: 'Şifre Hatası!',
+                                                  dialogContent:
+                                                      'Lütfen şifrenizi kontrol edin ve tekrar deneyin.',
+                                                  btnTitle: 'Kapat',
+                                                  onPressed: () {
+                                                    Navigator.pop(_);
+                                                  },
+                                                ),
+                                              );
                                             }
                                           }
                                         } else {
-                                          showDialog(context: context,
+                                          showDialog(
+                                              context: context,
                                               builder: (_) => AlertDialogWidget(
                                                   dialogTitle: 'Hata!',
-                                                  dialogContent: 'Şifre alanı boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
+                                                  dialogContent:
+                                                      'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
                                                   btnTitle: 'Kapat',
                                                   onPressed: () {
                                                     Navigator.pop(_);
                                                   }));
                                         }
                                       } else {
-                                        showDialog(context: context,
+                                        showDialog(
+                                            context: context,
                                             builder: (_) => AlertDialogWidget(
                                                 dialogTitle: 'Hata!',
-                                                dialogContent: 'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
+                                                dialogContent:
+                                                    'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
                                                 btnTitle: 'Kapat',
                                                 onPressed: () {
                                                   Navigator.pop(_);
@@ -199,7 +215,8 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                       }
                                     } else {
                                       //if there is no internet connection
-                                      showDialog(context: context,
+                                      showDialog(
+                                          context: context,
                                           builder: (_) => AlertDialogWidget(
                                               dialogTitle: 'İnternet hatası!',
                                               dialogContent:
