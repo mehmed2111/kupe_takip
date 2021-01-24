@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:kupe/dbtables/users_table.dart';
@@ -81,11 +82,26 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
                               //controller: _controller,
-                              keyboardType: TextInputType.visiblePassword,
-                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.text,
+                              obscureText: obscurePassword4,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Geçerli Şifre'),
+                                hintText: 'Geçerli Şifre',
+                                suffixIcon: IconButton(
+                                    icon: Icon(
+                                      obscurePassword4
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: kLoginLightDarkBackground,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        //toggle the state of visible password variable
+                                        obscurePassword4 = !obscurePassword4;
+                                      });
+                                    }),
+                                contentPadding: EdgeInsets.only(left: 20.0),
+                              ),
                               onChanged: (value) {
                                 setState(() {
                                   _oldPassword = value;
@@ -99,11 +115,26 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
                               //controller: _controller,
-                              keyboardType: TextInputType.visiblePassword,
-                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.text,
+                              obscureText: obscurePassword5,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Yeni Şifre'),
+                                hintText: 'Yeni Şifre',
+                                suffixIcon: IconButton(
+                                    icon: Icon(
+                                      obscurePassword5
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: kLoginLightDarkBackground,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        //toggle the state of visible password variable
+                                        obscurePassword5 = !obscurePassword5;
+                                      });
+                                    }),
+                                contentPadding: EdgeInsets.only(left: 20.0),
+                              ),
                               onChanged: (value) {
                                 setState(() {
                                   _newPassword = value;
@@ -117,11 +148,26 @@ class _SifreDegistirState extends State<SifreDegistir> {
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
                               //controller: _controller,
-                              keyboardType: TextInputType.visiblePassword,
-                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.text,
+                              obscureText: obscurePassword6,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Yeni Şifre (Tekrar)'),
+                                hintText: 'Yeni Şifre (Tekrar)',
+                                suffixIcon: IconButton(
+                                    icon: Icon(
+                                      obscurePassword6
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: kLoginLightDarkBackground,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        //toggle the state of visible password variable
+                                        obscurePassword6 = !obscurePassword6;
+                                      });
+                                    }),
+                                contentPadding: EdgeInsets.only(left: 20.0),
+                              ),
                               onChanged: (value) {
                                 setState(() {
                                   _newPassAgain = value;
@@ -160,7 +206,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                                     builder: (_) =>
                                                         AlertDialogWidget(
                                                       dialogTitle:
-                                                          'Güncelleme Başarılı',
+                                                          'Güncelleme Başarılı!',
                                                       dialogContent:
                                                           'Şifreniz başarılı bir şekilde güncellendi.',
                                                       btnTitle: 'Kapat',
@@ -176,55 +222,28 @@ class _SifreDegistirState extends State<SifreDegistir> {
                                             } else {
                                               showDialog(
                                                 context: context,
-                                                builder: (_) =>
-                                                    AlertDialogWidget(
-                                                  dialogTitle: 'Şifre Hatası!',
-                                                  dialogContent:
-                                                      'Lütfen şifrenizi kontrol edin ve tekrar deneyin.',
-                                                  btnTitle: 'Kapat',
-                                                  onPressed: () {
-                                                    Navigator.pop(_);
-                                                  },
-                                                ),
+                                                builder: (_) => PasswordError(),
                                               );
                                             }
                                           }
                                         } else {
                                           showDialog(
-                                              context: context,
-                                              builder: (_) => AlertDialogWidget(
-                                                  dialogTitle: 'Hata!',
-                                                  dialogContent:
-                                                      'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
-                                                  btnTitle: 'Kapat',
-                                                  onPressed: () {
-                                                    Navigator.pop(_);
-                                                  }));
+                                            context: context,
+                                            builder: (_) => EmptyAreaError(),
+                                          );
                                         }
                                       } else {
                                         showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialogWidget(
-                                                dialogTitle: 'Hata!',
-                                                dialogContent:
-                                                    'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
-                                                btnTitle: 'Kapat',
-                                                onPressed: () {
-                                                  Navigator.pop(_);
-                                                }));
+                                          context: context,
+                                          builder: (_) => CouldNotLoadData(),
+                                        );
                                       }
                                     } else {
                                       //if there is no internet connection
                                       showDialog(
-                                          context: context,
-                                          builder: (_) => AlertDialogWidget(
-                                              dialogTitle: 'İnternet hatası!',
-                                              dialogContent:
-                                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                                              btnTitle: 'Kapat',
-                                              onPressed: () {
-                                                Navigator.pop(_);
-                                              }));
+                                        context: context,
+                                        builder: (_) => InternetError(),
+                                      );
                                     }
                                   });
                                   setState(() {

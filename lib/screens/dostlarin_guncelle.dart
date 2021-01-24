@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/constants.dart';
 import 'dostlarin.dart';
-import 'package:kupe/widgets/alert_dialog_widget.dart';
 
 class DostlariniGuncelle extends StatefulWidget {
   DostlariniGuncelle() : super();
@@ -71,7 +71,8 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
                 setState(() {
                   _selectedAnimal = selectedAnimal;
 
-                  Navigator.of(context).push(PageRouteBuilder(
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
                         return Dostlarin(
@@ -84,34 +85,24 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
                                   : null,
                           color: _selectedAnimal.color,
                         );
-                      }));
+                      },
+                    ),
+                  );
                 });
               }
             }
           } else {
             showDialog(
-                context: context,
-                builder: (_) => AlertDialogWidget(
-                    dialogTitle: 'Hata!',
-                    dialogContent:
-                        'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
-                    btnTitle: 'Kapat',
-                    onPressed: () {
-                      Navigator.pop(_);
-                    }));
+              context: context,
+              builder: (_) => CouldNotLoadData(),
+            );
           }
         } else {
           //if there is no internet connection
           showDialog(
-              context: context,
-              builder: (_) => AlertDialogWidget(
-                  dialogTitle: 'İnternet hatası!',
-                  dialogContent:
-                      'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                  btnTitle: 'Kapat',
-                  onPressed: () {
-                    Navigator.pop(_);
-                  }));
+            context: context,
+            builder: (_) => InternetError(),
+          );
         }
       });
       setState(() {

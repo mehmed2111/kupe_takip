@@ -6,6 +6,12 @@ var animalID = 0;
 
 //for progress indicator control
 bool showSpinner = false;
+bool obscurePassword = true;
+bool obscurePassword2 = true;
+bool obscurePassword3 = true;
+bool obscurePassword4 = true;
+bool obscurePassword5 = true;
+bool obscurePassword6 = true;
 
 //App const colors
 const kMainKupeColor = Color(0xFF5CB3AB);
@@ -19,6 +25,7 @@ const kSendButtonTextStyle = TextStyle(
   fontSize: 18.0,
 );
 
+Widget icon;
 //TextFields decorations
 const kTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
+import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/profil_guncelle_widget.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/network/network_check.dart';
-import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ProfilGuncelle extends StatefulWidget {
@@ -156,17 +157,10 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                               textTelNo.text == user.telno &&
                                               textVet.text == user.veteriner) {
                                             showDialog(
-                                                context: context,
-                                                builder: (_) =>
-                                                    AlertDialogWidget(
-                                                        dialogTitle:
-                                                            'Profiliniz Güncel!',
-                                                        dialogContent:
-                                                            'Profilinizde yer alan bilgiler zaten güncel bilgilerinizdir.',
-                                                        btnTitle: 'Kapat',
-                                                        onPressed: () {
-                                                          Navigator.pop(_);
-                                                        }));
+                                              context: context,
+                                              builder: (_) =>
+                                                  ProfileIsUpToDate(),
+                                            );
                                           } else if (loggedUserID == user.id) {
                                             setState(() {
                                               _updateUserProfile(
@@ -176,45 +170,36 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                                                   textTelNo.text,
                                                   textVet.text);
                                               showDialog(
-                                                  context: context,
-                                                  builder: (_) =>
-                                                      AlertDialogWidget(
-                                                          dialogTitle:
-                                                              'Güncelleme Başarılı!',
-                                                          dialogContent:
-                                                              'Verileriniz başarılı bir şekilde güncellendi.',
-                                                          btnTitle: 'Kapat',
-                                                          onPressed: () {
-                                                            Navigator.pop(_);
-                                                            Navigator.pop(context, ProfilGuncelle.id);
-                                                          }));
+                                                context: context,
+                                                builder: (_) =>
+                                                    AlertDialogWidget(
+                                                  dialogTitle:
+                                                      'Güncelleme Başarılı!',
+                                                  dialogContent:
+                                                      'Verileriniz başarılı bir şekilde güncellendi.',
+                                                  btnTitle: 'Kapat',
+                                                  onPressed: () {
+                                                    Navigator.pop(_);
+                                                    Navigator.pop(context,
+                                                        ProfilGuncelle.id);
+                                                  },
+                                                ),
+                                              );
                                             });
                                           }
                                         }
                                       } else {
                                         showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialogWidget(
-                                                dialogTitle: 'Hata!',
-                                                dialogContent:
-                                                    'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
-                                                btnTitle: 'Kapat',
-                                                onPressed: () {
-                                                  Navigator.pop(_);
-                                                }));
+                                          context: context,
+                                          builder: (_) => EmptyAreaError(),
+                                        );
                                       }
                                     } else {
                                       //if there is no internet connection
                                       showDialog(
-                                          context: context,
-                                          builder: (_) => AlertDialogWidget(
-                                              dialogTitle: 'İnternet hatası!',
-                                              dialogContent:
-                                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                                              btnTitle: 'Kapat',
-                                              onPressed: () {
-                                                Navigator.pop(_);
-                                              }));
+                                        context: context,
+                                        builder: (_) => InternetError(),
+                                      );
                                     }
                                   });
                                   setState(() {

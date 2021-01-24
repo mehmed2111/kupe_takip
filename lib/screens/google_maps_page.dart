@@ -4,8 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
-import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -98,28 +98,16 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             }
           } else {
             showDialog(
-                context: context,
-                builder: (_) => AlertDialogWidget(
-                    dialogTitle: 'Hata!',
-                    dialogContent:
-                        'Verileriniz yüklenemedi. Lütfen daha sonra tekrar deneyin.',
-                    btnTitle: 'Kapat',
-                    onPressed: () {
-                      Navigator.pop(_);
-                    }));
+              context: context,
+              builder: (_) => CouldNotLoadData(),
+            );
           }
         } else {
           //if there is no internet connection
           showDialog(
-              context: context,
-              builder: (_) => AlertDialogWidget(
-                  dialogTitle: 'İnternet hatası!',
-                  dialogContent:
-                      'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                  btnTitle: 'Kapat',
-                  onPressed: () {
-                    Navigator.pop(_);
-                  }));
+            context: context,
+            builder: (_) => InternetError(),
+          );
         }
       });
       setState(() {
@@ -210,28 +198,30 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                     radius: 28.0,
                     backgroundColor: Colors.white.withOpacity(0.75),
                     child: IconButton(
-                        icon: Icon(Icons.satellite),
-                        iconSize: 36.0,
-                        color: Colors.grey[700],
-                        onPressed: () {
-                          setState(() {
-                            this._mapType = MapType.hybrid;
-                          });
-                        }),
+                      icon: Icon(Icons.satellite),
+                      iconSize: 36.0,
+                      color: Colors.grey[700],
+                      onPressed: () {
+                        setState(() {
+                          this._mapType = MapType.hybrid;
+                        });
+                      },
+                    ),
                   ),
                   SizedBox(width: 13.0),
                   CircleAvatar(
                     radius: 28.0,
                     backgroundColor: Colors.white.withOpacity(0.75),
                     child: IconButton(
-                        icon: Icon(Icons.map_rounded),
-                        iconSize: 36.0,
-                        color: Colors.grey[700],
-                        onPressed: () {
-                          setState(() {
-                            this._mapType = MapType.normal;
-                          });
-                        }),
+                      icon: Icon(Icons.map_rounded),
+                      iconSize: 36.0,
+                      color: Colors.grey[700],
+                      onPressed: () {
+                        setState(() {
+                          this._mapType = MapType.normal;
+                        });
+                      },
+                    ),
                   ),
                 ],
               ),

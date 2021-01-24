@@ -7,7 +7,7 @@ import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/models/beni_hatirla.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/sifremi_unuttum.dart';
-import 'package:kupe/widgets/alert_dialog_widget.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/login_page_buttons.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -23,7 +23,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool showSpinner = false;
   //String _username;
   String _password;
   TextEditingController _username = TextEditingController();
@@ -94,6 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                   cursorColor: kMainKupeColor,
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Kullanıcı adı',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: kLoginLightDarkBackground,
+                    ),
                   ),
                   controller: _username,
                 ),
@@ -101,11 +104,30 @@ class _LoginPageState extends State<LoginPage> {
                   height: 8.0,
                 ),
                 TextField(
+                  keyboardType: TextInputType.text,
                   textAlign: TextAlign.center,
-                  obscureText: true,
+                  obscureText: obscurePassword,
                   cursorColor: kMainKupeColor,
                   decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Şifre',
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: kLoginLightDarkBackground,
+                    ),
+                    suffixIcon: IconButton(
+                        icon: Icon(
+                          obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: kLoginLightDarkBackground,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            //toggle the state of visible password variable
+                            obscurePassword = !obscurePassword;
+                          });
+                        }),
+                    contentPadding: EdgeInsets.zero,
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -145,38 +167,24 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               } else {
                                 showDialog(
-                                    context: context,
-                                    builder: (_) => AlertDialogWidget(
-                                        dialogTitle: 'Giriş Başarısız!',
-                                        dialogContent:
-                                            'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
-                                        btnTitle: 'Kapat',
-                                        onPressed: () => Navigator.pop(_)));
+                                  context: context,
+                                  builder: (_) => UnsuccessfulLogin(),
+                                );
                               }
                             }
                           } else {
                             //throw Exception('Failed to load users');
                             showDialog(
-                                context: context,
-                                builder: (_) => AlertDialogWidget(
-                                    dialogTitle: 'Giriş Başarısız!',
-                                    dialogContent:
-                                        'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
-                                    btnTitle: 'Kapat',
-                                    onPressed: () => Navigator.pop(_)));
+                              context: context,
+                              builder: (_) => UnsuccessfulLogin(),
+                            );
                           }
                         } else {
                           //if there is no internet connection
                           showDialog(
-                              context: context,
-                              builder: (_) => AlertDialogWidget(
-                                  dialogTitle: 'İnternet hatası!',
-                                  dialogContent:
-                                      'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                                  btnTitle: 'Kapat',
-                                  onPressed: () {
-                                    Navigator.pop(_);
-                                  }));
+                            context: context,
+                            builder: (_) => InternetError(),
+                          );
                         }
                       });
                       setState(() {

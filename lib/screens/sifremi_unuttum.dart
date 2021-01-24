@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/network/network_check.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -71,10 +72,15 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
                               keyboardType: TextInputType.emailAddress,
-                              textAlign: TextAlign.center,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Mail adresinizi giriniz..'),
+                                hintText: 'Mail adresinizi giriniz..',
+                                suffixIcon: Icon(
+                                  Icons.mail,
+                                  color: kLoginLightDarkBackground,
+                                ),
+                                contentPadding: EdgeInsets.only(left: 20.0),
+                              ),
                               onChanged: (newValue) {
                                 setState(() {
                                   _email = newValue;
@@ -87,11 +93,27 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
-                              keyboardType: TextInputType.visiblePassword,
-                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.text,
+                              obscureText: obscurePassword2,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Yeni Şifre'),
+                                hintText: 'Yeni Şifre',
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    obscurePassword2
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: kLoginLightDarkBackground,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      //toggle the state of visible password variable
+                                      obscurePassword2 = !obscurePassword2;
+                                    });
+                                  },
+                                ),
+                                contentPadding: EdgeInsets.only(left: 20.0),
+                              ),
                               onChanged: (newValue) {
                                 setState(() {
                                   _newPassword = newValue;
@@ -103,11 +125,27 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
-                              keyboardType: TextInputType.visiblePassword,
-                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.text,
+                              obscureText: obscurePassword3,
                               cursorColor: kMainKupeColor,
                               decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Yeni Şifre (Tekrar)'),
+                                hintText: 'Yeni Şifre (Tekrar)',
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    obscurePassword3
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: kLoginLightDarkBackground,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      //toggle the state of visible password variable
+                                      obscurePassword3 = !obscurePassword3;
+                                    });
+                                  },
+                                ),
+                                contentPadding: EdgeInsets.only(left: 20.0),
+                              ),
                               onChanged: (newValue) {
                                 setState(() {
                                   _newPasswordRepeat = newValue;
@@ -125,10 +163,6 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                                 setState(() {
                                   showSpinner = true;
                                   getUserByEmail(_email);
-                                  /*User u;
-                                  for (u in _userByEmailList) {
-                                    print(u.password);
-                                  }*/
                                 });
                                 try {
                                   _networkCheck.check().then((internet) {
@@ -150,7 +184,7 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                                                 builder: (_) =>
                                                     AlertDialogWidget(
                                                   dialogTitle:
-                                                      'Güncelleme Başarılı',
+                                                      'Güncelleme Başarılı!',
                                                   dialogContent:
                                                       'Şifreniz başarılı bir şekilde güncellendi.',
                                                   btnTitle: 'Kapat',
@@ -165,45 +199,27 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                                               showDialog(
                                                 context: context,
                                                 builder: (_) =>
-                                                    AlertDialogWidget(
-                                                  dialogTitle: 'Şifre Hatası!',
-                                                  dialogContent:
-                                                      'Lütfen şifrenizi kontrol edin ve tekrar deneyin.',
-                                                  btnTitle: 'Kapat',
-                                                  onPressed: () {
-                                                    Navigator.pop(_);
-                                                  },
-                                                ),
+                                                    CheckFilledArea(),
                                               );
                                             }
                                           }
                                         } else {
                                           showDialog(
-                                              context: context,
-                                              builder: (_) => AlertDialogWidget(
-                                                  dialogTitle: 'Hata!',
-                                                  dialogContent:
-                                                      'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
-                                                  btnTitle: 'Kapat',
-                                                  onPressed: () {
-                                                    Navigator.pop(_);
-                                                  }));
+                                            context: context,
+                                            builder: (_) => EmptyAreaError(),
+                                          );
                                         }
                                       } else {
-                                        throw Exception(
-                                            'Could not load user by email');
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => CouldNotLoadData(),
+                                        );
                                       }
                                     } else {
                                       showDialog(
-                                          context: context,
-                                          builder: (_) => AlertDialogWidget(
-                                              dialogTitle: 'İnternet hatası!',
-                                              dialogContent:
-                                                  'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                                              btnTitle: 'Kapat',
-                                              onPressed: () {
-                                                Navigator.pop(_);
-                                              }));
+                                        context: context,
+                                        builder: (_) => InternetError(),
+                                      );
                                     }
                                   });
                                   setState(() {
@@ -215,6 +231,7 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                               },
                             ),
                           ),
+                          SizedBox(height: 16.0),
                         ],
                       ),
                     ),

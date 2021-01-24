@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 import 'package:kupe/widgets/dostlarin_widget.dart';
 import 'package:kupe/widgets/kapat_button.dart';
@@ -144,11 +145,14 @@ class _DostlarinState extends State<Dostlarin> {
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Text(value,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: kLoginDarkBackground,
-                                          fontSize: 15)),
+                                  child: Text(
+                                    value,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: kLoginDarkBackground,
+                                      fontSize: 15,
+                                    ),
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (String newValue) {
@@ -217,11 +221,8 @@ class _DostlarinState extends State<Dostlarin> {
                                                       btnTitle: 'Kapat',
                                                       onPressed: () {
                                                         Navigator.pop(_);
-                                                        //close this page
                                                         Navigator.pop(context,
                                                             Dostlarin.id);
-                                                        //Navigator.pop(context, DostlariniGuncelle.id);
-                                                        //Navigator.pushNamed(context, DostlariniGuncelle.id);
                                                       },
                                                     ),
                                                   );
@@ -232,30 +233,14 @@ class _DostlarinState extends State<Dostlarin> {
                                         } else {
                                           showDialog(
                                             context: context,
-                                            builder: (_) => AlertDialogWidget(
-                                              dialogTitle: 'Hata!',
-                                              dialogContent:
-                                                  'Alanlar boş bırakılamaz. Lütfen boş alanları doldurun ve tekrar deneyin.',
-                                              btnTitle: 'Kapat',
-                                              onPressed: () {
-                                                Navigator.pop(_);
-                                              },
-                                            ),
+                                            builder: (_) => EmptyAreaError(),
                                           );
                                         }
                                       } else {
                                         //if there is no internet connection
                                         showDialog(
                                           context: context,
-                                          builder: (_) => AlertDialogWidget(
-                                            dialogTitle: 'İnternet hatası!',
-                                            dialogContent:
-                                                'Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.',
-                                            btnTitle: 'Kapat',
-                                            onPressed: () {
-                                              Navigator.pop(_);
-                                            },
-                                          ),
+                                          builder: (_) => InternetError(),
                                         );
                                       }
                                     },
