@@ -9,6 +9,8 @@ import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
+import 'package:kupe/screens/region_delete_name.dart';
+import 'package:kupe/screens/region_name.dart';
 import 'package:kupe/screens/saglik_takip.dart';
 import 'package:kupe/screens/sifre_degistir.dart';
 import 'package:kupe/dbtables/users_table.dart';
@@ -209,17 +211,64 @@ class _NavMenuState extends State<NavMenu> {
                     );
                   },
                 ),
-                //burada Submenu oluşturuldu
+                //Submenu oluşturuldu
                 Divider(color: Colors.white, thickness: 0.3),
                 Theme(
                   data: Theme.of(context).copyWith(
-                    accentColor: kMainKupeColor,
-                    unselectedWidgetColor: Colors.white,
+                      accentColor: kMainKupeColor,
+                      unselectedWidgetColor: Colors.white),
+                  child: ExpansionTile(
+                    backgroundColor: kLoginLightDarkBackground,
+                    leading:
+                        Icon(Icons.edit_location_outlined, color: Colors.white),
+                    title: Text('Bölge',
+                        style: TextStyle(fontSize: 18, color: Colors.white)),
+                    children: [
+                      ListTile(
+                          leading: Icon(Icons.add, color: Colors.white),
+                          title: Text(
+                            'Yeni',
+                            style:
+                                TextStyle(fontSize: 18.0, color: Colors.white),
+                          ),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) {
+                                return RegionName();
+                              },
+                            ));
+                          }),
+                      ListTile(
+                        leading: Icon(Icons.create, color: Colors.white),
+                        title: Text(
+                          'Düzenle',
+                          style: TextStyle(fontSize: 18.0, color: Colors.white),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) {
+                              return RegionDeleteName();
+                            },
+                          ));
+                        },
+                      ),
+                    ],
                   ),
+                ),
+                //Submenu oluşturuldu
+                Divider(color: Colors.white, thickness: 0.3),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                      accentColor: kMainKupeColor,
+                      unselectedWidgetColor: Colors.white),
                   child: ExpansionTile(
                     //trailing:
                     //Icon(Icons.subdirectory_arrow_left, color: Colors.white),
-                    backgroundColor: Color(0xFF323244),
+                    backgroundColor: kLoginLightDarkBackground,
                     leading: Icon(Icons.settings, color: Colors.white),
                     title: Text('Ayarlar',
                         style: TextStyle(fontSize: 18, color: Colors.white)),

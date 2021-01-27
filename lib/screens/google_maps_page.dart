@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
+import 'package:kupe/dbtables/user_region.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+
+import '../constants.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   static const String id = 'google_maps_page';
@@ -22,7 +26,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   Timer timer;
   //On map start; default coordinates set to Turkey
   final LatLng _defaultIstanbul = const LatLng(39.1667, 35.6667);
-  bool showSpinner = false;
   //Location
   final Location location = Location();
   LocationData locationData;
@@ -30,14 +33,28 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   PermissionStatus _permissionGranted;
   //Maps
   MapType _mapType = MapType.normal;
-  GoogleMapController googleMapController;
+  GoogleMapController _googleMapController;
   BitmapDescriptor _mIconDog;
   BitmapDescriptor _mIconCat;
   //create markers list
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
+  //create polygon
+  Map<PolygonId, Polygon> polygon = <PolygonId, Polygon>{};
+  Set<Polygon> _polygons = HashSet<Polygon>();
+  List<LatLng> polygonLatLngs = List<LatLng>();
+  int _polygonIdCounter = 1;
+  bool _isPolygon = false;
   //fetch data
   UserAnimals _userAnimals = UserAnimals();
   List<UserAnimals> _userAnimalList;
+  UserRegion _userRegion = UserRegion();
+  List<UserRegion> _userRegionList;
+
+  void _getRegion(int userID) async {
+    var data = await _userRegion.fetchUserRegion(userID);
+    _userRegionList = data;
+    //print('Fetched region data: ${_userRegionList[0].region1}');
+  }
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error
   //and show user's animals on the map
@@ -45,7 +62,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     var dataList = await _userAnimals.fetchUserAnimals(loggedUserID);
     _userAnimalList = dataList;
 
-    googleMapController = controller;
+    _googleMapController = controller;
     setState(() {
       showSpinner = true;
     });
@@ -91,7 +108,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                             : null,
                   );
                   //add all animals which are in _animalMarkers
-                  markers[MarkerId('${_userAnimalList[i].id.toString()}')] =
+                  _markers[MarkerId('${_userAnimalList[i].id.toString()}')] =
                       markerList;
                 });
               }
@@ -115,6 +132,64 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       });
     } catch (e) {
       print(e);
+    }
+  }
+
+  void _getPolygon() async {
+    var data = await _userRegion.fetchUserRegion(loggedUserID);
+    _userRegionList = data;
+
+    var fullPolygon;
+    var polygonPoints;
+    var polygonLatLngs;
+    print('Fetched json length: ${_userRegionList.length}');
+    for (var i = 0; i < _userRegionList.length; i++) {
+      fullPolygon = _userRegionList[i].region1;
+      print('fullPolygon: $fullPolygon');
+      polygonPoints = fullPolygon.split("_");
+      print('polygonPoints: $polygonPoints');
+      polygonLatLngs = polygonPoints.length;
+      print('polygonLatLngs: $polygonLatLngs');
+      //set to null in every json item index change
+      List<LatLng> selectedPolygonPoints = List<LatLng>();
+      for (var j = 0; j < polygonLatLngs; j++) {
+        var selectedLatLngs = [];
+        selectedLatLngs.add(polygonPoints[j].split("x"));
+        print('selectedLatLngs: $selectedLatLngs');
+
+        selectedPolygonPoints.add(
+          LatLng(
+            double.parse('${selectedLatLngs[0][0]}'),
+            double.parse('${selectedLatLngs[0][1]}'),
+          ),
+        );
+        print('selectedPolygonPoints: $selectedPolygonPoints');
+
+        /*
+        //draw polygon on the map
+        final String polygonIdVal = 'polygon_id_$_polygonIdCounter';
+        _polygons.add(
+          Polygon(
+            polygonId: PolygonId(polygonIdVal),
+            points: polygonLatLngs,
+            strokeWidth: 2,
+            strokeColor: Colors.red,
+            fillColor: Colors.yellow.withOpacity(0.15),
+          ),
+        );*/
+
+      }
+      setState(() {
+        Polygon polygonList = Polygon(
+          polygonId: PolygonId('${_userRegionList[i].id.toString()}'),
+          points: selectedPolygonPoints,
+          strokeWidth: 2,
+          strokeColor: Colors.red,
+          fillColor: Colors.yellow.withOpacity(0.15),
+        );
+        polygon[PolygonId('${_userRegionList[i].id.toString()}')] = polygonList;
+      });
+      //print('polygonList: $polygon');
     }
   }
 
@@ -163,7 +238,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _markerIconCat();
     _checkLocationPermission();
     timer = Timer.periodic(Duration(seconds: 20),
-        (Timer t) => _getUserAnimals(googleMapController));
+        (Timer t) => _getUserAnimals(_googleMapController));
     //print('Timer called $timer');
   }
 
@@ -185,8 +260,18 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               zoom: 5.0,
             ),
             mapType: _mapType,
-            markers: Set<Marker>.of(markers.values), //_markers,
+            markers: Set<Marker>.of(_markers.values), //_markers,
             onMapCreated: _getUserAnimals,
+            polygons: Set<Polygon>.of(polygon.values),
+            myLocationEnabled: true,
+            /*onTap: (point) {
+              if (_isPolygon) {
+                setState(() {
+                  //polygonLatLngs.add(point);
+                  _setPolygon();
+                });
+              }
+            },*/
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 16.0),
@@ -221,6 +306,19 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           this._mapType = MapType.normal;
                         });
                       },
+                    ),
+                  ),
+                  SizedBox(width: 13.0),
+                  RaisedButton(
+                    color: Colors.white.withOpacity(0.75),
+                    onPressed: () {
+                      //_isPolygon = true;
+                      _getPolygon();
+                    },
+                    child: Text(
+                      'Bölge Oluştur',
+                      style: TextStyle(
+                          fontSize: 18.0, color: kLoginDarkBackground),
                     ),
                   ),
                 ],
