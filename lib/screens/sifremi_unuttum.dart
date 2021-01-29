@@ -23,7 +23,7 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
   bool showSpinner = false;
   User getUser = User();
   List<User> _userByEmailList;
-  List<User> userForgotPassList;
+  //List<User> userForgotPassList;
 
   void getUserByEmail(String email) async {
     var data = await getUser.fetchUserByEmail(email);
@@ -31,8 +31,9 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
   }
 
   void updateForgottenPass(int userId, String password) async {
-    var data = await getUser.updateForgottenPassword(userId, password);
-    userForgotPassList = data;
+    //var data =
+    await getUser.updateForgottenPassword(userId, password);
+    //userForgotPassList = data;
   }
 
   @override

@@ -8,6 +8,8 @@ import 'google_maps_page.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_page';
+  final bool isPolygon;
+  HomePage({this.isPolygon});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         //opens google maps page
-        body: GoogleMapsPage(),
+        body: GoogleMapsPage(isPolygon: widget.isPolygon),
       ),
     );
   }

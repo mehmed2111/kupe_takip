@@ -26,7 +26,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
   //added in order to fetch user data
   User _user = User();
   List<User> _userData;
-  List<User> updateUserProf;
+  //List<User> updateUserProf;
 
   void _getUserData(int id) async {
     var dataList = await _user.fetchUserProfile(id);
@@ -46,9 +46,9 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
 
   void _updateUserProfile(int userId, String email, String address,
       String telNo, String vet) async {
-    var userData =
-        await _user.updateUserProfile(userId, email, address, telNo, vet);
-    updateUserProf = userData;
+    //var userData =
+    await _user.updateUserProfile(userId, email, address, telNo, vet);
+    //updateUserProf = userData;
   }
 
   @override

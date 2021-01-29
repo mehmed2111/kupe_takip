@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/bildirim_deneme.dart';
+import 'package:kupe/screens/region_delete_name.dart';
 import 'package:kupe/screens/region_name.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
@@ -54,6 +55,7 @@ class Kupe extends StatelessWidget {
         HayvanMarker.id: (context) => HayvanMarker(),
         DostlariniGuncelle.id: (context) => DostlariniGuncelle(),
         RegionName.id: (context) => RegionName(),
+        RegionDeleteName.id: (context) => RegionDeleteName(),
       },
     );
   }

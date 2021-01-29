@@ -5,6 +5,7 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin_guncelle.dart';
+import 'package:kupe/screens/google_maps_page.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
@@ -232,13 +233,21 @@ class _NavMenuState extends State<NavMenu> {
                                 TextStyle(fontSize: 18.0, color: Colors.white),
                           ),
                           onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return RegionName();
-                              },
-                            ));
+                            _networkCheck.check().then((internet) {
+                              if (internet != null && internet) {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomePage(isPolygon: true)));
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => InternetError(),
+                                );
+                              }
+                            });
                           }),
                       ListTile(
                         leading: Icon(Icons.create, color: Colors.white),
@@ -247,13 +256,22 @@ class _NavMenuState extends State<NavMenu> {
                           style: TextStyle(fontSize: 18.0, color: Colors.white),
                         ),
                         onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(PageRouteBuilder(
-                            opaque: false,
-                            pageBuilder: (BuildContext context, _, __) {
-                              return RegionDeleteName();
-                            },
-                          ));
+                          _networkCheck.check().then((internet) {
+                            if (internet != null && internet) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(PageRouteBuilder(
+                                opaque: false,
+                                pageBuilder: (BuildContext context, _, __) {
+                                  return RegionDeleteName();
+                                },
+                              ));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (_) => InternetError(),
+                              );
+                            }
+                          });
                         },
                       ),
                     ],

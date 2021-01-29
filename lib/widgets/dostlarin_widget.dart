@@ -23,7 +23,7 @@ class DostlarinWidget extends StatelessWidget {
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: TextField(
-          keyboardType: TextInputType.name,
+          keyboardType: TextInputType.text,
           textAlign: TextAlign.center,
           cursorColor: kMainKupeColor,
           decoration: kTextFieldDecoration.copyWith(hintText: hintText),

@@ -25,7 +25,7 @@ class Dostlarin extends StatefulWidget {
 class _DostlarinState extends State<Dostlarin> {
   NetworkCheck _networkCheck = NetworkCheck();
   UserAnimals _userAnimals = UserAnimals();
-  List<UserAnimals> updateAnimal;
+  //List<UserAnimals> updateAnimal;
   List<UserAnimals> _userAnimalList;
 
   String dropDownAnimalGender = 'Cinsiyetini seç..';
@@ -34,9 +34,14 @@ class _DostlarinState extends State<Dostlarin> {
 
   void _updateUserAnimal(int animalId, String animalName, String animalColor,
       int animalGender) async {
-    var userAnimalData = await _userAnimals.updateUserAnimal(
-        animalId, animalName, animalColor, animalGender);
-    updateAnimal = userAnimalData;
+    //var userAnimalData =
+    await _userAnimals.updateUserAnimal(
+      animalId,
+      animalName,
+      animalColor,
+      animalGender,
+    );
+    //updateAnimal = userAnimalData;
   }
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error

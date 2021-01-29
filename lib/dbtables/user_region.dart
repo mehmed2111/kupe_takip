@@ -17,14 +17,27 @@ class UserRegion {
   }
 
   //https://www.aractakipsistemleri.com/canli3/Takip/DeleteRegionName?id=8
-  Future<UserRegion> deleteRegionName(int regionId) async {
+  deleteRegionName(int regionId) async {
     final response = await http.post(_url + 'DeleteRegionName?id=$regionId');
     var data = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      return (data).map((e) => UserRegion.fromJson(e));
+      return data;
     } else {
       throw Exception('Could not delete region name');
+    }
+  }
+
+  //https://www.aractakipsistemleri.com/canli3/Takip/InsertPolygon?user_id=5&rname=bolge_adi&region1=asdasdas
+  addRegionToUser(int userID, String regionName, String polygonPoints) async {
+    final response = await http.post(_url +
+        'InsertPolygon?user_id=$userID&rname=$regionName&region1=$polygonPoints');
+    var data = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return data;
+    } else {
+      throw Exception('Could not add region to an user');
     }
   }
 

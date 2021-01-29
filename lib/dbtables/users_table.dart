@@ -44,8 +44,7 @@ class User {
   }
 
   //https://www.aractakipsistemleri.com/canli3/Takip/UpdateForgottenPassword?id=5&yeni_sifre=deneme1
-  Future<List<User>> updateForgottenPassword(
-      int userId, String password) async {
+  updateForgottenPassword(int userId, String password) async {
     final http.Response response = await http.post(
         _url + "UpdateForgottenPassword?id=$userId&yeni_sifre=$password",
         body: jsonEncode(
@@ -53,13 +52,13 @@ class User {
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return (data as List).map((e) => User.fromJson(e)).toList();
+      return data;
     } else {
       throw Exception('Failed to load forgotten password update');
     }
   }
 
-  Future<List<User>> updateUserPassword(int userId, String password) async {
+  updateUserPassword(int userId, String password) async {
     final http.Response response = await http.post(
         _url + "UpdatePassword?id=$userId&password=$password",
         body: jsonEncode(
@@ -67,14 +66,14 @@ class User {
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return (data as List).map((e) => User.fromJson(e)).toList();
+      return data;
     } else {
       throw Exception('Failed to load password update');
     }
   }
 
-  Future<List<User>> updateUserProfile(int userId, String email, String address,
-      String telNo, String vet) async {
+  updateUserProfile(int userId, String email, String address, String telNo,
+      String vet) async {
     final http.Response response = await http.post(
         _url +
             "UpdateUser?id=$userId&e_mail=$email&adress=$address&telno=$telNo&veteriner=$vet",
@@ -88,7 +87,7 @@ class User {
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return (data as List).map((e) => User.fromJson(e)).toList();
+      return data;
     } else {
       throw Exception('Failed to load profile update');
     }

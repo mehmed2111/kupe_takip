@@ -19,8 +19,8 @@ class UserAnimals {
     }
   }
 
-  Future<List<UserAnimals>> updateUserAnimal(int animalId, String animalName,
-      String animalColor, int animalGender) async {
+  updateUserAnimal(int animalId, String animalName, String animalColor,
+      int animalGender) async {
     final http.Response response = await http.post(
         _url +
             'UpdateAnimal?id=$animalId&name=$animalName&color=$animalColor&gender=$animalGender',
@@ -33,7 +33,7 @@ class UserAnimals {
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      return (data as List).map((e) => UserAnimals.fromJson(e)).toList();
+      return data;
     } else {
       throw Exception('Failed to load user animal update json');
     }
