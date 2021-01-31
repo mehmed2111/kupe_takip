@@ -6,6 +6,8 @@ var animalID = 0;
 
 //for progress indicator control
 bool showSpinner = false;
+
+//for pass toggle icons
 bool obscurePassword = true;
 bool obscurePassword2 = true;
 bool obscurePassword3 = true;

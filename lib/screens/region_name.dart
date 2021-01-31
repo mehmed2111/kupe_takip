@@ -103,10 +103,16 @@ class _RegionNameState extends State<RegionName> {
                                 );
                               });
                             } else {
-                              EmptyAreaError();
+                              showDialog(
+                                context: context,
+                                builder: (_) => EmptyAreaError(),
+                              );
                             }
                           } else {
-                            InternetError();
+                            showDialog(
+                              context: context,
+                              builder: (_) => InternetError(),
+                            );
                           }
                         });
                         setState(() {
@@ -115,8 +121,7 @@ class _RegionNameState extends State<RegionName> {
                       } catch (e) {
                         throw Exception('Failed to save region to an user');
                       }
-                      //controls here..
-                      print('Gelen Polygon points: ${widget.polygonLatLngs}');
+                      //print('Gelen Polygon points: ${widget.polygonLatLngs}');
                     }),
               ),
               SizedBox(height: 10),

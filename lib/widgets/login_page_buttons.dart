@@ -19,7 +19,7 @@ class LoginPageButtons extends StatelessWidget {
         color: color,
         onPressed: onPressed,
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         child: Stack(
           children: [
             Align(

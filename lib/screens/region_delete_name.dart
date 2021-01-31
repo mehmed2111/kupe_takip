@@ -30,7 +30,7 @@ class _RegionDeleteNameState extends State<RegionDeleteName> {
   }
 
   void _deleteRegionName(int regionId) async {
-    var data = region.deleteRegionName(regionId);
+    region.deleteRegionName(regionId);
   }
 
   //Show all regions in a user on dropDownMenu by name

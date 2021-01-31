@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:collection';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
@@ -9,6 +9,7 @@ import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/region_name.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
+import 'package:kupe/widgets/rounded_button.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -131,7 +132,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     var data = await _userRegion.fetchUserRegion(loggedUserID);
     _userRegionList = data;
     //print('Fetched json length: ${_userRegionList.length}');
-    for (var i = 0; i <= _userRegionList.length; i++) {
+    for (var i = 0; i < _userRegionList.length; i++) {
       var fullPolygon = _userRegionList[i].region1;
       //print('fullPolygon: $fullPolygon');
       var polygonPoints = fullPolygon.split("_");
@@ -290,14 +291,13 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             markers: Set<Marker>.of(_markers.values), //_markers,
             onMapCreated: _getUserAnimals,
             polygons: Set<Polygon>.of(_polygon.values), //_polygons,
-            myLocationEnabled: true,
-            //zoomControlsEnabled: false,
+            //myLocationEnabled: true,
+            zoomControlsEnabled: false,
             onTap: (point) {
               if (widget.isPolygon != null && widget.isPolygon) {
                 setState(() {
                   _polygonLatLngs.add(point);
                   _drawPolygonRegion();
-                  //_regionSaveButton(polygonLatLngs);
                 });
               } else {
                 //do nothing
@@ -340,26 +340,34 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                     ),
                   ),
                   SizedBox(width: 13.0),
-                  //_regionSaveButton(polygonLatLngs, widget.isPolygon),
-                  RaisedButton(
-                    color: Colors.white.withOpacity(0.75),
-                    child: Text('Bölgeyi Kaydet',
-                        style: TextStyle(
-                            fontSize: 18.0, color: kLoginDarkBackground)),
-                    onPressed: () {
-                      //
-                      _polygonToDatabase();
-
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(PageRouteBuilder(
-                        opaque: false,
-                        pageBuilder: (BuildContext context, _, __) {
-                          return RegionName(
-                              polygonLatLngs: _polygonToDatabase());
-                        },
-                      ));
-                    },
-                  ),
+                  if (widget.isPolygon != null && widget.isPolygon)
+                    RoundedButton(
+                        colour: kMainKupeColor.withOpacity(0.80),
+                        buttonTitle: 'Bölge Oluştur',
+                        onPressed: () {
+                          if (_polygonLatLngs.length >= 3) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) {
+                                return RegionName(
+                                    polygonLatLngs: _polygonToDatabase());
+                              },
+                            ));
+                          } else
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.white,
+                              content: Text(
+                                'Bölge oluşturmak için HARİTA üzerinde en az 3 nokta seçmelisiniz..',
+                                style: TextStyle(
+                                    color: Colors.grey[700], fontSize: 18.0),
+                              ),
+                            ));
+                        })
+                  else
+                    //widget gone example
+                    Visibility(
+                        visible: false, child: RaisedButton(onPressed: () {}))
                 ],
               ),
             ),
