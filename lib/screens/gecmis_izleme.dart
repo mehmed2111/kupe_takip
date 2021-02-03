@@ -193,145 +193,50 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         child: Container(
           height: 470,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.slideshow,
-                    color: kLoginLightDarkBackground, size: 30),
-                SizedBox(width: 10.0),
-                Text(
-                  'Geçmiş İzleme',
-                  style: TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            Expanded(
-              child: Theme(
-                data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
-                child: ListView(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                  children: [
-                    //start date
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 17.0),
-                      child: Text(
-                        'Başlangıç Tarihi/Saati:',
-                        style: TextStyle(
-                          color: kLoginDarkBackground,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 48.0,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(
-                                      Icons.calendar_today,
-                                      color: kLoginDarkBackground,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      '${selectStartDate.toLocal()}'
-                                          .split(' ')[0],
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: kLoginDarkBackground),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32.0),
-                                side: BorderSide(
-                                  width: 1.0,
-                                  color: kMainKupeColor,
-                                ),
-                              ),
-                              onPressed: () => _selectStartDate(context),
-                            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.slideshow,
+                      color: kLoginLightDarkBackground, size: 30),
+                  SizedBox(width: 10.0),
+                  Text(
+                    'Geçmiş İzleme',
+                    style:
+                        TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.0),
+              Expanded(
+                child: Theme(
+                  data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
+                  child: ListView(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                    children: [
+                      //start date
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Text(
+                          'Başlangıç Tarihi/Saati:',
+                          style: TextStyle(
+                            color: kLoginDarkBackground,
+                            fontSize: 18.0,
                           ),
                         ),
-                        SizedBox(width: 10.0),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 48.0,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(
-                                      Icons.watch_later_outlined,
-                                      color: kLoginDarkBackground,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      '${selectedStartTime.format(context)}'
-                                          .split(' ')[0],
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: kLoginDarkBackground),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32.0),
-                                side: BorderSide(
-                                  width: 1.0,
-                                  color: kMainKupeColor,
-                                ),
-                              ),
-                              onPressed: () => _selectStartTime(context),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 10.0),
-                    //end date
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 17.0),
-                      child: Text(
-                        'Bitiş Tarihi/Saati:',
-                        style: TextStyle(
-                          color: kLoginDarkBackground,
-                          fontSize: 18.0,
-                        ),
                       ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 48.0,
-                            child: RaisedButton(
+                      SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 48.0,
+                              child: RaisedButton(
                                 color: Colors.white,
                                 child: Stack(
                                   children: [
@@ -346,7 +251,7 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        '${selectEndDate.toLocal()}'
+                                        '${selectStartDate.toLocal()}'
                                             .split(' ')[0],
                                         style: TextStyle(
                                             fontSize: 16,
@@ -362,121 +267,219 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                                     color: kMainKupeColor,
                                   ),
                                 ),
-                                onPressed: () => _selectEndDate(context)),
-                          ),
-                        ),
-                        SizedBox(width: 10.0),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 48.0,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(
-                                      Icons.watch_later_outlined,
-                                      color: kLoginDarkBackground,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      '${selectedEndTime.format(context)}'
-                                          .split(' ')[0],
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: kLoginDarkBackground),
-                                    ),
-                                  ),
-                                ],
+                                onPressed: () => _selectStartDate(context),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32.0),
-                                side: BorderSide(
-                                  width: 1.0,
-                                  color: kMainKupeColor,
-                                ),
-                              ),
-                              onPressed: () => _selectEndTime(context),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10.0),
-                    //choose animal
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 17.0),
-                      child: Text(
-                        'Dostunu Seç',
-                        style: TextStyle(
-                          color: kLoginDarkBackground,
-                          fontSize: 18.0,
+                          SizedBox(width: 10.0),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 48.0,
+                              child: RaisedButton(
+                                color: Colors.white,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(
+                                        Icons.watch_later_outlined,
+                                        color: kLoginDarkBackground,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '${selectedStartTime.format(context)}'
+                                            .split(' ')[0],
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: kLoginDarkBackground),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32.0),
+                                  side: BorderSide(
+                                    width: 1.0,
+                                    color: kMainKupeColor,
+                                  ),
+                                ),
+                                onPressed: () => _selectStartTime(context),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 10.0),
+                      //end date
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Text(
+                          'Bitiş Tarihi/Saati:',
+                          style: TextStyle(
+                            color: kLoginDarkBackground,
+                            fontSize: 18.0,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 48.0,
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1.0, color: kMainKupeColor),
-                          borderRadius: BorderRadius.circular(32.0),
+                      SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 48.0,
+                              child: RaisedButton(
+                                  color: Colors.white,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(
+                                          Icons.calendar_today,
+                                          color: kLoginDarkBackground,
+                                          size: 20,
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '${selectEndDate.toLocal()}'
+                                              .split(' ')[0],
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: kLoginDarkBackground),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32.0),
+                                    side: BorderSide(
+                                      width: 1.0,
+                                      color: kMainKupeColor,
+                                    ),
+                                  ),
+                                  onPressed: () => _selectEndDate(context)),
+                            ),
+                          ),
+                          SizedBox(width: 10.0),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 48.0,
+                              child: RaisedButton(
+                                color: Colors.white,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(
+                                        Icons.watch_later_outlined,
+                                        color: kLoginDarkBackground,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '${selectedEndTime.format(context)}'
+                                            .split(' ')[0],
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: kLoginDarkBackground),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32.0),
+                                  side: BorderSide(
+                                    width: 1.0,
+                                    color: kMainKupeColor,
+                                  ),
+                                ),
+                                onPressed: () => _selectEndTime(context),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10.0),
+                      //choose animal
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Text(
+                          'Dostunu Seç',
+                          style: TextStyle(
+                            color: kLoginDarkBackground,
+                            fontSize: 18.0,
+                          ),
                         ),
                       ),
-                      child: DropdownButton(
-                        value: _selectedAnimal,
-                        items: _dropDownMenuItems,
-                        onChanged: onChangedDropDownMenuItem,
-                        icon: Icon(Icons.arrow_drop_down,
-                            color: kLoginDarkBackground),
-                        isExpanded: true,
-                        iconSize: 30.0,
-                        iconEnabledColor: kLoginDarkBackground,
-                        underline: SizedBox(),
-                        dropdownColor: Colors.white,
-                        style: TextStyle(
-                            color: kLoginDarkBackground, fontSize: 18.0),
+                      SizedBox(height: 10.0),
+                      Container(
+                        height: 48.0,
+                        padding: EdgeInsets.symmetric(horizontal: 15.0),
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1.0, color: kMainKupeColor),
+                            borderRadius: BorderRadius.circular(32.0),
+                          ),
+                        ),
+                        child: DropdownButton(
+                          value: _selectedAnimal,
+                          items: _dropDownMenuItems,
+                          onChanged: onChangedDropDownMenuItem,
+                          icon: Icon(Icons.arrow_drop_down,
+                              color: kLoginDarkBackground),
+                          isExpanded: true,
+                          iconSize: 30.0,
+                          iconEnabledColor: kLoginDarkBackground,
+                          underline: SizedBox(),
+                          dropdownColor: Colors.white,
+                          style: TextStyle(
+                              color: kLoginDarkBackground, fontSize: 18.0),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20.0),
-                    //show on map
-                    RoundedButton(
-                      colour: kMainKupeColor,
-                      buttonTitle: 'Haritada Göster',
-                      onPressed: () {
-                        _networkCheck.check().then((internet) {
-                          if (internet != null && internet) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GecmisIzlemeHarita(
-                                      animalId: _selectedAnimal.id),
-                                ));
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (_) => InternetError(),
-                            );
-                          }
-                        });
-                      },
-                    ),
-                    SizedBox(height: 10.0),
-                  ],
+                      SizedBox(height: 20.0),
+                      //show on map
+                      RoundedButton(
+                        colour: kMainKupeColor,
+                        buttonTitle: 'Haritada Göster',
+                        onPressed: () {
+                          _networkCheck.check().then((internet) {
+                            if (internet != null && internet) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GecmisIzlemeHarita(
+                                        animalId: _selectedAnimal.id),
+                                  ));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (_) => InternetError(),
+                              );
+                            }
+                          });
+                        },
+                      ),
+                      SizedBox(height: 10.0),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            //SizedBox(height: 10.0),
-            KapatButton(onPressed: () {
-              Navigator.pop(context);
-            }),
-          ]),
+              //SizedBox(height: 10.0),
+              KapatButton(onPressed: () {
+                Navigator.pop(context);
+              }),
+            ],
+          ),
         ),
       ),
     );
