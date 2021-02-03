@@ -28,7 +28,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   //call json data every 20 seconds
   Timer timer;
   //On map start; default coordinates set to Turkey
-  final LatLng _defaultIstanbul = const LatLng(39.1667, 35.6667);
+  final LatLng _defaultTurkey = const LatLng(39.1667, 35.6667);
   //Location
   final Location location = Location();
   LocationData locationData;
@@ -50,6 +50,24 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   List<UserAnimals> _userAnimalList;
   UserRegion _userRegion = UserRegion();
   List<UserRegion> _userRegionList;
+
+  /*isLatLngInZone(double lat, double lng, List<LatLng> polygonLatLngs) {
+    var verticesY = [];
+    var verticesX = [];
+    double longitudeX = lng;
+    double latitudeY = lat;
+    List<LatLng> latLngs = polygonLatLngs;
+    var r = 0;
+    var i = 0;
+    var j = 0;
+    var c = 0;
+    var point = 0;
+
+    for (r = 0; r < latLngs.length; r++) {
+      verticesY.add(latLngs[r].latitude);
+      verticesX.add(latLngs[r].longitude);
+    }
+  }*/
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error and show user's animals on the map
   void _getUserAnimals(GoogleMapController controller) async {
@@ -284,7 +302,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
         children: [
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: _defaultIstanbul,
+              target: _defaultTurkey,
               zoom: 5.0,
             ),
             mapType: _mapType,
@@ -308,68 +326,70 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 16.0),
             child: Align(
               alignment: Alignment.bottomLeft,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 28.0,
-                    backgroundColor: Colors.white.withOpacity(0.75),
-                    child: IconButton(
-                      icon: Icon(Icons.satellite),
-                      iconSize: 36.0,
-                      color: Colors.grey[700],
-                      onPressed: () {
-                        setState(() {
-                          this._mapType = MapType.hybrid;
-                        });
-                      },
-                    ),
+              child: Row(children: [
+                CircleAvatar(
+                  radius: 28.0,
+                  backgroundColor: Colors.white.withOpacity(0.75),
+                  child: IconButton(
+                    icon: Icon(Icons.satellite),
+                    iconSize: 36.0,
+                    color: Colors.grey[700],
+                    onPressed: () {
+                      setState(() {
+                        this._mapType = MapType.hybrid;
+                      });
+                    },
                   ),
-                  SizedBox(width: 13.0),
-                  CircleAvatar(
-                    radius: 28.0,
-                    backgroundColor: Colors.white.withOpacity(0.75),
-                    child: IconButton(
-                      icon: Icon(Icons.map_rounded),
-                      iconSize: 36.0,
-                      color: Colors.grey[700],
-                      onPressed: () {
-                        setState(() {
-                          this._mapType = MapType.normal;
-                        });
-                      },
-                    ),
+                ),
+                SizedBox(width: 13.0),
+                CircleAvatar(
+                  radius: 28.0,
+                  backgroundColor: Colors.white.withOpacity(0.75),
+                  child: IconButton(
+                    icon: Icon(Icons.map_rounded),
+                    iconSize: 36.0,
+                    color: Colors.grey[700],
+                    onPressed: () {
+                      setState(() {
+                        this._mapType = MapType.normal;
+                      });
+                    },
                   ),
-                  SizedBox(width: 13.0),
-                  if (widget.isPolygon != null && widget.isPolygon)
-                    RoundedButton(
-                        colour: kMainKupeColor.withOpacity(0.80),
-                        buttonTitle: 'Bölge Oluştur',
-                        onPressed: () {
-                          if (_polygonLatLngs.length >= 3) {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return RegionName(
-                                    polygonLatLngs: _polygonToDatabase());
-                              },
-                            ));
-                          } else
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              backgroundColor: Colors.white,
-                              content: Text(
-                                'Bölge oluşturmak için HARİTA üzerinde en az 3 nokta seçmelisiniz..',
-                                style: TextStyle(
-                                    color: Colors.grey[700], fontSize: 18.0),
-                              ),
-                            ));
-                        })
-                  else
-                    //widget gone example
-                    Visibility(
-                        visible: false, child: RaisedButton(onPressed: () {}))
-                ],
-              ),
+                ),
+                SizedBox(width: 13.0),
+                if (widget.isPolygon != null && widget.isPolygon)
+                  RoundedButton(
+                    colour: kMainKupeColor.withOpacity(0.80),
+                    buttonTitle: 'Bölge Oluştur',
+                    onPressed: () {
+                      if (_polygonLatLngs.length >= 3) {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).push(PageRouteBuilder(
+                          opaque: false,
+                          pageBuilder: (BuildContext context, _, __) {
+                            return RegionName(
+                                polygonLatLngs: _polygonToDatabase());
+                          },
+                        ));
+                      } else {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            'Bölge oluşturmak için HARİTA üzerinde en az 3 nokta seçmelisiniz..',
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 18.0),
+                          ),
+                        ));
+                      }
+                    },
+                  )
+                else
+                  //widget gone example
+                  Visibility(
+                    visible: false,
+                    child: RaisedButton(onPressed: () {}),
+                  ),
+              ]),
             ),
           ),
         ],

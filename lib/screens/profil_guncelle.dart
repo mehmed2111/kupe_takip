@@ -110,6 +110,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                       data: Theme.of(context)
                           .copyWith(accentColor: kMainKupeColor),
                       child: ListView(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         controller: ScrollController(keepScrollOffset: false),
                         children: [
                           ProfilGuncelleWidget(
@@ -211,7 +212,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
                               },
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          SizedBox(height: 6.0),
                         ],
                       ),
                     ),

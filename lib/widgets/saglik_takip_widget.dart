@@ -47,9 +47,7 @@ class SaglikTakipWidget extends StatelessWidget {
                         backgroundImage: AssetImage('images/logo.jpg'),
                         radius: 40.0,
                       ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
+                      SizedBox(width: 10.0),
                       Text(
                         name,
                         style: TextStyle(
@@ -59,16 +57,18 @@ class SaglikTakipWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 10.0),
                   Expanded(
                     child: Theme(
                       data: Theme.of(context)
                           .copyWith(accentColor: kMainKupeColor),
                       child: ListView(
-                        controller: ScrollController(keepScrollOffset: false),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        //controller: ScrollController(keepScrollOffset: false),
                         children: [
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Hayvan ID:',
                                 style: TextStyle(
@@ -88,7 +88,6 @@ class SaglikTakipWidget extends StatelessWidget {
                           SizedBox(height: 10.0),
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Adı:',
                                 style: TextStyle(
@@ -110,7 +109,6 @@ class SaglikTakipWidget extends StatelessWidget {
                           SizedBox(height: 10.0),
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Parazitler:',
                                 style: TextStyle(
@@ -118,7 +116,7 @@ class SaglikTakipWidget extends StatelessWidget {
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(width: 10.0),
+                              SizedBox(width: 5.0),
                               Flexible(
                                 child: Text(
                                   parazitler,
@@ -132,7 +130,6 @@ class SaglikTakipWidget extends StatelessWidget {
                           SizedBox(height: 10.0),
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Karma:',
                                 style: TextStyle(
@@ -154,7 +151,6 @@ class SaglikTakipWidget extends StatelessWidget {
                           SizedBox(height: 10.0),
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Kuduz:',
                                 style: TextStyle(
@@ -176,7 +172,6 @@ class SaglikTakipWidget extends StatelessWidget {
                           SizedBox(height: 10.0),
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Mantar:',
                                 style: TextStyle(
@@ -198,7 +193,6 @@ class SaglikTakipWidget extends StatelessWidget {
                           SizedBox(height: 10.0),
                           Row(
                             children: [
-                              SizedBox(width: 10.0),
                               Text(
                                 'Lyme:',
                                 style: TextStyle(
@@ -221,9 +215,6 @@ class SaglikTakipWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30.0,
                   ),
                   KapatButton(onPressed: () {
                     Navigator.pop(context);

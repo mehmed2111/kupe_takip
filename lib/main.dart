@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kupe/bildirim_deneme.dart';
+import 'package:kupe/screens/gecmis_izleme.dart';
 import 'package:kupe/screens/region_delete_name.dart';
 import 'package:kupe/screens/region_name.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
@@ -39,6 +41,9 @@ class Kupe extends StatelessWidget {
     //use the app only in portrait mode. Disables device orientation
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
+      //for tr lang support in calendar
+      localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+      supportedLocales: [const Locale('en'), const Locale('tr')],
       home: LoginPage(username: username),
       routes: {
         LoginPage.id: (context) => LoginPage(),
@@ -56,6 +61,7 @@ class Kupe extends StatelessWidget {
         DostlariniGuncelle.id: (context) => DostlariniGuncelle(),
         RegionName.id: (context) => RegionName(),
         RegionDeleteName.id: (context) => RegionDeleteName(),
+        GecmisIzleme.id: (context) => GecmisIzleme(),
       },
     );
   }

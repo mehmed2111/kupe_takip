@@ -5,6 +5,7 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin_guncelle.dart';
+import 'package:kupe/screens/gecmis_izleme.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
@@ -199,6 +200,33 @@ class _NavMenuState extends State<NavMenu> {
                       (internet) {
                         if (internet != null && internet) {
                           Navigator.popAndPushNamed(context, HomePage.id);
+                        } else {
+                          //if there is no internet connection
+                          showDialog(
+                            context: context,
+                            builder: (_) => InternetError(),
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.slideshow, color: Colors.white),
+                  title: Text(
+                    'Geçmiş İzleme',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  onTap: () {
+                    _networkCheck.check().then(
+                      (internet) {
+                        if (internet != null && internet) {
+                          Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) {
+                              return GecmisIzleme();
+                            },
+                          ));
                         } else {
                           //if there is no internet connection
                           showDialog(

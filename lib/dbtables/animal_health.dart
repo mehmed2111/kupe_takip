@@ -11,10 +11,10 @@ class AnimalHealth {
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      print('Success!');
+      //print('Success!');
       return (data as List).map((e) => AnimalHealth.fromJson(e)).toList();
     } else {
-      print('Failed to load animal health!');
+      //print('Failed to load animal health!');
       throw Exception('Could not load animal health');
     }
   }

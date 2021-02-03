@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
@@ -84,7 +85,7 @@ class _DostlarinState extends State<Dostlarin> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
             child: Container(
-              height: 530,
+              height: 500,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -115,6 +116,7 @@ class _DostlarinState extends State<Dostlarin> {
                         accentColor: kMainKupeColor,
                       ),
                       child: ListView(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         children: [
                           DostlarinWidget(
                             textTitle: 'ADI',
@@ -130,6 +132,7 @@ class _DostlarinState extends State<Dostlarin> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Container(
+                            height: 48.0,
                             margin: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             padding: EdgeInsets.symmetric(

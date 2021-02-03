@@ -59,7 +59,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
                 borderRadius: BorderRadius.circular(30.0)),
             elevation: 16.0,
             child: Container(
-                height: 400.0,
+                height: 380.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -76,6 +76,7 @@ class _SifreDegistirState extends State<SifreDegistir> {
                       data: Theme.of(context)
                           .copyWith(accentColor: kMainKupeColor),
                       child: ListView(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         controller: ScrollController(keepScrollOffset: false),
                         children: [
                           Padding(
@@ -176,9 +177,9 @@ class _SifreDegistirState extends State<SifreDegistir> {
                               },
                             ),
                           ),
+                          SizedBox(height: 16.0),
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 16.0),
+                            padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: RoundedButton(
                               colour: kMainKupeColor,
                               buttonTitle: 'Güncelle',
