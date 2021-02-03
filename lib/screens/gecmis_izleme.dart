@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
@@ -187,17 +188,19 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
       body: Dialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 10.0),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         child: Container(
-          height: 550,
+          height: 470,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.slideshow, color: kLoginLightDarkBackground),
+                Icon(Icons.slideshow,
+                    color: kLoginLightDarkBackground, size: 30),
                 SizedBox(width: 10.0),
                 Text(
                   'Geçmiş İzleme',
@@ -211,7 +214,7 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                 data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
                 child: ListView(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                   children: [
                     //start date
                     Padding(
@@ -225,70 +228,90 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                       ),
                     ),
                     SizedBox(height: 10.0),
-                    Container(
-                      height: 48.0,
-                      child: RaisedButton(
-                        color: Colors.white,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Icon(Icons.calendar_today,
-                                  color: kLoginDarkBackground),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '${selectStartDate.toLocal()}'.split(' ')[0],
-                                style: TextStyle(
-                                    fontSize: 18, color: kLoginDarkBackground),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 48.0,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(
+                                      Icons.calendar_today,
+                                      color: kLoginDarkBackground,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '${selectStartDate.toLocal()}'
+                                          .split(' ')[0],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: kLoginDarkBackground),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0),
+                                side: BorderSide(
+                                  width: 1.0,
+                                  color: kMainKupeColor,
+                                ),
+                              ),
+                              onPressed: () => _selectStartDate(context),
                             ),
-                          ],
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                          side: BorderSide(
-                            width: 1.0,
-                            color: kMainKupeColor,
                           ),
                         ),
-                        onPressed: () => _selectStartDate(context),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 48.0,
-                      child: RaisedButton(
-                        color: Colors.white,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Icon(Icons.watch_later_outlined,
-                                  color: kLoginDarkBackground),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '${selectedStartTime.format(context)}'
-                                    .split(' ')[0],
-                                style: TextStyle(
-                                    fontSize: 18, color: kLoginDarkBackground),
+                        SizedBox(width: 10.0),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 48.0,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(
+                                      Icons.watch_later_outlined,
+                                      color: kLoginDarkBackground,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '${selectedStartTime.format(context)}'
+                                          .split(' ')[0],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: kLoginDarkBackground),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0),
+                                side: BorderSide(
+                                  width: 1.0,
+                                  color: kMainKupeColor,
+                                ),
+                              ),
+                              onPressed: () => _selectStartTime(context),
                             ),
-                          ],
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                          side: BorderSide(
-                            width: 1.0,
-                            color: kMainKupeColor,
                           ),
                         ),
-                        onPressed: () => _selectStartTime(context),
-                      ),
+                      ],
                     ),
+
                     SizedBox(height: 10.0),
                     //end date
                     Padding(
@@ -302,69 +325,87 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                       ),
                     ),
                     SizedBox(height: 10.0),
-                    Container(
-                      height: 48.0,
-                      child: RaisedButton(
-                          color: Colors.white,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.calendar_today,
-                                    color: kLoginDarkBackground),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 48.0,
+                            child: RaisedButton(
+                                color: Colors.white,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(
+                                        Icons.calendar_today,
+                                        color: kLoginDarkBackground,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '${selectEndDate.toLocal()}'
+                                            .split(' ')[0],
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: kLoginDarkBackground),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32.0),
+                                  side: BorderSide(
+                                    width: 1.0,
+                                    color: kMainKupeColor,
+                                  ),
+                                ),
+                                onPressed: () => _selectEndDate(context)),
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 48.0,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(
+                                      Icons.watch_later_outlined,
+                                      color: kLoginDarkBackground,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '${selectedEndTime.format(context)}'
+                                          .split(' ')[0],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: kLoginDarkBackground),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  '${selectEndDate.toLocal()}'.split(' ')[0],
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: kLoginDarkBackground),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32.0),
+                                side: BorderSide(
+                                  width: 1.0,
+                                  color: kMainKupeColor,
                                 ),
                               ),
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32.0),
-                            side: BorderSide(
-                              width: 1.0,
-                              color: kMainKupeColor,
+                              onPressed: () => _selectEndTime(context),
                             ),
-                          ),
-                          onPressed: () => _selectEndDate(context)),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 48.0,
-                      child: RaisedButton(
-                        color: Colors.white,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Icon(Icons.watch_later_outlined,
-                                  color: kLoginDarkBackground),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '${selectedEndTime.format(context)}'
-                                    .split(' ')[0],
-                                style: TextStyle(
-                                    fontSize: 18, color: kLoginDarkBackground),
-                              ),
-                            ),
-                          ],
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                          side: BorderSide(
-                            width: 1.0,
-                            color: kMainKupeColor,
                           ),
                         ),
-                        onPressed: () => _selectEndTime(context),
-                      ),
+                      ],
                     ),
                     SizedBox(height: 10.0),
                     //choose animal

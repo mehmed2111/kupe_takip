@@ -8,7 +8,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class GecmisIzlemeHarita extends StatefulWidget {
   final int animalId;
-
   GecmisIzlemeHarita({this.animalId});
 
   @override
@@ -24,17 +23,6 @@ class _GecmisIzlemeHaritaState extends State<GecmisIzlemeHarita> {
 
   AnimalTracking _animalTracking = AnimalTracking();
   List<AnimalTracking> animalTrackList;
-
-  /*LatLng _startPoint;
-  void getAnimalTrack(int animalId) async {
-    var data = await _animalTracking.fetchAnimalTrack(animalId);
-    animalTrackList = data;
-    for (int i = 0; i < animalTrackList.length; i++) {
-      if (widget.animalId == animalTrackList[i].animalId) {
-        _startPoint = LatLng(animalTrackList[0].lat, animalTrackList[0].lng);
-      }
-    }
-  }*/
 
   void _getAnimalTracking(GoogleMapController controller) async {
     var data = await _animalTracking.fetchAnimalTrack(widget.animalId);
@@ -95,7 +83,7 @@ class _GecmisIzlemeHaritaState extends State<GecmisIzlemeHarita> {
   @override
   void initState() {
     super.initState();
-    //getAnimalTrack(widget.animalId);
+    _getAnimalTracking(googleMapController);
     //print('Animal id from gecmis izleme: ${widget.animalId}');
   }
 
@@ -112,28 +100,76 @@ class _GecmisIzlemeHaritaState extends State<GecmisIzlemeHarita> {
         child: Column(
           children: [
             Expanded(
+              flex: 2,
               child: GoogleMap(
                 initialCameraPosition:
                     CameraPosition(target: _defaultTurkey, zoom: 7),
                 mapType: MapType.normal,
                 zoomControlsEnabled: false,
+                myLocationEnabled: false,
                 onMapCreated: _getAnimalTracking,
                 polylines: Set<Polyline>.of(_polylines.values),
               ),
-              flex: 2,
+            ),
+            Container(
+              height: 30.0,
+              color: kLoginLightDarkBackground,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'KONUM',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                    SizedBox(width: 28.0),
+                    Text(
+                      'ID',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                    SizedBox(width: 40.0),
+                    Text(
+                      'TARİH',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Expanded(
-              child: Container(
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 20.0,
-                        color: kLoginLightDarkBackground,
-                      ),
-                    ],
-                  )),
               flex: 1,
+              child: Theme(
+                data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                  children: [
+                    for (int i = 0; i < animalTrackList.length; i++)
+                      Row(
+                        children: [
+                          Text(
+                            '${animalTrackList[i].lat.roundToDouble()}' +
+                                ',' +
+                                '${animalTrackList[i].lng.roundToDouble()}',
+                            style: TextStyle(
+                                color: kLoginLightDarkBackground, fontSize: 13),
+                          ),
+                          SizedBox(width: 25.0),
+                          Text(
+                            animalTrackList[i].animalId.toString(),
+                            style: TextStyle(
+                                color: kLoginLightDarkBackground, fontSize: 13),
+                          ),
+                          SizedBox(width: 25.0),
+                          Text(
+                            animalTrackList[i].tarih.toString(),
+                            style: TextStyle(
+                                color: kLoginLightDarkBackground, fontSize: 13),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
