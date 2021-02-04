@@ -5,7 +5,7 @@ import 'package:kupe/constants.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/screens/alarm_rapor_tanim.dart';
 import 'package:kupe/screens/dostlarin_guncelle.dart';
-import 'package:kupe/screens/gecmis_izleme.dart';
+import 'package:kupe/screens/animal_history_tracking.dart';
 import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/login_page.dart';
@@ -224,7 +224,7 @@ class _NavMenuState extends State<NavMenu> {
                           Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
-                              return GecmisIzleme();
+                              return AnimalHistoryTracking();
                             },
                           ));
                         } else {

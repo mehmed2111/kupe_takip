@@ -16,18 +16,6 @@ class UserRegion {
     }
   }
 
-  //https://www.aractakipsistemleri.com/canli3/Takip/DeleteRegionName?id=8
-  deleteRegionName(int regionId) async {
-    final response = await http.post(_url + 'DeleteRegionName?id=$regionId');
-    var data = json.decode(response.body);
-
-    if (response.statusCode == 200) {
-      return data;
-    } else {
-      throw Exception('Could not delete region name');
-    }
-  }
-
   //https://www.aractakipsistemleri.com/canli3/Takip/InsertPolygon?user_id=5&rname=bolge_adi&region1=asdasdas
   addRegionToUser(int userID, String regionName, String polygonPoints) async {
     final response = await http.post(_url +
@@ -38,6 +26,18 @@ class UserRegion {
       return data;
     } else {
       throw Exception('Could not add region to an user');
+    }
+  }
+
+  //https://www.aractakipsistemleri.com/canli3/Takip/DeleteRegionName?id=8
+  deleteRegionName(int regionId) async {
+    final response = await http.post(_url + 'DeleteRegionName?id=$regionId');
+    var data = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      return data;
+    } else {
+      throw Exception('Could not delete region name');
     }
   }
 
@@ -53,14 +53,5 @@ class UserRegion {
     userId = json['user_id'];
     rname = json['rname'];
     region1 = json['region1'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['rname'] = this.rname;
-    data['region1'] = this.region1;
-    return data;
   }
 }

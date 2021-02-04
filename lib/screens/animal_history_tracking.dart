@@ -3,21 +3,22 @@ import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
-import 'package:kupe/screens/gecmis_izleme_harita.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
+import 'package:kupe/dbtables/animal_tracking.dart';
+import 'package:kupe/screens/animal_history_tracking_map.dart';
 
-class GecmisIzleme extends StatefulWidget {
-  static const String id = 'gecmis_izleme';
+class AnimalHistoryTracking extends StatefulWidget {
+  static const String id = 'animal_tracking';
   @override
-  _GecmisIzlemeState createState() => _GecmisIzlemeState();
+  _AnimalHistoryTrackingState createState() => _AnimalHistoryTrackingState();
 }
 
-class _GecmisIzlemeState extends State<GecmisIzleme> {
+class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
   NetworkCheck _networkCheck = NetworkCheck();
-  DateTime selectStartDate = DateTime.now();
-  DateTime selectEndDate = DateTime.now();
+  DateTime selectedStartDate = DateTime.now();
+  DateTime selectedEndDate = DateTime.now();
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
 
@@ -25,6 +26,11 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
   List<UserAnimals> _userAnimalsList;
   UserAnimals _selectedAnimal;
   List<DropdownMenuItem<UserAnimals>> _dropDownMenuItems;
+  AnimalTracking getAnimalTracking = AnimalTracking();
+  List<AnimalTracking> animalTrackList;
+
+  String _startDateTime;
+  String _endDateTime;
 
   void getUserAnimals(int userId) async {
     var data = await _userAnimals.fetchUserAnimals(userId);
@@ -62,7 +68,7 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
     final DateTime picked = await showDatePicker(
       context: context,
       locale: const Locale("tr", "TR"),
-      initialDate: selectStartDate,
+      initialDate: selectedStartDate,
       firstDate: DateTime(2015),
       lastDate: DateTime(2032),
       helpText: 'Tarih seçin',
@@ -84,9 +90,9 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
         );
       },
     );
-    if (picked != null && picked != selectStartDate)
+    if (picked != null && picked != selectedStartDate)
       setState(() {
-        selectStartDate = picked;
+        selectedStartDate = picked;
       });
   }
 
@@ -122,7 +128,7 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
     final DateTime picked = await showDatePicker(
       context: context,
       locale: const Locale("tr", "TR"),
-      initialDate: selectEndDate,
+      initialDate: selectedEndDate,
       firstDate: DateTime(2015),
       lastDate: DateTime(2032),
       helpText: 'Tarih seçin',
@@ -144,9 +150,9 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
         );
       },
     );
-    if (picked != null && picked != selectEndDate)
+    if (picked != null && picked != selectedEndDate)
       setState(() {
-        selectEndDate = picked;
+        selectedEndDate = picked;
       });
   }
 
@@ -251,7 +257,7 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        '${selectStartDate.toLocal()}'
+                                        '${selectedStartDate.toLocal()}'
                                             .split(' ')[0],
                                         style: TextStyle(
                                             fontSize: 16,
@@ -348,7 +354,7 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          '${selectEndDate.toLocal()}'
+                                          '${selectedEndDate.toLocal()}'
                                               .split(' ')[0],
                                           style: TextStyle(
                                               fontSize: 16,
@@ -452,14 +458,49 @@ class _GecmisIzlemeState extends State<GecmisIzleme> {
                         colour: kMainKupeColor,
                         buttonTitle: 'Haritada Göster',
                         onPressed: () {
-                          _networkCheck.check().then((internet) {
+                          _startDateTime =
+                              '${selectedStartDate.toLocal()}'.split(' ')[0] +
+                                  ' ' +
+                                  '${selectedStartTime.format(context)}'
+                                      .split(' ')[0];
+                          _endDateTime =
+                              '${selectedEndDate.toLocal()}'.split(' ')[0] +
+                                  ' ' +
+                                  '${selectedEndTime.format(context)}'
+                                      .split(' ')[0];
+
+                          _networkCheck.check().then((internet) async {
                             if (internet != null && internet) {
-                              Navigator.push(
+                              var data =
+                                  await getAnimalTracking.fetchAnimalTrack(
+                                _selectedAnimal.id,
+                                _startDateTime,
+                                _endDateTime,
+                              );
+                              //assign fetched data from json to animalTrackList
+                              animalTrackList = data;
+
+                              if (animalTrackList.length != 0 &&
+                                  animalTrackList.length > 1) {
+                                //push parameters to the chosen page
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GecmisIzlemeHarita(
-                                        animalId: _selectedAnimal.id),
-                                  ));
+                                    builder: (context) =>
+                                        AnimalHistoryTrackingMap(
+                                      animalTrackList: animalTrackList,
+                                      animalId: _selectedAnimal.id,
+                                      startDateTime: _startDateTime,
+                                      endDateTime: _endDateTime,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => DateTimeNotMatched(),
+                                );
+                              }
                             } else {
                               showDialog(
                                 context: context,

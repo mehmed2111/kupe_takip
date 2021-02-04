@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kupe/bildirim_deneme.dart';
-import 'package:kupe/screens/gecmis_izleme.dart';
+import 'package:kupe/screens/animal_history_tracking.dart';
 import 'package:kupe/screens/region_delete_name.dart';
 import 'package:kupe/screens/region_name.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
@@ -61,7 +61,7 @@ class Kupe extends StatelessWidget {
         DostlariniGuncelle.id: (context) => DostlariniGuncelle(),
         RegionName.id: (context) => RegionName(),
         RegionDeleteName.id: (context) => RegionDeleteName(),
-        GecmisIzleme.id: (context) => GecmisIzleme(),
+        AnimalHistoryTracking.id: (context) => AnimalHistoryTracking(),
       },
     );
   }

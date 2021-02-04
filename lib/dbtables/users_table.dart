@@ -3,10 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:kupe/constants.dart';
 
 class User {
-  //URL for json to fetch data from DB
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
-  //Map<String, String> headers = {};
-  //headers['user_cookie'] = "$loggedUserID";
 
   Future<List<User>> fetchLoginUser(String username, String password) async {
     final response = await http
@@ -129,19 +126,4 @@ class User {
         heatAlarm: json["heat_alarm"],
         sifre2: json["sifre2"],
       );
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['password'] = this.password;
-    data['e_mail'] = this.eMail;
-    data['adress'] = this.adress;
-    data['telno'] = this.telno;
-    data['veteriner'] = this.veteriner;
-    data['region_alarm'] = this.regionAlarm;
-    data['heat_alarm'] = this.heatAlarm;
-    data['sifre2'] = this.sifre2;
-    return data;
-  }
 }

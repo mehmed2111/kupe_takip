@@ -11,10 +11,8 @@ class AnimalHealth {
 
     var data = json.decode(response.body);
     if (response.statusCode == 200) {
-      //print('Success!');
       return (data as List).map((e) => AnimalHealth.fromJson(e)).toList();
     } else {
-      //print('Failed to load animal health!');
       throw Exception('Could not load animal health');
     }
   }
@@ -45,16 +43,4 @@ class AnimalHealth {
         mantar: json["mantar"],
         lyme: json["lyme"],
       );
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['animal_id'] = this.animalId;
-    data['parazitler'] = this.parazitler;
-    data['karma'] = this.karma;
-    data['kuduz'] = this.kuduz;
-    data['mantar'] = this.mantar;
-    data['lyme'] = this.lyme;
-    return data;
-  }
 }

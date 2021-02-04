@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 class AnimalData {
   //https://www.aractakipsistemleri.com/canli3/Takip/GetAnimalEveryData?animal_id=6
+  //https://www.aractakipsistemleri.com/canli3/Takip/GetAnimalEveryData?animal_id=10
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
 
   Future<List<AnimalData>> fetchAnimalData(int animalId) async {
@@ -17,7 +18,6 @@ class AnimalData {
     }
   }
 
-  int userId;
   int id;
   String name;
   String color;
@@ -33,8 +33,7 @@ class AnimalData {
   String lyme;
 
   AnimalData(
-      {this.userId,
-      this.id,
+      {this.id,
       this.name,
       this.color,
       this.gender,
@@ -49,7 +48,6 @@ class AnimalData {
       this.lyme});
 
   AnimalData.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
     id = json['id'];
     name = json['name'];
     color = json['color'];

@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 
+class DateTimeNotMatched extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialogWidget(
+      dialogTitle: 'Hata!',
+      dialogContent:
+          'Belirtmiş olduğunuz tarih aralığında herhangi bir veri bulunamamıştır.',
+      btnTitle: 'Kapat',
+      onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+}
+
 class InternetError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

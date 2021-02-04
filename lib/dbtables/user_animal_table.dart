@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class UserAnimals {
-  //URL for json data to fetch USERS from DB
   //https://www.aractakipsistemleri.com/canli3/Takip/GetSelectedAnimal?user_id=5
   //https://www.aractakipsistemleri.com/canli3/Takip/UpdateAnimal?id=10&name=hayvan10&color=Beyaz&gender=0
   String _url = 'https://www.aractakipsistemleri.com/canli3/Takip/';
 
-  //fetch json data
   Future<List<UserAnimals>> fetchUserAnimals(int userId) async {
     final response = await http.get(_url + 'GetSelectedAnimal?user_id=$userId');
     var data = json.decode(response.body);
@@ -67,18 +65,5 @@ class UserAnimals {
     category = json['category'];
     gender = json['gender'];
     color = json['color'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['name'] = this.name;
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
-    data['category'] = this.category;
-    data['gender'] = this.gender;
-    data['color'] = this.color;
-    return data;
   }
 }
