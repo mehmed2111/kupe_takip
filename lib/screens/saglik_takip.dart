@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/dbtables/animal_health.dart';
+import 'package:kupe/dbtables/animal_data.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
@@ -22,15 +22,15 @@ class _SaglikTakipState extends State<SaglikTakip> {
   List<DropdownMenuItem<UserAnimals>> _dropdownMenuItems;
   UserAnimals _selectedAnimal;
 
-  AnimalHealth _animalHealth = AnimalHealth();
-  List<AnimalHealth> animalHealthList;
   UserAnimals _userAnimals = UserAnimals();
   List<UserAnimals> _userAnimalList;
+  AnimalData _animalData = AnimalData();
+  List<AnimalData> _animalDataList;
 
   //call fetchAnimalHealth() function inside this function in order to prevent 'instance of Users' error
-  void _getAnimalHealth(int animalId) async {
-    var animalData = await _animalHealth.fetchAnimalHealth(animalId);
-    animalHealthList = animalData;
+  void _getAnimalData(int animalId) async {
+    var animalData = await _animalData.fetchAnimalData(animalId);
+    _animalDataList = animalData;
   }
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error
@@ -38,18 +38,19 @@ class _SaglikTakipState extends State<SaglikTakip> {
     var dataList = await _userAnimals.fetchUserAnimals(userId);
     _userAnimalList = dataList;
 
-    //UserAnimals animal;
+    var animalId = Iterable<int>.generate(_userAnimalList.length).toList();
+    print('animal id lenght: $animalId');
     setState(() {
       _dropdownMenuItems = buildDropdownMenuItems(_userAnimalList);
       _selectedAnimal = _dropdownMenuItems[0].value;
-      _getAnimalHealth(animalID);
-      //for (animal in _userAnimalList) {
-      //if (loggedUserID == animal.userId) {
-      //send animals ids in a user
-      //animalID = animal.id;
-      //_getAnimalHealth(animalID);
-      //}
-      //}
+
+      for (int i = 0; i < _userAnimalList.length; i++) {
+        if (loggedUserID == _userAnimalList[i].userId) {
+          animalId[i] = _userAnimalList[i].id;
+          print('animal ids: ${animalId[i]}');
+          _getAnimalData(animalId[i]);
+        }
+      }
     });
   }
 
@@ -75,36 +76,44 @@ class _SaglikTakipState extends State<SaglikTakip> {
   }
 
   onChangedDropdownItem(UserAnimals selectedAnimal) {
-    UserAnimals animal;
-    AnimalHealth animalHealth;
+    AnimalData animalData;
+    int id;
     setState(() {
+      id = 0;
       showSpinner = true;
+      _selectedAnimal = selectedAnimal;
+      id = _selectedAnimal.id;
+      print('selectedAnimal dan gelen id: $id');
+      _getAnimalData(id);
     });
     try {
       _networkCheck.check().then((internet) {
         if (internet != null && internet) {
-          if (_userAnimalList != null && animalHealthList != null) {
-            for (animal in _userAnimalList) {
-              for (animalHealth in animalHealthList) {
-                if (animal.id == animalHealth.animalId) {
-                  setState(() {
-                    _selectedAnimal = selectedAnimal;
-
-                    Navigator.of(context).push(PageRouteBuilder(
-                        opaque: false,
-                        pageBuilder: (BuildContext context, _, __) {
-                          return SaglikTakipWidget(
-                            hayvanID: _selectedAnimal.id,
-                            name: _selectedAnimal.name,
-                            parazitler: animalHealth.parazitler,
-                            karma: animalHealth.parazitler,
-                            kuduz: animalHealth.kuduz,
-                            mantar: animalHealth.mantar,
-                            lyme: animalHealth.lyme,
-                          );
-                        }));
-                  });
-                }
+          if (_animalDataList != null) {
+            for (int i = 0; i < _animalDataList.length; i++) {
+              print('animal data dan gelen id: ${_animalDataList[i].id}');
+              if (id == _animalDataList[i].id) {
+                //id = 0;
+                setState(() {
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return SaglikTakipWidget(
+                          hayvanID: _animalDataList[i].id,
+                          name: _animalDataList[i].name,
+                          parazitler: _animalDataList[i].parazitler,
+                          karma: _animalDataList[i].karma,
+                          kuduz: _animalDataList[i].kuduz,
+                          mantar: _animalDataList[i].mantar,
+                          lyme: _animalDataList[i].lyme,
+                        );
+                      }));
+                });
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (_) => DateTimeNotMatched(),
+                );
               }
             }
           } else {

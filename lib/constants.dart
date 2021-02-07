@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 //fetched id's
 int loggedUserID = 0;
-var animalID = 0;
+var animalID;
+//var animalID = Iterable<int>.generate(10).toList();
 
 //for progress indicator control
 bool showSpinner = false;

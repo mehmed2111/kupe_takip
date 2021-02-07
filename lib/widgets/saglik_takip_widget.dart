@@ -123,19 +123,17 @@ class SaglikTakipWidget extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              flex: 2,
-                              child: Flexible(
-                                child: Text(
-                                  parazitler,
-                                  style: TextStyle(
-                                    color: kLoginDarkBackground,
-                                    fontSize: 18.0,
-                                  ),
+                              flex: 1,
+                              child: Text(
+                                parazitler,
+                                style: TextStyle(
+                                  color: kLoginDarkBackground,
+                                  fontSize: 18.0,
                                 ),
                               ),
                             ),
                             Expanded(
-                              flex: 1,
+                              flex: 2,
                               child: RaisedButton(
                                 color: Colors.white,
                                 child: Stack(
