@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kupe/screens/animal_history_tracking.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/rounded_button_with_icon.dart';
 
 class HayvanMarker extends StatelessWidget {
   static const String id = 'hayvan_marker';
@@ -31,7 +34,7 @@ class HayvanMarker extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Container(
-            height: 380.0,
+            height: 395.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -55,12 +58,13 @@ class HayvanMarker extends StatelessWidget {
                     ),
                   ],
                 ),
-                //SizedBox(height: 10.0),
+                SizedBox(height: 10.0),
                 Expanded(
                   child: Theme(
                     data:
                         Theme.of(context).copyWith(accentColor: kMainKupeColor),
                     child: ListView(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
                         Row(
@@ -195,9 +199,40 @@ class HayvanMarker extends StatelessWidget {
                     ),
                   ),
                 ),
-                KapatButton(onPressed: () {
-                  Navigator.pop(context);
-                }),
+                //SizedBox(height: 10.0),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 42.0,
+                          child: RoundedButtonWithIcon(
+                            btnTitle: 'Geçmiş izleme',
+                            icon: Icons.slideshow,
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).push(PageRouteBuilder(
+                                opaque: false,
+                                pageBuilder: (BuildContext context, _, __) {
+                                  return AnimalHistoryTracking();
+                                },
+                              ));
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Expanded(
+                        flex: 1,
+                        child: KapatButton(onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

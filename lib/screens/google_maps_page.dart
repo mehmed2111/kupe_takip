@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/dbtables/animal_data.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/dbtables/user_region.dart';
 import 'package:kupe/network/network_check.dart';
@@ -45,11 +46,16 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   Map<PolygonId, Polygon> _polygon = <PolygonId, Polygon>{};
   List<LatLng> _polygonLatLngs = List<LatLng>();
   int _polygonIdCounter = 1;
-  //fetch data
+  //animals in a user
   UserAnimals _userAnimals = UserAnimals();
   List<UserAnimals> _userAnimalList;
+  //regions in a user
   UserRegion _userRegion = UserRegion();
   List<UserRegion> _userRegionList;
+  //all animal data
+  AnimalData _getAnimalData = AnimalData();
+  List<AnimalData> _animalDataList;
+  AnimalData _animalData;
 
   /*isLatLngInZone(double lat, double lng, List<LatLng> polygonLatLngs) {
     var verticesY = [];
@@ -71,8 +77,10 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error and show user's animals on the map
   void _getUserAnimals(GoogleMapController controller) async {
+    //fetch all user animals
     var dataList = await _userAnimals.fetchUserAnimals(loggedUserID);
     _userAnimalList = dataList;
+
     _googleMapController = controller;
     setState(() {
       showSpinner = true;
@@ -92,26 +100,51 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                     position:
                         LatLng(_userAnimalList[i].lat, _userAnimalList[i].lng),
                     infoWindow: InfoWindow(
-                        title: _userAnimalList[i].name,
-                        snippet: 'Daha fazla bilgi için tıklayınız..',
-                        onTap: () {
-                          Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) {
-                                return HayvanMarker(
-                                  ad: _userAnimalList[i].name,
-                                  sagDurumu: 'İyi',
-                                  isi: '37',
-                                  cinsiyet: _userAnimalList[i].gender == 0
-                                      ? 'Erkek'
-                                      : _userAnimalList[i].gender == 1
-                                          ? 'Dişi'
-                                          : null,
-                                  renk: _userAnimalList[i].color,
-                                  sonKonT: 'Eklenecek',
-                                );
-                              }));
-                        }),
+                      title: _userAnimalList[i].name,
+                      snippet: 'Daha fazla bilgi için tıklayınız..',
+                      onTap: () async {
+                        //fetch all animal data by id
+                        var data = await _getAnimalData.fetchAnimalData(
+                          _userAnimalList[i].id,
+                        );
+                        _animalDataList = data;
+                        //print('user animal dan gelen id: ${_userAnimalList[i].id}');
+
+                        if (_animalDataList != null) {
+                          for (_animalData in _animalDataList) {
+                            if (_userAnimalList[i].id == _animalData.id) {
+                              //print('animal data dan gelen id: ${_animalData.id}');
+                              Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) {
+                                    return HayvanMarker(
+                                      ad: _animalData.name,
+                                      sagDurumu: 'İyi',
+                                      isi: '37',
+                                      cinsiyet: _animalData.gender == 0
+                                          ? 'Erkek'
+                                          : _animalData.gender == 1
+                                              ? 'Dişi'
+                                              : null,
+                                      renk: _animalData.color,
+                                      sonKonT: _animalData.konumTarih,
+                                    );
+                                  }));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AnimalIdDoesNotMatched(),
+                              );
+                            }
+                          }
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CouldNotLoadData(),
+                          );
+                        }
+                      },
+                    ),
                     icon: _userAnimalList[i].category == 1
                         ? _mIconDog
                         : _userAnimalList[i].category == 0

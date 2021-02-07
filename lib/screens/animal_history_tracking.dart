@@ -8,6 +8,7 @@ import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:kupe/dbtables/animal_tracking.dart';
 import 'package:kupe/screens/animal_history_tracking_map.dart';
+import 'package:kupe/widgets/rounded_button_with_icon.dart';
 
 class AnimalHistoryTracking extends StatefulWidget {
   static const String id = 'animal_tracking';
@@ -198,7 +199,7 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         child: Container(
-          height: 470,
+          height: 485,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -223,6 +224,7 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
                   child: ListView(
                     padding:
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                    controller: ScrollController(keepScrollOffset: false),
                     children: [
                       //start date
                       Padding(
@@ -242,37 +244,10 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
                             flex: 1,
                             child: Container(
                               height: 48.0,
-                              child: RaisedButton(
-                                color: Colors.white,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Icon(
-                                        Icons.calendar_today,
-                                        color: kLoginDarkBackground,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '${selectedStartDate.toLocal()}'
-                                            .split(' ')[0],
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: kLoginDarkBackground),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32.0),
-                                  side: BorderSide(
-                                    width: 1.0,
-                                    color: kMainKupeColor,
-                                  ),
-                                ),
+                              child: RoundedButtonWithIcon(
+                                btnTitle: '${selectedStartDate.toLocal()}'
+                                    .split(' ')[0],
+                                icon: Icons.calendar_today,
                                 onPressed: () => _selectStartDate(context),
                               ),
                             ),
@@ -282,37 +257,10 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
                             flex: 1,
                             child: Container(
                               height: 48.0,
-                              child: RaisedButton(
-                                color: Colors.white,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Icon(
-                                        Icons.watch_later_outlined,
-                                        color: kLoginDarkBackground,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '${selectedStartTime.format(context)}'
-                                            .split(' ')[0],
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: kLoginDarkBackground),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32.0),
-                                  side: BorderSide(
-                                    width: 1.0,
-                                    color: kMainKupeColor,
-                                  ),
-                                ),
+                              child: RoundedButtonWithIcon(
+                                btnTitle: '${selectedStartTime.format(context)}'
+                                    .split(' ')[0],
+                                icon: Icons.watch_later_outlined,
                                 onPressed: () => _selectStartTime(context),
                               ),
                             ),
@@ -339,38 +287,12 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
                             flex: 1,
                             child: Container(
                               height: 48.0,
-                              child: RaisedButton(
-                                  color: Colors.white,
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Icon(
-                                          Icons.calendar_today,
-                                          color: kLoginDarkBackground,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          '${selectedEndDate.toLocal()}'
-                                              .split(' ')[0],
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: kLoginDarkBackground),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(32.0),
-                                    side: BorderSide(
-                                      width: 1.0,
-                                      color: kMainKupeColor,
-                                    ),
-                                  ),
-                                  onPressed: () => _selectEndDate(context)),
+                              child: RoundedButtonWithIcon(
+                                btnTitle: '${selectedEndDate.toLocal()}'
+                                    .split(' ')[0],
+                                icon: Icons.calendar_today,
+                                onPressed: () => _selectEndDate(context),
+                              ),
                             ),
                           ),
                           SizedBox(width: 10.0),
@@ -378,37 +300,10 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
                             flex: 1,
                             child: Container(
                               height: 48.0,
-                              child: RaisedButton(
-                                color: Colors.white,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Icon(
-                                        Icons.watch_later_outlined,
-                                        color: kLoginDarkBackground,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '${selectedEndTime.format(context)}'
-                                            .split(' ')[0],
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: kLoginDarkBackground),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32.0),
-                                  side: BorderSide(
-                                    width: 1.0,
-                                    color: kMainKupeColor,
-                                  ),
-                                ),
+                              child: RoundedButtonWithIcon(
+                                btnTitle: '${selectedEndTime.format(context)}'
+                                    .split(' ')[0],
+                                icon: Icons.watch_later_outlined,
                                 onPressed: () => _selectEndTime(context),
                               ),
                             ),

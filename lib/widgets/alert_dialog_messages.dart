@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 
+class AnimalIdDoesNotMatched extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialogWidget(
+      dialogTitle: 'Hata!',
+      dialogContent: 'Dostunaza ait herhangi bir sağlık eşleşmesi bulunamadı.',
+      btnTitle: 'Kapat',
+      onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+}
+
 class DateTimeNotMatched extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialogWidget(
       dialogTitle: 'Hata!',
       dialogContent:
-          'Belirtmiş olduğunuz tarih aralığında herhangi bir veri bulunamamıştır.',
+          'Belirtmiş olduğunuz tarih aralığında herhangi bir konum verisi bulunamadı.',
       btnTitle: 'Kapat',
       onPressed: () => Navigator.of(context).pop(),
     );
@@ -33,7 +45,7 @@ class UnsuccessfulLogin extends StatelessWidget {
     return AlertDialogWidget(
       dialogTitle: 'Giriş Başarısız!',
       dialogContent:
-          'Kullanıcı adınız veya şifreniz yanlış. Lütfen tekrar deneyiniz.',
+          'Kullanıcı adınız veya şifreniz yanlış. Lütfen verilerinizi kontrol edin ve tekrar deneyin.',
       btnTitle: 'Kapat',
       onPressed: () => Navigator.of(context).pop(),
     );

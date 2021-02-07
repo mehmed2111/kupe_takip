@@ -18,39 +18,25 @@ class SaglikTakip extends StatefulWidget {
 
 class _SaglikTakipState extends State<SaglikTakip> {
   NetworkCheck _networkCheck = NetworkCheck();
-  bool showSpinner = false;
+  //drop down menu
   List<DropdownMenuItem<UserAnimals>> _dropdownMenuItems;
   UserAnimals _selectedAnimal;
-
+  //animals in a user
   UserAnimals _userAnimals = UserAnimals();
   List<UserAnimals> _userAnimalList;
-  AnimalData _animalData = AnimalData();
+  //all animal data
+  AnimalData _getAnimalData = AnimalData();
   List<AnimalData> _animalDataList;
-
-  //call fetchAnimalHealth() function inside this function in order to prevent 'instance of Users' error
-  void _getAnimalData(int animalId) async {
-    var animalData = await _animalData.fetchAnimalData(animalId);
-    _animalDataList = animalData;
-  }
+  AnimalData _animalData;
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error
   void _getUserAnimals(int userId) async {
     var dataList = await _userAnimals.fetchUserAnimals(userId);
     _userAnimalList = dataList;
 
-    var animalId = Iterable<int>.generate(_userAnimalList.length).toList();
-    print('animal id lenght: $animalId');
     setState(() {
       _dropdownMenuItems = buildDropdownMenuItems(_userAnimalList);
       _selectedAnimal = _dropdownMenuItems[0].value;
-
-      for (int i = 0; i < _userAnimalList.length; i++) {
-        if (loggedUserID == _userAnimalList[i].userId) {
-          animalId[i] = _userAnimalList[i].id;
-          print('animal ids: ${animalId[i]}');
-          _getAnimalData(animalId[i]);
-        }
-      }
     });
   }
 
@@ -65,54 +51,57 @@ class _SaglikTakipState extends State<SaglikTakip> {
       List<UserAnimals> userAnimals) {
     List<DropdownMenuItem<UserAnimals>> items = List();
     for (UserAnimals animal in userAnimals) {
-      items.add(
-        DropdownMenuItem(
-          value: animal,
-          child: Text(animal.name),
-        ),
-      );
+      if (userAnimals != null) {
+        items.add(
+          DropdownMenuItem(
+            value: animal,
+            child: Text(animal.name),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (_) => CouldNotLoadData(),
+        );
+      }
     }
     return items;
   }
 
-  onChangedDropdownItem(UserAnimals selectedAnimal) {
-    AnimalData animalData;
-    int id;
+  onChangedDropdownItem(UserAnimals selectedAnimal) async {
+    var data = await _getAnimalData.fetchAnimalData(selectedAnimal.id);
+    _animalDataList = data;
+
     setState(() {
-      id = 0;
       showSpinner = true;
-      _selectedAnimal = selectedAnimal;
-      id = _selectedAnimal.id;
-      print('selectedAnimal dan gelen id: $id');
-      _getAnimalData(id);
+      //print('selectedAnimal dan gelen id: ${selectedAnimal.id}');
     });
     try {
       _networkCheck.check().then((internet) {
         if (internet != null && internet) {
           if (_animalDataList != null) {
-            for (int i = 0; i < _animalDataList.length; i++) {
-              print('animal data dan gelen id: ${_animalDataList[i].id}');
-              if (id == _animalDataList[i].id) {
-                //id = 0;
+            for (_animalData in _animalDataList) {
+              //print('animal data dan gelen id: ${_animalData.id}');
+              if (selectedAnimal.id == _animalData.id) {
                 setState(() {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
                         return SaglikTakipWidget(
-                          hayvanID: _animalDataList[i].id,
-                          name: _animalDataList[i].name,
-                          parazitler: _animalDataList[i].parazitler,
-                          karma: _animalDataList[i].karma,
-                          kuduz: _animalDataList[i].kuduz,
-                          mantar: _animalDataList[i].mantar,
-                          lyme: _animalDataList[i].lyme,
+                          hayvanID: _animalData.id,
+                          name: _animalData.name,
+                          parazitler: _animalData.parazitler,
+                          karma: _animalData.karma,
+                          kuduz: _animalData.kuduz,
+                          mantar: _animalData.mantar,
+                          lyme: _animalData.lyme,
                         );
                       }));
                 });
               } else {
                 showDialog(
                   context: context,
-                  builder: (_) => DateTimeNotMatched(),
+                  builder: (_) => AnimalIdDoesNotMatched(),
                 );
               }
             }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/rounded_button_with_icon.dart';
 
 import 'kapat_button.dart';
 
@@ -134,36 +135,9 @@ class SaglikTakipWidget extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 2,
-                              child: RaisedButton(
-                                color: Colors.white,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Icon(
-                                        Icons.calendar_today,
-                                        color: kLoginDarkBackground,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Aşı Bilgisi Girin',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: kLoginDarkBackground),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32.0),
-                                  side: BorderSide(
-                                    width: 1.0,
-                                    color: kMainKupeColor,
-                                  ),
-                                ),
+                              child: RoundedButtonWithIcon(
+                                icon: Icons.calendar_today,
+                                btnTitle: 'Aşı Bilgisi Girin',
                                 onPressed: () {
                                   //controls here
                                 },

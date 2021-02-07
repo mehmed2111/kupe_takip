@@ -34,7 +34,7 @@ class KullaniciProfili extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Container(
-            height: 450.0,
+            height: 410.0,
             //width: 360.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -65,6 +65,7 @@ class KullaniciProfili extends StatelessWidget {
                     data:
                         Theme.of(context).copyWith(accentColor: kMainKupeColor),
                     child: ListView(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
                       controller: ScrollController(keepScrollOffset: false),
                       children: [
                         KullaniciProfiliWidget(

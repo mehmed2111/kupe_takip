@@ -47,12 +47,19 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
       List<UserAnimals> userAnimals) {
     List<DropdownMenuItem<UserAnimals>> items = List();
     for (UserAnimals animal in userAnimals) {
-      items.add(
-        DropdownMenuItem(
-          value: animal,
-          child: Text(animal.name),
-        ),
-      );
+      if (userAnimals != null) {
+        items.add(
+          DropdownMenuItem(
+            value: animal,
+            child: Text(animal.name),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (_) => CouldNotLoadData(),
+        );
+      }
     }
     return items;
   }

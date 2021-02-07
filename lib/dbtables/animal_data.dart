@@ -20,12 +20,12 @@ class AnimalData {
 
   int id;
   String name;
-  String color;
-  int gender;
   int category;
+  int gender;
+  String color;
   double lat;
   double lng;
-  String tarih;
+  String konumTarih;
   String parazitler;
   String karma;
   String kuduz;
@@ -35,12 +35,12 @@ class AnimalData {
   AnimalData(
       {this.id,
       this.name,
-      this.color,
-      this.gender,
       this.category,
+      this.gender,
+      this.color,
       this.lat,
       this.lng,
-      this.tarih,
+      this.konumTarih,
       this.parazitler,
       this.karma,
       this.kuduz,
@@ -50,12 +50,12 @@ class AnimalData {
   AnimalData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    color = json['color'];
-    gender = json['gender'];
     category = json['category'];
+    gender = json['gender'];
+    color = json['color'];
     lat = json['lat'];
     lng = json['lng'];
-    tarih = json['tarih'];
+    konumTarih = json['konumTarih'];
     parazitler = json['parazitler'];
     karma = json['karma'];
     kuduz = json['kuduz'];
