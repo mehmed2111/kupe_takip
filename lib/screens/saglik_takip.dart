@@ -149,10 +149,20 @@ class _SaglikTakipState extends State<SaglikTakip> {
               SizedBox(height: 20.0),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                /*padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(20.0),
+                ),*/
+                height: 60.0,
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1.0, color: kMainKupeColor),
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                ),
                 child: DropdownButton(
                   value: _selectedAnimal,
                   items: _dropdownMenuItems,

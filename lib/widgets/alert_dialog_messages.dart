@@ -1,5 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:kupe/widgets/agree_or_not_button_widget.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
+
+class AgreeOrNotAgreeVaccineDate extends StatelessWidget {
+  final Function agreeOnPressed;
+  final Function notAgreeOnPressed;
+
+  AgreeOrNotAgreeVaccineDate({
+    @required this.agreeOnPressed,
+    @required this.notAgreeOnPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AgreeOrNotButton(
+      dialogTitle: 'Aşı Tarihi',
+      dialogContent:
+          'Aşı tarihi olarak bugünkü tarih girilecektir. Onaylıyor musunuz?',
+      agreeBtnTitle: 'Evet',
+      doNotAgreeBtnTitle: 'Hayır',
+      agreeOnPressed: agreeOnPressed,
+      notAgreeOnPressed: notAgreeOnPressed,
+    );
+  }
+}
+
+class VaccineInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialogWidget(
+      dialogTitle: 'Aşı Tarih',
+      dialogContent:
+          'Buradaki alan dostunuzun son aşı tarihini göstermektedir.',
+      btnTitle: 'Kapat',
+      onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+}
+
+class VaccineEndDate extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialogWidget(
+      dialogTitle: 'Kalan Süre',
+      dialogContent:
+          'Buradaki alan dostunuzun bir sonraki aşısı için kalan süreyi göstermektedir.',
+      btnTitle: 'Kapat',
+      onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+}
 
 class AnimalIdDoesNotMatched extends StatelessWidget {
   @override

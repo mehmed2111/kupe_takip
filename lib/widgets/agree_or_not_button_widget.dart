@@ -1,18 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
 
-class AlertDialogWidget extends StatelessWidget {
+class AgreeOrNotButton extends StatelessWidget {
   final String dialogTitle;
   final String dialogContent;
-  final String btnTitle;
-  final Function onPressed;
+  final String agreeBtnTitle;
+  final String doNotAgreeBtnTitle;
+  final Function agreeOnPressed;
+  final Function notAgreeOnPressed;
 
-  AlertDialogWidget({
+  AgreeOrNotButton({
     @required this.dialogTitle,
     @required this.dialogContent,
-    @required this.btnTitle,
-    @required this.onPressed,
+    @required this.agreeBtnTitle,
+    @required this.doNotAgreeBtnTitle,
+    @required this.agreeOnPressed,
+    @required this.notAgreeOnPressed,
   });
 
   @override
@@ -23,7 +26,7 @@ class AlertDialogWidget extends StatelessWidget {
         backgroundColor: Colors.white,
         titlePadding: EdgeInsets.symmetric(vertical: 20.0),
         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-        buttonPadding: EdgeInsets.symmetric(horizontal: 25.0),
+        buttonPadding: EdgeInsets.symmetric(horizontal: 20.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -48,9 +51,10 @@ class AlertDialogWidget extends StatelessWidget {
         ),
         actions: [
           SizedBox(
-            //MediaQuery olmadan kapat butonu ortalanamıyor ve display'e göre responsive olmasını sağlıyor
+            //MediaQuery olmadan kapat butonu ortalanamıyor ve display'e göre responsive olmuyor
             width: MediaQuery.of(context).size.width,
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 MaterialButton(
                   shape: RoundedRectangleBorder(
@@ -58,11 +62,25 @@ class AlertDialogWidget extends StatelessWidget {
                   color: kLoginDarkBackground,
                   elevation: 5.0,
                   height: 42.0,
+                  minWidth: 75.0,
                   child: Text(
-                    btnTitle,
+                    agreeBtnTitle,
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: onPressed,
+                  onPressed: agreeOnPressed,
+                ),
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  color: kLoginDarkBackground,
+                  elevation: 5.0,
+                  height: 42.0,
+                  minWidth: 75.0,
+                  child: Text(
+                    doNotAgreeBtnTitle,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: notAgreeOnPressed,
                 ),
               ],
             ),
