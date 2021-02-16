@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RememberMe extends StatefulWidget {
   final String username;
   RememberMe({this.username});
+
   @override
   _RememberMeState createState() => _RememberMeState();
 }
@@ -15,7 +16,7 @@ class RememberMe extends StatefulWidget {
 class _RememberMeState extends State<RememberMe> {
   bool rememberMe = false;
 
-  void rememberMeOnChanged(bool newValue) async {
+  void _rememberMeOnChanged(bool newValue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     rememberMe = newValue;
     setState(() {
@@ -35,12 +36,14 @@ class _RememberMeState extends State<RememberMe> {
       children: [
         Switch(
           value: rememberMe,
-          onChanged: rememberMeOnChanged,
+          onChanged: _rememberMeOnChanged,
           activeTrackColor: kMainKupeColor,
           activeColor: Colors.white,
         ),
-        Text('Beni Hatırla',
-            style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0)),
+        Text(
+          'Beni Hatırla',
+          style: TextStyle(color: kLoginDarkBackground, fontSize: 18.0),
+        ),
       ],
     );
 

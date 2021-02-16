@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kupe/bildirim_deneme.dart';
 import 'package:kupe/constants.dart';
+import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/nav_menu.dart';
 import 'package:kupe/screens/google_maps_page.dart';
 import 'google_maps_page.dart';
@@ -47,8 +47,9 @@ class _HomePageState extends State<HomePage> {
   Future<bool> _onBackPressed() {
     return showDialog(
           context: context,
-          builder: (context) {
-            return AlertDialog(
+          builder: (context) => OnBackPressedExitOrNot(),
+
+          /*AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
               title: Text(
@@ -87,8 +88,7 @@ class _HomePageState extends State<HomePage> {
                   //Navigator.of(context).pop(true);
                 ),
               ],
-            );
-          },
+            );*/
         ) ??
         false;
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/animal_data.dart';
+import 'package:kupe/dbtables/region_exit_control.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/dbtables/user_region.dart';
 import 'package:kupe/network/network_check.dart';
@@ -57,6 +58,9 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   List<AnimalData> _animalDataList;
   AnimalData _animalData;
 
+  RegionExitControl _regionExitControl = RegionExitControl();
+  List<RegionExitControl> regionExitList;
+
   /*isLatLngInZone(double lat, double lng, List<LatLng> polygonLatLngs) {
     var verticesY = [];
     var verticesX = [];
@@ -75,8 +79,35 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     }
   }*/
 
+  void _exitCheck(int animalId) async {
+    var data = await _regionExitControl.regionCheck(animalId);
+    regionExitList = data;
+
+    /*Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BildirimDeneme(regionExitList: regionExitList),
+      ),
+    );*/
+
+    /*if (regionExitList != null) {
+      setState(() {
+        BildirimDeneme(regionExitList: regionExitList);
+      });
+    }*/
+
+    /*if (regionExitList[0].komut == regionExitList[1].komut) {
+      print('İhlal yok');
+    }
+    if (regionExitList[0].komut == 'BA' && regionExitList[1].komut == 'AB') {
+      print('İhlal var');
+    }*/
+    //print('regionExitList: ${regionExitList[0].komut}');
+  }
+
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error and show user's animals on the map
   void _getUserAnimals(GoogleMapController controller) async {
+    _exitCheck(17);
     //fetch all user animals
     var dataList = await _userAnimals.fetchUserAnimals(loggedUserID);
     _userAnimalList = dataList;

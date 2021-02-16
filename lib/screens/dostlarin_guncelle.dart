@@ -5,7 +5,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/constants.dart';
-import 'dostlarin.dart';
+import 'dostlarin_guncelle_pop_up.dart';
 
 class DostlariniGuncelle extends StatefulWidget {
   DostlariniGuncelle() : super();
@@ -82,7 +82,7 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
                     PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return Dostlarin(
+                        return DostlarinGuncellePopUp(
                           selectedAnimalId: _selectedAnimal.id,
                           name: _selectedAnimal.name,
                           gender: _selectedAnimal.gender == 0
@@ -149,8 +149,9 @@ class _DostlariniGuncelleState extends State<DostlariniGuncelle> {
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   child: DropdownButton(
                     value: _selectedAnimal,
                     items: _dropdownMenuItems,

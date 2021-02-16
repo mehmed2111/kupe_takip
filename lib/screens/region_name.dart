@@ -29,117 +29,122 @@ class _RegionNameState extends State<RegionName> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      child: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Container(
-          height: 250,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.edit_location_outlined,
-                      color: kLoginDarkBackground),
-                  SizedBox(width: 10),
-                  Text('Bölgeyi Kaydet',
-                      style:
-                          TextStyle(color: kLoginDarkBackground, fontSize: 25)),
-                ],
-              ),
-              SizedBox(height: 16),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  textAlign: TextAlign.center,
-                  cursorColor: kMainKupeColor,
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Bölge adı giriniz..'),
-                  onChanged: (value) {
-                    setState(() {
-                      regionName = value;
-                    });
-                  },
+    return SafeArea(
+      child: Dialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        child: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Container(
+            height: 250,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.edit_location_outlined,
+                        color: kLoginDarkBackground),
+                    SizedBox(width: 10),
+                    Text('Bölgeyi Kaydet',
+                        style: TextStyle(
+                            color: kLoginDarkBackground, fontSize: 25)),
+                  ],
                 ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: RoundedButton(
-                    colour: kMainKupeColor,
-                    buttonTitle: 'Kaydet',
-                    onPressed: () {
+                SizedBox(height: 16),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    textAlign: TextAlign.center,
+                    cursorColor: kMainKupeColor,
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Bölge adı giriniz..'),
+                    onChanged: (value) {
                       setState(() {
-                        showSpinner = true;
+                        regionName = value;
                       });
-                      try {
-                        _networkCheck.check().then((internet) {
-                          if (internet != null && internet) {
-                            if (regionName != null) {
-                              setState(() {
-                                //add region to the database
-                                addUserRegion(
-                                  loggedUserID,
-                                  regionName,
-                                  widget.polygonLatLngs,
-                                );
+                    },
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: RoundedButton(
+                      colour: kMainKupeColor,
+                      buttonTitle: 'Kaydet',
+                      onPressed: () {
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        try {
+                          _networkCheck.check().then((internet) {
+                            if (internet != null && internet) {
+                              if (regionName != null) {
+                                setState(() {
+                                  //add region to the database
+                                  addUserRegion(
+                                    loggedUserID,
+                                    regionName,
+                                    widget.polygonLatLngs,
+                                  );
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (_) => AlertDialogWidget(
+                                      dialogTitle: 'Kayıt Başarılı!',
+                                      dialogContent:
+                                          'Bölge başarılı bir şekilde kaydedildi.',
+                                      btnTitle: 'Kapat',
+                                      onPressed: () {
+                                        Navigator.pop(_);
+                                        Navigator.pop(context, RegionName.id);
+                                        Navigator.pushNamed(
+                                            context, HomePage.id);
+                                      },
+                                    ),
+                                  );
+                                });
+                              } else {
                                 showDialog(
                                   context: context,
-                                  builder: (_) => AlertDialogWidget(
-                                    dialogTitle: 'Kayıt Başarılı!',
-                                    dialogContent:
-                                        'Bölge başarılı bir şekilde kaydedildi.',
-                                    btnTitle: 'Kapat',
-                                    onPressed: () {
-                                      Navigator.pop(_);
-                                      Navigator.pop(context, RegionName.id);
-                                      Navigator.pushNamed(context, HomePage.id);
-                                    },
-                                  ),
+                                  builder: (_) => EmptyAreaError(),
                                 );
-                              });
+                              }
                             } else {
                               showDialog(
                                 context: context,
-                                builder: (_) => EmptyAreaError(),
+                                builder: (_) => InternetError(),
                               );
                             }
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (_) => InternetError(),
-                            );
-                          }
-                        });
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      } catch (e) {
-                        throw Exception('Failed to save region to an user');
-                      }
-                      //print('Gelen Polygon points: ${widget.polygonLatLngs}');
-                    }),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: RoundedButton(
-                    colour: kLoginDarkBackground,
-                    buttonTitle: 'İptal',
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  HomePage(isPolygon: false)));
-                    }),
-              ),
-            ],
+                          });
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        } catch (e) {
+                          throw Exception('Failed to save region to an user');
+                        }
+                        //print('Gelen Polygon points: ${widget.polygonLatLngs}');
+                      }),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: RoundedButton(
+                      colour: kLoginDarkBackground,
+                      buttonTitle: 'İptal',
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    HomePage(isPolygon: false)));
+                      }),
+                ),
+              ],
+            ),
           ),
         ),
       ),

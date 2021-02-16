@@ -194,227 +194,232 @@ class _AnimalHistoryTrackingState extends State<AnimalHistoryTracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
-      body: Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 10.0),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        child: Container(
-          height: 485,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.slideshow,
-                      color: kLoginLightDarkBackground, size: 30),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Geçmiş İzleme',
-                    style:
-                        TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              Expanded(
-                child: Theme(
-                  data: Theme.of(context).copyWith(accentColor: kMainKupeColor),
-                  child: ListView(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                    controller: ScrollController(keepScrollOffset: false),
-                    children: [
-                      //start date
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Text(
-                          'Başlangıç Tarihi/Saati:',
-                          style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
+      body: SafeArea(
+        child: Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 10.0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          child: Container(
+            height: 485,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.slideshow,
+                        color: kLoginLightDarkBackground, size: 30),
+                    SizedBox(width: 10.0),
+                    Text(
+                      'Geçmiş İzleme',
+                      style: TextStyle(
+                          color: kLoginDarkBackground, fontSize: 25.0),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Expanded(
+                  child: Theme(
+                    data:
+                        Theme.of(context).copyWith(accentColor: kMainKupeColor),
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 10.0),
+                      controller: ScrollController(keepScrollOffset: false),
+                      children: [
+                        //start date
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 17.0),
+                          child: Text(
+                            'Başlangıç Tarihi/Saati:',
+                            style: TextStyle(
+                              color: kLoginDarkBackground,
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 48.0,
-                              child: RoundedButtonWithIcon(
-                                btnTitle: '${selectedStartDate.toLocal()}'
-                                    .split(' ')[0],
-                                icon: Icons.calendar_today,
-                                onPressed: () => _selectStartDate(context),
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                height: 48.0,
+                                child: RoundedButtonWithIcon(
+                                  btnTitle: '${selectedStartDate.toLocal()}'
+                                      .split(' ')[0],
+                                  icon: Icons.calendar_today,
+                                  onPressed: () => _selectStartDate(context),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 48.0,
-                              child: RoundedButtonWithIcon(
-                                btnTitle: '${selectedStartTime.format(context)}'
-                                    .split(' ')[0],
-                                icon: Icons.watch_later_outlined,
-                                onPressed: () => _selectStartTime(context),
+                            SizedBox(width: 10.0),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                height: 48.0,
+                                child: RoundedButtonWithIcon(
+                                  btnTitle:
+                                      '${selectedStartTime.format(context)}'
+                                          .split(' ')[0],
+                                  icon: Icons.watch_later_outlined,
+                                  onPressed: () => _selectStartTime(context),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
 
-                      SizedBox(height: 10.0),
-                      //end date
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Text(
-                          'Bitiş Tarihi/Saati:',
-                          style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 48.0,
-                              child: RoundedButtonWithIcon(
-                                btnTitle: '${selectedEndDate.toLocal()}'
-                                    .split(' ')[0],
-                                icon: Icons.calendar_today,
-                                onPressed: () => _selectEndDate(context),
-                              ),
+                        SizedBox(height: 10.0),
+                        //end date
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 17.0),
+                          child: Text(
+                            'Bitiş Tarihi/Saati:',
+                            style: TextStyle(
+                              color: kLoginDarkBackground,
+                              fontSize: 18.0,
                             ),
                           ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 48.0,
-                              child: RoundedButtonWithIcon(
-                                btnTitle: '${selectedEndTime.format(context)}'
-                                    .split(' ')[0],
-                                icon: Icons.watch_later_outlined,
-                                onPressed: () => _selectEndTime(context),
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                height: 48.0,
+                                child: RoundedButtonWithIcon(
+                                  btnTitle: '${selectedEndDate.toLocal()}'
+                                      .split(' ')[0],
+                                  icon: Icons.calendar_today,
+                                  onPressed: () => _selectEndDate(context),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10.0),
-                      //choose animal
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Text(
-                          'Dostunu Seç',
-                          style: TextStyle(
-                            color: kLoginDarkBackground,
-                            fontSize: 18.0,
+                            SizedBox(width: 10.0),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                height: 48.0,
+                                child: RoundedButtonWithIcon(
+                                  btnTitle: '${selectedEndTime.format(context)}'
+                                      .split(' ')[0],
+                                  icon: Icons.watch_later_outlined,
+                                  onPressed: () => _selectEndTime(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0),
+                        //choose animal
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 17.0),
+                          child: Text(
+                            'Dostunu Seç',
+                            style: TextStyle(
+                              color: kLoginDarkBackground,
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Container(
-                        height: 48.0,
-                        padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(width: 1.0, color: kMainKupeColor),
-                            borderRadius: BorderRadius.circular(32.0),
+                        SizedBox(height: 10.0),
+                        Container(
+                          height: 48.0,
+                          padding: EdgeInsets.symmetric(horizontal: 15.0),
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              side:
+                                  BorderSide(width: 1.0, color: kMainKupeColor),
+                              borderRadius: BorderRadius.circular(32.0),
+                            ),
+                          ),
+                          child: DropdownButton(
+                            value: _selectedAnimal,
+                            items: _dropDownMenuItems,
+                            onChanged: onChangedDropDownMenuItem,
+                            icon: Icon(Icons.arrow_drop_down,
+                                color: kLoginDarkBackground),
+                            isExpanded: true,
+                            iconSize: 30.0,
+                            iconEnabledColor: kLoginDarkBackground,
+                            underline: SizedBox(),
+                            dropdownColor: Colors.white,
+                            style: TextStyle(
+                                color: kLoginDarkBackground, fontSize: 18.0),
                           ),
                         ),
-                        child: DropdownButton(
-                          value: _selectedAnimal,
-                          items: _dropDownMenuItems,
-                          onChanged: onChangedDropDownMenuItem,
-                          icon: Icon(Icons.arrow_drop_down,
-                              color: kLoginDarkBackground),
-                          isExpanded: true,
-                          iconSize: 30.0,
-                          iconEnabledColor: kLoginDarkBackground,
-                          underline: SizedBox(),
-                          dropdownColor: Colors.white,
-                          style: TextStyle(
-                              color: kLoginDarkBackground, fontSize: 18.0),
-                        ),
-                      ),
-                      SizedBox(height: 20.0),
-                      //show on map
-                      RoundedButton(
-                        colour: kMainKupeColor,
-                        buttonTitle: 'Haritada Göster',
-                        onPressed: () {
-                          _startDateTime =
-                              '${selectedStartDate.toLocal()}'.split(' ')[0] +
-                                  ' ' +
-                                  '${selectedStartTime.format(context)}'
-                                      .split(' ')[0];
-                          _endDateTime =
-                              '${selectedEndDate.toLocal()}'.split(' ')[0] +
-                                  ' ' +
-                                  '${selectedEndTime.format(context)}'
-                                      .split(' ')[0];
+                        SizedBox(height: 20.0),
+                        //show on map
+                        RoundedButton(
+                          colour: kMainKupeColor,
+                          buttonTitle: 'Haritada Göster',
+                          onPressed: () {
+                            _startDateTime =
+                                '${selectedStartDate.toLocal()}'.split(' ')[0] +
+                                    ' ' +
+                                    '${selectedStartTime.format(context)}'
+                                        .split(' ')[0];
+                            _endDateTime =
+                                '${selectedEndDate.toLocal()}'.split(' ')[0] +
+                                    ' ' +
+                                    '${selectedEndTime.format(context)}'
+                                        .split(' ')[0];
 
-                          _networkCheck.check().then((internet) async {
-                            if (internet != null && internet) {
-                              var data =
-                                  await getAnimalTracking.fetchAnimalTrack(
-                                _selectedAnimal.id,
-                                _startDateTime,
-                                _endDateTime,
-                              );
-                              //assign fetched data from json to animalTrackList
-                              animalTrackList = data;
-
-                              if (animalTrackList.length != 0 &&
-                                  animalTrackList.length > 1) {
-                                //push parameters to the chosen page
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        AnimalHistoryTrackingMap(
-                                      animalTrackList: animalTrackList,
-                                      animalId: _selectedAnimal.id,
-                                      startDateTime: _startDateTime,
-                                      endDateTime: _endDateTime,
-                                    ),
-                                  ),
+                            _networkCheck.check().then((internet) async {
+                              if (internet != null && internet) {
+                                var data =
+                                    await getAnimalTracking.fetchAnimalTrack(
+                                  _selectedAnimal.id,
+                                  _startDateTime,
+                                  _endDateTime,
                                 );
+                                //assign fetched data from json to animalTrackList
+                                animalTrackList = data;
+
+                                if (animalTrackList.length != 0 &&
+                                    animalTrackList.length > 1) {
+                                  //push parameters to the chosen page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AnimalHistoryTrackingMap(
+                                        animalTrackList: animalTrackList,
+                                        animalId: _selectedAnimal.id,
+                                        startDateTime: _startDateTime,
+                                        endDateTime: _endDateTime,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => DateTimeNotMatched(),
+                                  );
+                                }
                               } else {
                                 showDialog(
                                   context: context,
-                                  builder: (_) => DateTimeNotMatched(),
+                                  builder: (_) => InternetError(),
                                 );
                               }
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (_) => InternetError(),
-                              );
-                            }
-                          });
-                        },
-                      ),
-                      SizedBox(height: 10.0),
-                    ],
+                            });
+                          },
+                        ),
+                        SizedBox(height: 10.0),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              //SizedBox(height: 10.0),
-              KapatButton(onPressed: () {
-                Navigator.pop(context);
-              }),
-            ],
+                //SizedBox(height: 10.0),
+                KapatButton(onPressed: () {
+                  Navigator.pop(context);
+                }),
+              ],
+            ),
           ),
         ),
       ),

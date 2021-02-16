@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kupe/widgets/agree_or_not_button_widget.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
@@ -18,7 +19,7 @@ class AgreeOrNotAgreeVaccineDate extends StatelessWidget {
       dialogContent:
           'Aşı tarihi olarak bugünkü tarih girilecektir. Onaylıyor musunuz?',
       agreeBtnTitle: 'Evet',
-      doNotAgreeBtnTitle: 'Hayır',
+      notAgreeBtnTitle: 'Hayır',
       agreeOnPressed: agreeOnPressed,
       notAgreeOnPressed: notAgreeOnPressed,
     );
@@ -162,6 +163,20 @@ class ProfileIsUpToDate extends StatelessWidget {
           'Profilinizde yer alan bilgiler zaten güncel bilgilerinizdir.',
       btnTitle: 'Kapat',
       onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+}
+
+class OnBackPressedExitOrNot extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AgreeOrNotButton(
+      dialogTitle: 'Çıkış Yap',
+      dialogContent: 'Uygulamadan çıkmak istediğinize emin misiniz?',
+      agreeBtnTitle: 'Evet',
+      notAgreeBtnTitle: 'Hayır',
+      agreeOnPressed: () => exit(0),
+      notAgreeOnPressed: () => Navigator.of(context).pop(false),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/network/network_check.dart';
-import 'package:kupe/screens/alarm_rapor_tanim.dart';
+import 'package:kupe/screens/alarm_report_description.dart';
 import 'package:kupe/screens/dostlarin_guncelle.dart';
 import 'package:kupe/screens/animal_history_tracking.dart';
 import 'package:kupe/screens/home_page.dart';
@@ -12,7 +12,7 @@ import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/region_delete_name.dart';
 import 'package:kupe/screens/saglik_takip.dart';
-import 'package:kupe/screens/sifre_degistir.dart';
+import 'package:kupe/screens/password_change.dart';
 import 'package:kupe/dbtables/users_table.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -221,6 +221,7 @@ class _NavMenuState extends State<NavMenu> {
                     _networkCheck.check().then(
                       (internet) {
                         if (internet != null && internet) {
+                          Navigator.of(context).pop();
                           Navigator.of(context).push(PageRouteBuilder(
                             opaque: false,
                             pageBuilder: (BuildContext context, _, __) {
@@ -334,7 +335,7 @@ class _NavMenuState extends State<NavMenu> {
                                 PageRouteBuilder(
                                   opaque: false,
                                   pageBuilder: (BuildContext context, _, __) {
-                                    return SifreDegistir();
+                                    return PasswordChange();
                                   },
                                 ),
                               );
@@ -390,7 +391,7 @@ class _NavMenuState extends State<NavMenu> {
                                 PageRouteBuilder(
                                   opaque: false,
                                   pageBuilder: (BuildContext context, _, __) {
-                                    return AlarmRaporTanim();
+                                    return AlarmReportDescription();
                                   },
                                 ),
                               );

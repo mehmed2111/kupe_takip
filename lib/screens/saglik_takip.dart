@@ -4,7 +4,7 @@ import 'package:kupe/dbtables/animal_data.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
-import 'package:kupe/widgets/saglik_takip_widget.dart';
+import 'file:///D:/ATC_MEHMED/Mobil_Uygulamalar/Flutter_Uygulamar/kupe_08_02_2021/lib/screens/saglik_takip_pop_up.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class SaglikTakip extends StatefulWidget {
@@ -87,7 +87,7 @@ class _SaglikTakipState extends State<SaglikTakip> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return SaglikTakipWidget(
+                        return SaglikTakipPopUp(
                           hayvanID: _animalData.id,
                           name: _animalData.name,
                           parazitler: _animalData.parazitler,
@@ -149,12 +149,12 @@ class _SaglikTakipState extends State<SaglikTakip> {
               SizedBox(height: 20.0),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                /*padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                ),*/
-                height: 60.0,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                /* height: 60.0,
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                 decoration: ShapeDecoration(
                   color: Colors.white,
@@ -162,7 +162,7 @@ class _SaglikTakipState extends State<SaglikTakip> {
                     side: BorderSide(width: 1.0, color: kMainKupeColor),
                     borderRadius: BorderRadius.circular(32.0),
                   ),
-                ),
+                ),*/
                 child: DropdownButton(
                   value: _selectedAnimal,
                   items: _dropdownMenuItems,

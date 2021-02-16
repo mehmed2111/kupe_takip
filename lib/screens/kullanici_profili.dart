@@ -27,8 +27,7 @@ class KullaniciProfili extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0),
+      body: SafeArea(
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),

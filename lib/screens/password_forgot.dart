@@ -8,14 +8,14 @@ import 'package:kupe/widgets/rounded_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:kupe/widgets/alert_dialog_widget.dart';
 
-class SifremiUnuttum extends StatefulWidget {
-  static const String id = 'sifremi_unuttum';
+class PasswordForgot extends StatefulWidget {
+  static const String id = 'password_forgot';
 
   @override
-  _SifremiUnuttumState createState() => _SifremiUnuttumState();
+  _PasswordForgotState createState() => _PasswordForgotState();
 }
 
-class _SifremiUnuttumState extends State<SifremiUnuttum> {
+class _PasswordForgotState extends State<PasswordForgot> {
   String _email;
   String _newPassword;
   String _newPasswordRepeat;
@@ -42,8 +42,7 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
       backgroundColor: Colors.white.withOpacity(0.25),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+        child: SafeArea(
           child: Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
@@ -192,7 +191,7 @@ class _SifremiUnuttumState extends State<SifremiUnuttum> {
                                                   onPressed: () {
                                                     Navigator.pop(_);
                                                     Navigator.pop(context,
-                                                        SifremiUnuttum.id);
+                                                        PasswordForgot.id);
                                                   },
                                                 ),
                                               );

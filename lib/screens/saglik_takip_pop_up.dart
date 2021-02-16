@@ -5,7 +5,7 @@ import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/health_vaccine_info_widget.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 
-class SaglikTakipWidget extends StatefulWidget {
+class SaglikTakipPopUp extends StatefulWidget {
   final int hayvanID;
   final String name;
   final String parazitler;
@@ -14,7 +14,7 @@ class SaglikTakipWidget extends StatefulWidget {
   final String mantar;
   final String lyme;
 
-  SaglikTakipWidget({
+  SaglikTakipPopUp({
     this.hayvanID,
     this.name,
     this.parazitler,
@@ -25,10 +25,10 @@ class SaglikTakipWidget extends StatefulWidget {
   });
 
   @override
-  _SaglikTakipWidgetState createState() => _SaglikTakipWidgetState();
+  _SaglikTakipPopUpState createState() => _SaglikTakipPopUpState();
 }
 
-class _SaglikTakipWidgetState extends State<SaglikTakipWidget> {
+class _SaglikTakipPopUpState extends State<SaglikTakipPopUp> {
   DateTime selectParasiteDate = DateTime.now();
   String parasiteDate = 'Aşı bilgisi yok';
   DateTime selectKarmaDate = DateTime.now();

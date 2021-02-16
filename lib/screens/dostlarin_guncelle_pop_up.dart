@@ -10,20 +10,21 @@ import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class Dostlarin extends StatefulWidget {
+class DostlarinGuncellePopUp extends StatefulWidget {
   static const String id = 'dostlarin';
   final String name;
   final String gender;
   final String color;
   final int selectedAnimalId;
 
-  Dostlarin({this.name, this.gender, this.color, this.selectedAnimalId});
+  DostlarinGuncellePopUp(
+      {this.name, this.gender, this.color, this.selectedAnimalId});
 
   @override
-  _DostlarinState createState() => _DostlarinState();
+  _DostlarinGuncellePopUpState createState() => _DostlarinGuncellePopUpState();
 }
 
-class _DostlarinState extends State<Dostlarin> {
+class _DostlarinGuncellePopUpState extends State<DostlarinGuncellePopUp> {
   NetworkCheck _networkCheck = NetworkCheck();
   UserAnimals _userAnimals = UserAnimals();
   //List<UserAnimals> updateAnimal;
@@ -79,8 +80,7 @@ class _DostlarinState extends State<Dostlarin> {
       backgroundColor: Colors.white.withOpacity(0.25),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
+        child: SafeArea(
           child: Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
@@ -229,8 +229,10 @@ class _DostlarinState extends State<Dostlarin> {
                                                       btnTitle: 'Kapat',
                                                       onPressed: () {
                                                         Navigator.pop(_);
-                                                        Navigator.pop(context,
-                                                            Dostlarin.id);
+                                                        Navigator.pop(
+                                                            context,
+                                                            DostlarinGuncellePopUp
+                                                                .id);
                                                       },
                                                     ),
                                                   );

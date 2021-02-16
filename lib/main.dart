@@ -5,8 +5,8 @@ import 'package:kupe/screens/animal_history_tracking.dart';
 import 'package:kupe/screens/region_delete_name.dart';
 import 'package:kupe/screens/region_name.dart';
 import 'package:kupe/widgets/hayvan_marker_widget.dart';
-import 'package:kupe/screens/alarm_rapor_tanim.dart';
-import 'package:kupe/screens/dostlarin.dart';
+import 'package:kupe/screens/alarm_report_description.dart';
+import 'package:kupe/screens/dostlarin_guncelle_pop_up.dart';
 import 'package:kupe/screens/dostlarin_guncelle.dart';
 import 'package:kupe/screens/kullanici_profili.dart';
 import 'package:kupe/screens/google_maps_page.dart';
@@ -14,8 +14,8 @@ import 'package:kupe/screens/home_page.dart';
 import 'package:kupe/screens/login_page.dart';
 import 'package:kupe/screens/profil_guncelle.dart';
 import 'package:kupe/screens/saglik_takip.dart';
-import 'package:kupe/screens/sifre_degistir.dart';
-import 'package:kupe/screens/sifremi_unuttum.dart';
+import 'package:kupe/screens/password_change.dart';
+import 'package:kupe/screens/password_forgot.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,12 +50,12 @@ class Kupe extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         GoogleMapsPage.id: (context) => GoogleMapsPage(),
         KullaniciProfili.id: (context) => KullaniciProfili(),
-        SifreDegistir.id: (context) => SifreDegistir(),
+        PasswordChange.id: (context) => PasswordChange(),
         ProfilGuncelle.id: (context) => ProfilGuncelle(),
-        AlarmRaporTanim.id: (context) => AlarmRaporTanim(),
-        SifremiUnuttum.id: (context) => SifremiUnuttum(),
+        AlarmReportDescription.id: (context) => AlarmReportDescription(),
+        PasswordForgot.id: (context) => PasswordForgot(),
         SaglikTakip.id: (context) => SaglikTakip(),
-        Dostlarin.id: (context) => Dostlarin(),
+        DostlarinGuncellePopUp.id: (context) => DostlarinGuncellePopUp(),
         BildirimDeneme.id: (context) => BildirimDeneme(),
         HayvanMarker.id: (context) => HayvanMarker(),
         DostlariniGuncelle.id: (context) => DostlariniGuncelle(),

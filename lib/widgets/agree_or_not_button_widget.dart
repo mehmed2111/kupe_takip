@@ -5,17 +5,17 @@ class AgreeOrNotButton extends StatelessWidget {
   final String dialogTitle;
   final String dialogContent;
   final String agreeBtnTitle;
-  final String doNotAgreeBtnTitle;
+  final String notAgreeBtnTitle;
   final Function agreeOnPressed;
   final Function notAgreeOnPressed;
 
   AgreeOrNotButton({
-    @required this.dialogTitle,
-    @required this.dialogContent,
-    @required this.agreeBtnTitle,
-    @required this.doNotAgreeBtnTitle,
-    @required this.agreeOnPressed,
-    @required this.notAgreeOnPressed,
+    this.dialogTitle,
+    this.dialogContent,
+    this.agreeBtnTitle,
+    this.notAgreeBtnTitle,
+    this.agreeOnPressed,
+    this.notAgreeOnPressed,
   });
 
   @override
@@ -35,7 +35,7 @@ class AgreeOrNotButton extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.red,
-            fontSize: 25,
+            fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -77,7 +77,7 @@ class AgreeOrNotButton extends StatelessWidget {
                   height: 42.0,
                   minWidth: 75.0,
                   child: Text(
-                    doNotAgreeBtnTitle,
+                    notAgreeBtnTitle,
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: notAgreeOnPressed,

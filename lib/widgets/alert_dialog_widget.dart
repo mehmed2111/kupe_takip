@@ -32,7 +32,7 @@ class AlertDialogWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.red,
-            fontSize: 25,
+            fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
         ),

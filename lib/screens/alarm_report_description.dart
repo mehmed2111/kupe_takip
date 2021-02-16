@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:kupe/constants.dart';
-import 'package:kupe/models/bolge_ihlal_onchanged.dart';
-import 'package:kupe/models/isi_alarmi.dart';
+import 'package:kupe/models/region_exit_on_changed.dart';
+import 'package:kupe/models/isi_alarm.dart';
 import 'package:kupe/widgets/kapat_button.dart';
 import 'package:kupe/widgets/rounded_button.dart';
 
-class AlarmRaporTanim extends StatelessWidget {
-  static const String id = 'alarm_rapor_tanim';
+class AlarmReportDescription extends StatefulWidget {
+  static const String id = 'alarm_report_description';
+  /*final bool regionAlarmValue;
 
+  AlarmReportDescription({this.regionAlarmValue});*/
+
+  @override
+  _AlarmReportDescriptionState createState() => _AlarmReportDescriptionState();
+}
+
+class _AlarmReportDescriptionState extends State<AlarmReportDescription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.25),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+      body: SafeArea(
         child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           elevation: 16.0,
           child: Container(
-              height: 380.0,
-              //width: 360.0,
+              height: 350.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -31,27 +37,29 @@ class AlarmRaporTanim extends StatelessWidget {
                     style:
                         TextStyle(color: kLoginDarkBackground, fontSize: 25.0),
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 20.0),
                   Expanded(
                     child: Theme(
                       data: Theme.of(context)
                           .copyWith(accentColor: kMainKupeColor),
                       child: ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
                         controller: ScrollController(keepScrollOffset: false),
                         children: [
-                          BolgeihlalOnChanged(),
-                          IsiAlarmi(),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 16.0),
-                            child: RoundedButton(
-                              colour: kMainKupeColor,
-                              buttonTitle: 'Güncelle',
-                              onPressed: () {
-                                /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
-                              },
-                            ),
+                          RegionExitOnChanged(),
+                          IsiAlarm(),
+                          SizedBox(height: 20.0),
+                          RoundedButton(
+                            colour: kMainKupeColor,
+                            buttonTitle: 'Kaydet',
+                            onPressed: () {
+                              /*daha sonra veritabanı ile karşılaştırılarak yapılacak*/
+                              /*setState(() {
+                                print(widget.regionAlarmValue);
+                              });*/
+                            },
                           ),
+                          SizedBox(height: 20.0),
                         ],
                       ),
                     ),

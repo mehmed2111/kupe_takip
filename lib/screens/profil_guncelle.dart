@@ -72,8 +72,7 @@ class _ProfilGuncelleState extends State<ProfilGuncelle> {
       backgroundColor: Colors.white.withOpacity(0.25),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
+        child: SafeArea(
           child: Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
