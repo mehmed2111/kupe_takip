@@ -18,10 +18,31 @@ import 'package:kupe/screens/password_change.dart';
 import 'package:kupe/screens/password_forgot.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workmanager/workmanager.dart';
 
 Future<void> main() async {
   //used shared_preference package in order to auto-login user
   WidgetsFlutterBinding.ensureInitialized();
+
+  //start work manager set isInDebugMode to true in order to trigger data even the app is terminated
+  await Workmanager.initialize(callbackDispatcher, isInDebugMode: true);
+  //periodically check region json
+  /*await Workmanager.registerPeriodicTask(
+    "5", 'Bölge ihlal alarmı',
+    existingWorkPolicy: ExistingWorkPolicy.replace,
+    frequency: Duration(minutes: 1), //when should it check the link
+    initialDelay:
+        Duration(seconds: 5), //duration before showing the notification
+    constraints: Constraints(networkType: NetworkType.connected),
+  );*/
+
+// Periodic task registration
+  Workmanager.registerPeriodicTask(
+    "2",
+    "simplePeriodicTask",
+    frequency: Duration(minutes: 15),
+  );
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var username = prefs.getString('username');
   print(username);

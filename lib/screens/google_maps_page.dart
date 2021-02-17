@@ -61,25 +61,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   RegionExitControl _regionExitControl = RegionExitControl();
   List<RegionExitControl> regionExitList;
 
-  /*isLatLngInZone(double lat, double lng, List<LatLng> polygonLatLngs) {
-    var verticesY = [];
-    var verticesX = [];
-    double longitudeX = lng;
-    double latitudeY = lat;
-    List<LatLng> latLngs = polygonLatLngs;
-    var r = 0;
-    var i = 0;
-    var j = 0;
-    var c = 0;
-    var point = 0;
-
-    for (r = 0; r < latLngs.length; r++) {
-      verticesY.add(latLngs[r].latitude);
-      verticesX.add(latLngs[r].longitude);
-    }
-  }*/
-
-  void _exitCheck(int animalId) async {
+  /*void _exitCheck(int animalId) async {
     var data = await _regionExitControl.regionCheck(animalId);
     regionExitList = data;
 
@@ -103,11 +85,11 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       print('İhlal var');
     }*/
     //print('regionExitList: ${regionExitList[0].komut}');
-  }
+  }*/
 
   //call fetchUserAnimals() function inside this function in order to prevent 'instance of Users' error and show user's animals on the map
   void _getUserAnimals(GoogleMapController controller) async {
-    _exitCheck(17);
+    //_exitCheck(17);
     //fetch all user animals
     var dataList = await _userAnimals.fetchUserAnimals(loggedUserID);
     _userAnimalList = dataList;
