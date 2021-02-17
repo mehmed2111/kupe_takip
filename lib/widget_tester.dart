@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kupe/bildirim_deneme.dart';
+import 'file:///D:/Storage/Flutter_Projects/kupe_17_02_2021/lib/notifications/notification_on_region_exit.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(BildirimDeneme());
+    await tester.pumpWidget(NotificationOnRegionExit());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

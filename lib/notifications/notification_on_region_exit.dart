@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/dbtables/region_exit_control.dart';
-import 'package:kupe/widgets/rounded_button.dart';
 import 'package:workmanager/workmanager.dart';
 
 RegionExitControl _regionExitControl = RegionExitControl();
@@ -17,12 +16,12 @@ void callbackDispatcher() {
     var initializationSettingsIOS = IOSInitializationSettings();
     var initSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-    flp.initialize(
-        initSettings /*, onSelectNotification: onSelectNotification*/);
+    flp.initialize(initSettings, onSelectNotification: onSelectNotification);
 
     //fetch region control from json
     var response = await _regionExitControl.regionCheck(17);
     regionExitList = response;
+
     print("here================");
     print(regionExitList);
 
@@ -30,16 +29,24 @@ void callbackDispatcher() {
     //showNotification(flp);
     if (regionExitList[0].komut == regionExitList[1].komut) {
       print('İhlal yok');
+      var android = new AndroidNotificationDetails(
+          'id', 'channel ', 'description',
+          priority: Priority.high, importance: Importance.max);
+      var iOS = new IOSNotificationDetails();
+      var platform = new NotificationDetails(android: android, iOS: iOS);
+      await flp.show(
+          0, 'Küpe Takip', 'Dostunuz bölgeyi ihlal etmedi.', platform,
+          payload: 'Bildirimler');
     }
     if (regionExitList[0].komut == 'BA' && regionExitList[1].komut == 'AB') {
-      //print('İhlal var');
+      print('İhlal var');
       var android = new AndroidNotificationDetails(
           'id', 'channel ', 'description',
           priority: Priority.high, importance: Importance.max);
       var iOS = new IOSNotificationDetails();
       var platform = new NotificationDetails(android: android, iOS: iOS);
       await flp.show(0, 'Küpe Takip', 'Dostunuz bölgeyi ihlal etti.', platform,
-          payload: 'Mesajın yönlendirildiği sayfa');
+          payload: 'Bildirimler');
     }
 
     /*var convert = json.decode(response.body);
@@ -74,76 +81,34 @@ void showNotification(flp) async {
   }
 }
 */
-class BildirimDeneme extends StatefulWidget {
-  static const String id = 'bildirim_deneme';
 
-  final List<RegionExitControl> regionExitList;
-  BildirimDeneme({this.regionExitList});
-
-  @override
-  _BildirimDenemeState createState() => _BildirimDenemeState();
+BuildContext context;
+Future onSelectNotification(String payload) {
+  return Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) {
+        return MessageScreen(payload: payload);
+      },
+    ),
+  );
 }
 
-class _BildirimDenemeState extends State<BildirimDeneme> {
-  /* RegionExitControl _regionExitControl = RegionExitControl();
-  List<RegionExitControl> regionExitList;
-  Timer _timer;*/
-
-  /* void _exitCheck(int animalId) async {
-    var data = await _regionExitControl.regionCheck(animalId);
-    regionExitList = data;
-  }*/
-
-  @override
-  void initState() {
-    super.initState();
-    /*var initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = IOSInitializationSettings();
-    var initSettings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-
-    flutterLocalNotificationsPlugin.initialize(initSettings,
-        onSelectNotification: onSelectNotification);*/
-
-    //_timer = Timer.periodic(Duration(seconds: 20), (Timer t) => _exitCheck(17));
-    //print('Bildirimler sayfasında: $regionExitList');
-  }
-
-  @override
-  void dispose() {
-    //_timer?.cancel();
-    super.dispose();
-  }
-
-  Future onSelectNotification(String payload) {
-    return Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return MessageScreen(
-            payload: payload,
-          );
-        },
-      ),
-    );
-  }
+class NotificationOnRegionExit extends StatelessWidget {
+  static const String id = 'notification_region_exit';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
+      appBar: AppBar(
         backgroundColor: kMainKupeColor,
-        title: new Text('Bildirim Deneme'),
+        title: Text('Bildirimler'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            /*RoundedButton(
-              colour: kMainKupeColor,
-              buttonTitle: 'Bildirim Gönder',
-              onPressed: showNotification,
-            ),*/
+        child: ListView(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+          children: [
+            //for (int i = 0; i < regionExitList.length; i++)
+            //Text(regionExitList[i].komut),
           ],
         ),
       ),
@@ -165,6 +130,7 @@ class MessageScreen extends StatelessWidget {
         backgroundColor: kMainKupeColor,
         title: Text(payload),
       ),
+      body: NotificationOnRegionExit(),
     );
   }
 }

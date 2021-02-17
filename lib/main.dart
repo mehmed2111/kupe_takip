@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:kupe/bildirim_deneme.dart';
+import 'package:kupe/notifications/notification_on_region_exit.dart';
 import 'package:kupe/screens/animal_history_tracking.dart';
 import 'package:kupe/screens/region_delete_name.dart';
 import 'package:kupe/screens/region_name.dart';
@@ -24,23 +24,17 @@ Future<void> main() async {
   //used shared_preference package in order to auto-login user
   WidgetsFlutterBinding.ensureInitialized();
 
-  //start work manager set isInDebugMode to true in order to trigger data even the app is terminated
-  await Workmanager.initialize(callbackDispatcher, isInDebugMode: true);
+  //start work manager
+  //isInDebugMode if enabled it will post a notification whenever the task is running
+  await Workmanager.initialize(callbackDispatcher, isInDebugMode: false);
   //periodically check region json
-  /*await Workmanager.registerPeriodicTask(
+  await Workmanager.registerPeriodicTask(
     "5", 'Bölge ihlal alarmı',
     existingWorkPolicy: ExistingWorkPolicy.replace,
-    frequency: Duration(minutes: 1), //when should it check the link
+    frequency: Duration(minutes: 15), //when should it check the link
     initialDelay:
         Duration(seconds: 5), //duration before showing the notification
     constraints: Constraints(networkType: NetworkType.connected),
-  );*/
-
-// Periodic task registration
-  Workmanager.registerPeriodicTask(
-    "2",
-    "simplePeriodicTask",
-    frequency: Duration(minutes: 15),
   );
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -77,7 +71,7 @@ class Kupe extends StatelessWidget {
         PasswordForgot.id: (context) => PasswordForgot(),
         SaglikTakip.id: (context) => SaglikTakip(),
         DostlarinGuncellePopUp.id: (context) => DostlarinGuncellePopUp(),
-        BildirimDeneme.id: (context) => BildirimDeneme(),
+        NotificationOnRegionExit.id: (context) => NotificationOnRegionExit(),
         HayvanMarker.id: (context) => HayvanMarker(),
         DostlariniGuncelle.id: (context) => DostlariniGuncelle(),
         RegionName.id: (context) => RegionName(),

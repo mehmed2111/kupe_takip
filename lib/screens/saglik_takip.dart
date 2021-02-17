@@ -4,7 +4,7 @@ import 'package:kupe/dbtables/animal_data.dart';
 import 'package:kupe/dbtables/user_animal_table.dart';
 import 'package:kupe/network/network_check.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
-import 'file:///D:/ATC_MEHMED/Mobil_Uygulamalar/Flutter_Uygulamar/kupe_08_02_2021/lib/screens/saglik_takip_pop_up.dart';
+import 'package:kupe/screens/saglik_takip_pop_up.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class SaglikTakip extends StatefulWidget {

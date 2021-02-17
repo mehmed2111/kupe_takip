@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kupe/bildirim_deneme.dart';
+import 'file:///D:/Storage/Flutter_Projects/kupe_17_02_2021/lib/notifications/notification_on_region_exit.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/nav_menu.dart';
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(Icons.notifications_active_outlined),
                 onPressed: () {
                   print(loggedUserID);
-                  Navigator.pushNamed(context, BildirimDeneme.id);
+                  Navigator.pushNamed(context, NotificationOnRegionExit.id);
                 }),
           ],
         ),
