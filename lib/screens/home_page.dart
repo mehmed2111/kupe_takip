@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/Storage/Flutter_Projects/kupe_17_02_2021/lib/notifications/notification_on_region_exit.dart';
+import 'package:kupe/notifications/notification_on_region_exit.dart';
 import 'package:kupe/constants.dart';
 import 'package:kupe/widgets/alert_dialog_messages.dart';
 import 'package:kupe/widgets/nav_menu.dart';
@@ -44,6 +44,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   //Alert Dialog to ask to exit from the App onBackButton pressed on Android devices
+  //declared context here because when I import notification_on_region_exit.dart context gets inactive
+  BuildContext get context;
   Future<bool> _onBackPressed() {
     return showDialog(
           context: context,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'file:///D:/Storage/Flutter_Projects/kupe_17_02_2021/lib/notifications/notification_on_region_exit.dart';
+import 'package:kupe/notifications/notification_on_region_exit.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
