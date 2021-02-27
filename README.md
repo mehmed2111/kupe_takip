@@ -1,4 +1,4 @@
-# kupe
+# Kupe Takip
 
-Kupe Flutter Mobil Uygulamasi
+ATC Kupe Takip Flutter Mobil Uygulamasi
 
